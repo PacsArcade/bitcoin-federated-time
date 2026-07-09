@@ -1,0 +1,93 @@
+# 2. The thirteen months and the moon
+
+## Every month is the same shape
+
+The calendar on your wall is **messy**: 12 months, all different sizes. September has 30 days, July
+has 31, and poor February gets 28 (or 29 when it feels like it). Nobody can remember which is which.
+
+Bitcoin time is **tidy**. Every month is the **exact same shape** — 4 weeks, 28 days, a perfect
+little rectangle:
+
+```
+   ┌──────────────────────┐
+   │  1  2  3  4  5  6  7 │
+   │  8  9 10 11 12 13 14 │
+   │ 15 16 17 18 19 20 21 │
+   │ 22 23 24 25 26 27 28 │
+   └──────────────────────┘
+     4 weeks · 28 days · no messy 30s or 31s
+```
+
+Now stack **thirteen** of those identical months. Thirteen × 28 = **364 days** — one day short of a
+sun-year, and it slowly drifts away from the sun a day or so each year. **That's allowed.** Bitcoin
+keeps time by *its own heartbeat*, not by the sky. (Fun fact: one month = exactly **two** of
+Bitcoin's "difficulty adjustments" — the calendar page turns on the same beat the network re-tunes
+itself.)
+
+### Wait — thirteen months?
+
+Yes! One more than you're used to. For now the library just numbers them **M01 to M13** — the
+*names* are still waiting to be chosen. The old 13-month calendar that inspired this one *did* name
+them, though: it kept the twelve you know and slipped a brand-new month, called **Sol**, in right
+after June —
+
+```
+   … May · June · [ Sol ] · July · August …
+                    ▲ the new one
+```
+
+— so its year had a thirteenth month tucked in the middle. That's where our extra month comes from.
+
+## The moon comes free
+
+Here's the loveliest part. A **28-day month is one whole trip of the moon.** So the moon rides the
+calendar without anyone winding it — the same picture, every month:
+
+```
+   D01   🌑  new moon      · the month begins
+   D08   🌓  first quarter
+   D15   🌕  FULL moon     · the middle of the month
+   D22   🌗  last quarter
+   D28   🌑  new again     · the month ends
+```
+
+Because every month *starts* on a new moon, **every new year starts on a new moon too** — just like
+the old Asian calendars, falling right out of the block math with nothing bolted on.
+
+## And every year has an animal — even the one who was left out
+
+Each year gets an animal sign. Most people know **twelve**: Rat, Ox, Tiger, Rabbit, Dragon, Snake,
+Horse, Goat, Monkey, Rooster, Dog, Pig. But do you know *why* there are only twelve, and why there's
+no Cat? Here's the story. 🐈
+
+> **The Great Race.** Long, long ago (the story goes), the Jade Emperor — the emperor of the whole
+> sky — called every animal to a **race across a wide, cold river**. "The first twelve to reach the
+> other side," he said, "will each have a year named after them. Forever."
+>
+> The **Cat** and the **Rat** were best friends, and both were small — too small to swim such a big
+> river. So they made a clever plan together: they would ride across on the back of the kind, strong
+> **Ox**, who couldn't see well and didn't mind passengers.
+>
+> But halfway across, the Rat did a sneaky, greedy thing. It **pushed its friend the Cat into the
+> water** and rode on alone. And just as the Ox reached the shore in first place — *plop!* — the Rat
+> leapt off its nose and landed on the bank **first of all**. That's why the Rat is the very first
+> animal, and the patient Ox is second.
+>
+> The Cat, cold and dripping, climbed out of the river far too late. There was no thirteenth spot.
+> And that — the story says — is why there is **no Cat among the twelve**… and why, to this very day,
+> **cats have never, ever forgiven rats.** 🐀💨🐈
+
+In *this* clock — the one with a thirteenth of everything — we finally do the kind thing. We save the
+Cat a seat. The **13th year is the Astronomical Cat**: the friend who was left out, welcomed home at
+last.
+
+```python
+import bft
+bft.moon_phase(920000)     # 🌒 Waxing Crescent
+bft.year_animal(920000)    # 🐍 Snake
+```
+
+The moon and the animals here are for **wonder, not money** — no clock tells you what a coin will be
+worth. But keep an eye on that thirteenth. It keeps coming up… →
+
+**Next:** [the two calendars →](3-the-two-calendars.md)
