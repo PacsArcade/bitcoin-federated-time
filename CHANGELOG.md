@@ -1,6 +1,9 @@
 # Changelog
 
-## 0.3.0 — the house clock canon (unreleased · awaiting the key)
+## 0.3.0 — the house clock canon
+
+*Published `0018.04.20 a₿` — during block ~958,336, `02:40` on the face — signed by Pac's
+key and shipped on the 420 day itself. Happy 420. 🍒🗝️₿*
 
 - **`block_beat()`** — the canonical `hh:mm` block-beat face (6 blocks an hour, ten minutes a
   block, no seconds) now leads every surface; the ordinal degree notation stays as an
