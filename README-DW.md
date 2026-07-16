@@ -26,6 +26,22 @@ many blocks so far.**
 The Hatter lost himself to find time. Then he gave it to every fren. That's the whole legend,
 and this little library is the legend, executable.
 
+## An auditorium in Portland
+
+He'd been keeping company with the ordinal folk — many nights at their **coding club**,
+listening, tinkering; once they even handed him a testing request to sign off, and he did,
+and it counted. The seed was in the ground already. Then one day in Portland — **Bitcoin is
+for Everyone**, a whole auditorium of frens — the big screen wore the generic time clock,
+laid out precisely as the handbook says: hour, minute, second. Correct. Tidy. And the
+admiral, looking up at it, heard the seed crack open: *it could be better.*
+
+Not better as in *righter* — better as in **deeper**. The notation stops at naming the
+positions. Nobody had followed the numbers down to what they *mean*. So the degens dug —
+that is, after all, the whole job description — through the face, the calendar, the moon,
+the countdowns, the thirteens, until the shovel rang on something warm: **the heart of
+bitcoin.** This package is that heart, brought up whole and displayed the only way the
+arcade knows how — **8-bit, nostalgic, beating.**
+
 ## The hat was labeled all along: **10/6**
 
 The Hatter's hat has always worn its paper tag: **“In this style 10/6.”**

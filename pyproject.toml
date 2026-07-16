@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bitcoin-federated-time"
 version = "0.3.0"
-description = "Read a Bitcoin block height as time: the hh:mm block-beat clock, a 13-month block calendar, the halving/countdown math, and ordinal degree notation as a labeled sidebar. No dependencies."
+description = "Read a Bitcoin block height as time — ordinal theory's clock, taken deeper: the hh:mm block-beat face, a 13-month block calendar, the halving/countdown math, and the degree notation kept as an honest sidebar. Sparked at the Ordinals coding club; built by degens to show the heart of bitcoin in 8-bit nostalgic art. No dependencies."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }

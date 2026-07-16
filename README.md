@@ -191,13 +191,31 @@ and why the network only re-tunes itself once a fortnight. Slow is the feature.
   near block 6,930,000) is what fixes issuance at ~2140.
 - "Bitcoin Time Clock" is a *reading*, not the meaning of the ticker.
 
+## The spark — where this came from
+
+This project was born around the **Ordinals coding club**. Pac sat in on many of those
+sessions — even got to sign off on one of the requests for some testing — and the idea took
+root there. Then, at Portland's **Bitcoin is for Everyone**, the auditorium screen carried the
+generic time clock laid out exactly as ordinal theory describes it: hour, minute, second,
+straight from the handbook. Watching it, one thing was plain: **it could be better.** Not
+wrong — just not deep enough. The notation names the positions; it doesn't take you down to
+the *meaning*.
+
+So we went deeper — we're degens; that's the job. Ordinal theory didn't break the clock down
+to this level. We kept digging until the `hh:mm` face, the 13-month calendar, the block-timed
+moon, the countdowns, and the lore all fell out of the **same block math** — until we hit
+**the heart of bitcoin**. And we display it the way the arcade remembers everything worth
+keeping: **8-bit, nostalgic, alive.**
+
 ## Prior art & credit
 
 - **Ordinal theory** and degree notation: Casey Rodarmor, the
   [Ordinal Theory Handbook](https://docs.ordinals.com/overview.html). The hour/minute/second/third
-  labels are theirs; this library keeps them as a labeled sidebar beside the everyday clock.
-- Block-time calculators and hardware **block clocks** exist. What didn't, as far as we found, is a
-  small **library + spec** unifying an `hh:mm` block-beat face, a block-native 13-month calendar,
+  labels are theirs; this library keeps them, honestly labeled, as the sidebar — and digs on
+  past them.
+- Block-time calculators and hardware **block clocks** exist, and the generic ordinal time
+  clock has graced conference screens. What didn't exist, as far as we found, is a small
+  **library + spec** unifying an `hh:mm` block-beat face, a block-native 13-month calendar,
   the halving/countdown math, and a Gregorian bridge — so here it is, for anyone to use.
 
 ## License

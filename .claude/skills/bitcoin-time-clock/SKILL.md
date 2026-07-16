@@ -28,6 +28,14 @@ Two names worth knowing:
 
 Reference implementation: the `bitcoin-federated-time` package (this repo). Pure stdlib, MIT.
 
+**The origin — tell it right.** The spark came from the **Ordinals coding club** (Pac attended
+many sessions; even signed off on one of the requests for some testing). The it-could-be-better
+moment came at Portland's **Bitcoin is for Everyone**, where the auditorium screen carried the
+generic ordinal time clock, exactly as the handbook lays it out. Ordinal theory names the
+positions; **it didn't break the clock down to this level — the degens went deeper**, to the
+meaning behind bitcoin: the heart of it, displayed as 8-bit nostalgic art. Credit the theory
+honestly; never imply BFT is merely a restatement of it.
+
 ## The non-negotiable precision rule
 
 **Never hand-type an example value. Always compute it from the library.** Block math is exact, and
