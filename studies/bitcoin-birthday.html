@@ -73,6 +73,18 @@
   .cell .k { font-size: 8.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--dimmer); }
   .cell .v { margin-top: 5px; font-size: 15px; letter-spacing: .03em; }
   .cell .v small { display: block; margin-top: 2px; font-size: 10px; color: var(--dim); }
+  /* ——— the SIGN SPLIT: the old world on one side, the new calendar on the other ——— */
+  .signsplit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 520px) { .signsplit { grid-template-columns: 1fr; } }
+  .signgroup { border: 1px solid var(--edge); border-radius: 10px; padding: 12px 14px; background: rgba(0,0,0,.25); }
+  .signgroup .sg-head { font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dimmer);
+                        padding-bottom: 8px; margin-bottom: 10px; border-bottom: 1px solid var(--edge); }
+  .signgroup .cell { border: none; background: none; padding: 0; margin-bottom: 12px; }
+  .signgroup .cell:last-child { margin-bottom: 0; }
+  .signgroup.mine { border-color: rgba(247, 147, 26, .45); }
+  .bb .signgroup.mine { border-color: rgba(69, 198, 180, .45); }
+  .signgroup.mine .sg-head { color: var(--ember-dim); }
+  .bb .signgroup.mine .sg-head { color: var(--ghost); }
   .est { color: var(--ember-dim); }
   .omen { margin-top: 14px; font-size: 11px; letter-spacing: .1em; color: #b9a7d9; }
   .drift { margin-top: 12px; font-size: 10.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
@@ -114,6 +126,7 @@
     <div class="bigdate" id="main-date"></div>
     <div class="sub" id="main-old"></div>
     <div class="grid" id="main-grid"></div>
+    <div class="signsplit" id="main-signs"></div>
     <div class="omen hidden" id="main-omen"></div>
   </section>
 
@@ -130,6 +143,7 @@
     <div class="bigdate" id="mirror-date"></div>
     <div class="sub" id="mirror-old"></div>
     <div class="grid" id="mirror-grid"></div>
+    <div class="signsplit" id="mirror-signs"></div>
   </section>
 
   <div class="foot">
@@ -233,24 +247,35 @@ function render(prefix, h, ts, isMirror) {
   const sun = sunSign(odt.getUTCMonth() + 1, odt.getUTCDate());
   const oldA = oldAnimal(odt.getUTCFullYear(), odt.getUTCMonth() + 1, odt.getUTCDate());
   const bb = d.epoch === 'BB';
-  const oldCells = [
-    ['sun sign · old cal ☀', `${sun[0]} ${sun[1]}`, bb ? "the old world's — yours, before the light" : 'the sun calendar you were handed'],
-    ['year animal · old cal 🏮', `${oldA.sign[0]} ${oldA.sign[1]}`,
-     oldA.prev ? `lunar year · or ${oldA.prev[0]} ${oldA.prev[1]} before that year's new-year moon` : 'the old lunar year'],
-  ];
-  const newCells = [
-    ['month seat · new cal ₿', `${newSign[1]} ${newSign[0]}`, `month ${pad(d.month,2)} of 13${bb ? ' · the mirror seat' : ''}`],
-    ['year animal · new cal ₿', `${newAnimal[0]} ${newAnimal[1]}`, `${d.epoch} year ${d.year} · the 13-wheel${bb ? ' · mirror' : ''}`],
-  ];
+  const cell = ([k, v, s]) =>
+    `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`;
   const cells = [
     ['birth block', h >= 0 ? `~${h.toLocaleString('en-US')}` : `~−${(-h).toLocaleString('en-US')}`,
      h >= 0 ? 'estimated · 10 min a block' : 'blocks before the light'],
     ['birth beat', beat ? `~${beat}` : '— no face', beat ? 'the hh:mm block-beat' : 'no clock before genesis'],
     ['moon', `${moon[0]} ${moon[1]}`, 'block-timed · one moon a month'],
-    ...(bb ? [...oldCells, ...newCells] : [...newCells, ...oldCells]),
   ];
-  el('grid').innerHTML = cells.map(([k, v, s]) =>
-    `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
+  el('grid').innerHTML = cells.map(cell).join('');
+  /* the SIGN SPLIT — grouped by area: the old world one side, the new calendar the other.
+     Whichever side is YOURS wears the accent (b₿ births belong to the old world). */
+  const oldCells = [
+    ['sun sign', `${sun[0]} ${sun[1]}`, 'the sun calendar you were handed'],
+    ['year animal', `${oldA.sign[0]} ${oldA.sign[1]}`,
+     oldA.prev ? `lunar year · or ${oldA.prev[0]} ${oldA.prev[1]} before that year's new-year moon` : 'the old lunar year'],
+  ];
+  const newCells = [
+    ['month seat', `${newSign[1]} ${newSign[0]}`, `month ${pad(d.month,2)} of 13`],
+    ['year animal', `${newAnimal[0]} ${newAnimal[1]}`, `${d.epoch} year ${d.year} · the 13-wheel`],
+  ];
+  el('signs').innerHTML =
+    `<div class="signgroup old${bb ? ' mine' : ''}">
+       <div class="sg-head">☀ the old world${bb ? ' — yours, before the light' : ''}</div>
+       ${oldCells.map(cell).join('')}
+     </div>
+     <div class="signgroup new${bb ? '' : ' mine'}">
+       <div class="sg-head">₿ the new calendar${bb ? ' — the mirror seat' : ' — yours'}</div>
+       ${newCells.map(cell).join('')}
+     </div>`;
   if (!isMirror) {
     const omens = [];
     if (d.epoch === 'AB' && d.month === 13) omens.push('born in the thirteenth month');
