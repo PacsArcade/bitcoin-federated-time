@@ -1026,7 +1026,7 @@ function ensureFruitFace(R) {
   // (the opaque gold coin used to cover it; emoji are transparent at the edges)
   const plate = document.createElementNS(SVGNS, 'circle');
   plate.setAttribute('class', 'fruit-plate');
-  plate.setAttribute('r', R.geom.shape === 'square' ? 12 : 16);
+  plate.setAttribute('r', R.geom.shape === 'square' ? 15 : 16);
   plate.style.display = 'none';
   inner.appendChild(plate);
   R.fruitPlate = plate;
@@ -1034,7 +1034,7 @@ function ensureFruitFace(R) {
   const t = document.createElementNS(SVGNS, 'text');
   t.setAttribute('class', 'fruit-face');
   t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central');
-  t.style.font = `${R.geom.shape === 'square' ? 18 : 26}px ui-monospace, Consolas, monospace`;
+  t.style.font = `${R.geom.shape === 'square' ? 24 : 26}px ui-monospace, Consolas, monospace`;
   t.style.display = 'none';
   inner.appendChild(t);
   R.fruitFace = t;
