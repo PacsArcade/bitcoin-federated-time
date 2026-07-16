@@ -118,6 +118,23 @@ def test_lore_is_magic_not_leakage():
     assert "no real" in tw["note"].lower()                              # it disclaims itself
 
 
+def test_holidays():
+    from bft import holidays
+    at = {x["name"] for x in holidays.holidays_at(840_000)}
+    assert "The Fourth Halving" in at and "Halving Day" in at       # 4/20's block, both readings
+    g = {x["name"] for x in holidays.holidays_at(0)}
+    assert "Genesis Block Day" in g and "New Year (the new-moon new year)" in g
+    assert "Halving Day" not in g                                    # genesis is a birth, not a halving
+    assert holidays.holidays_at(-5) == []                            # no feast days before the light
+    cal = holidays.year_calendar(18)
+    hallows = next(r for r in cal if r["name"] == "The Hallows")
+    assert hallows["height"] == 983_664                              # Day 0 IS the Hallows' first block
+    assert hallows["date"] == "0018.10.28 a₿"
+    assert any(r["name"] == "Year's End" for r in cal)
+    upcoming = holidays.next_holidays(958_335, count=3)
+    assert upcoming and all(u["day_start_height"] > 958_335 for u in upcoming)
+
+
 def test_clock_smoke():
     lines = bft.format_clock(858_000)
     assert any("Clock (hh:mm)" in ln for ln in lines)       # the canonical face leads

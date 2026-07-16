@@ -39,6 +39,11 @@ pip install bitcoin-federated-time      # once published
 
 ## Quick start
 
+```bash
+python -m bft 958346     # the whole clock in your terminal — plus today's feast days
+python -m bft 1983-06-13 # a birthday (b₿ before genesis)
+```
+
 ```python
 import bft
 
@@ -46,6 +51,7 @@ bft.block_beat(958_346)["hhmm"]  # '04:20'                (the canonical hh:mm f
 bft.format_date(958_346)         # '0018.04.20 a₿'        (the ₿-marked bitcoin date)
 bft.halving(958_346)             # {'epoch': 4, 'subsidy_btc': 3.125, 'blocks_to_next_halving': 91654}
 bft.countdown(958_346)           # {'to_halving': 91654, 'to_last_satoshi': 5971654, ...}
+bft.holidays.next_holidays(958_346, 3)   # the chain's coming feast days (docs/bitcoin-holidays.md)
 
 print("\n".join(bft.format_clock(958_346)))
 # Bitcoin Time Clock — block 958,346

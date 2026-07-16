@@ -1,0 +1,21 @@
+# Nobody should have to trust; everybody should get to verify — including this repo, on push.
+name: tests
+on:
+  push:
+  pull_request:
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: run the suite (and the demo — it must not crash on any console)
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python tests/test_bft.py

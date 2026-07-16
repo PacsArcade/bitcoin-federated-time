@@ -340,6 +340,7 @@ def format_clock(height: Optional[int], month_names: Optional[list[str]] = None)
     ]
 
 
-# --- the sky, and the magic (imported last, so the core above is fully defined first) ---------
+# --- the sky, the magic, and the feast days (imported last — the core above comes first) ------
 from .sky import moon_phase, year_animal, MOON_PHASES, YEAR_ANIMALS  # noqa: E402,F401
 from . import lore  # noqa: E402,F401
+from . import holidays  # noqa: E402,F401

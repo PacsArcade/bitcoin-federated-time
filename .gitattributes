@@ -1,0 +1,5 @@
+# One line-ending law for a repo read on every OS: LF in the repo, LF in the tree.
+* text=auto eol=lf
+*.png binary
+*.gif binary
+*.jpg binary

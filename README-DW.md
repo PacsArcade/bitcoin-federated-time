@@ -17,23 +17,24 @@ Look at your wall calendar. Popes deleting ten days. Kings deleting eleven. Empe
 months after themselves. A leap-second committee. **You are all still at that tea-party** —
 sitting at a table where whoever owns the clock owns the afternoon.
 
-Our Hatter — the one they call **the admiral** around this arcade — went looking for a way out.
-He didn't invent one. *(He'd tell you this part himself, and he'd tap the table twice for
-emphasis:)* **he found one, already ticking.** A clock wound at height zero in January 2009,
-that has never once been set, and never once been wrong about the only thing it claims: **how
-many blocks so far.**
+Our Hatter went looking for a way out. And here's the first thing to know about our Hatter:
+**ours isn't one head under one hat.** The hat is shared — **twelve artists, one vision** —
+and **Pac is one of the twelve.** Together they didn't invent a way out. *(Any of them would
+tell you this part, tapping the table twice for emphasis:)* **they found one, already
+ticking.** A clock wound at height zero in January 2009, that has never once been set, and
+never once been wrong about the only thing it claims: **how many blocks so far.**
 
-The Hatter lost himself to find time. Then he gave it to every fren. That's the whole legend,
-and this little library is the legend, executable.
+The Hatter lost himself to find time. Then the twelve gave it to every fren. That's the whole
+legend, and this little library is the legend, executable.
 
 ## An auditorium in Portland
 
-He'd been keeping company with the ordinal folk — many nights at their **coding club**,
-listening, tinkering; once they even handed him a testing request to sign off, and he did,
-and it counted. The seed was in the ground already. Then one day in Portland — **Bitcoin is
-for Everyone**, a whole auditorium of frens — the big screen wore the generic time clock,
-laid out precisely as the handbook says: hour, minute, second. Correct. Tidy. And the
-admiral, looking up at it, heard the seed crack open: *it could be better.*
+Pac — one of the twelve — had been keeping company with the ordinal folk: many nights at
+their **coding club**, listening, tinkering; once they even handed him a testing request to
+sign off, and he did, and it counted. The seed was in the ground already. Then one day in
+Portland — **Bitcoin is for Everyone**, a whole auditorium of frens — the big screen wore the
+generic time clock, laid out precisely as the handbook says: hour, minute, second. Correct.
+Tidy. And looking up at it, he heard the seed crack open: *it could be better.*
 
 Not better as in *righter* — better as in **deeper**. The notation stops at naming the
 positions. Nobody had followed the numbers down to what they *mean*. So the degens dug —
@@ -42,19 +43,22 @@ the countdowns, the thirteens, until the shovel rang on something warm: **the he
 bitcoin.** This package is that heart, brought up whole and displayed the only way the
 arcade knows how — **8-bit, nostalgic, beating.**
 
-## The hat was labeled all along: **10/6**
+## The hat wears its tag: **12/1**
 
-The Hatter's hat has always worn its paper tag: **“In this style 10/6.”**
+Every Hatter's hat carries a paper tag. The old storybook one read 10/6 — a price.
+**Ours reads 12/1, and it isn't a price: twelve artists, one vision.** The house's own
+twelve-and-one, the same shape as everything else in this clock — twelve months and Sol,
+twelve signs and Ophiuchus, twelve animals and the Cat. Twelve hands under one hat, and the
+vision is the thirteenth thing: the one you can't buy, only find.
 
-Read the tag again, slowly:
+*(And if you squint at the old storybook price anyway: this clock runs **ten** minutes a
+block, **six** blocks an hour. Even 10/6 reads like a spec sheet. The mad ones were right the
+whole time. 🫖)*
 
-> **10 minutes a block. 6 blocks an hour.**
-
-That IS this clock — the `hh:mm` **block-beat**, the canonical face of Bitcoin Federated Time.
+That's the face — the `hh:mm` **block-beat**, the canonical reading of Bitcoin Federated Time.
 A day is 144 blocks. An hour is six of them. Every block is worth ten minutes on the face, and
 the last digit — **the struggling digit** — trembles on its hinge as the current block fills,
-0 through 9, the only honest guess on an otherwise chain-exact clock. In this style, 10/6.
-The mad ones were right the whole time. 🫖
+0 through 9, the only honest guess on an otherwise chain-exact clock.
 
 ```python
 import bft
@@ -66,7 +70,7 @@ bft.format_date(958_346)          # '0018.04.20 a₿'  (the year IS bitcoin's ag
 
 - **The clock** — `block_beat()`: the 10/6 face. No seconds. Slow on purpose; this is a clock
   for people who plan in decades, and the fastest hand takes ten minutes. *(“We make time to
-  train,” says the admiral, who runs an arcade on it.)*
+  train,” say the twelve, who run an arcade on it.)*
 - **The calendar** — thirteen months, every one a perfect 28-day rectangle, every one a whole
   trip of the moon: `0018.04.20 a₿`, marker after, no exceptions, no leap hacks, nobody's name
   on any month. Born before the light? The clock runs backward for you: `yyyy.dd.mm b₿` — the
@@ -114,12 +118,19 @@ Ours.
 
 ## The ember at the center of everything
 
-Ask the admiral why the clock's glow breathes that particular orange and he will not say he
+Ask Pac why the clock's glow breathes that particular orange and he will not say he
 chose it. Bitcoin's heartbeat — one block in ~600 seconds — carried up 58 octaves into light
 lands at **~624 nanometers**: a real, physical ember-orange that the chain itself hums.
 **He didn't pick the color. He found it.** Like the clock. Like everything good in here —
 already true, just waiting for someone mad enough to check. *(Nobody should have to trust;
 everybody should get to verify.)*
+
+And if you ask him twice, he'll tell you the stranger part: as a kid, his favorite color was
+**vivid tangerine**. He was carrying the 624 his whole life and didn't know its name yet.
+That's what staying curious buys you — you keep digging, you keep fitting together puzzle
+pieces nobody else believed were from the same set, and one day the picture assembles: a
+future with bitcoin in it, and **trust and abundance for all**. This clock is one piece of
+that picture, placed.
 
 ## Come mad, leave counting
 
