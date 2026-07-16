@@ -67,10 +67,13 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
 0. **THE CLOCK FACE — hh:mm block-beat (canonical, house standard).** `block_beat(h)` →
    `{hhmm "04:20", hour 0–23, minute 0/10..50, beat 0–143, blocks_into_hour 0–5}`. A BFT day =
    144 blocks on a 24-hour face: **6 blocks an hour, ten "minutes" a block, hh:mm stepping by
-   ten, NO seconds.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact. A live display may
-   estimate progress *inside* the current block as a climbing ones digit (0→9) — that digit is an
-   estimate and wears a `~`. None for pre-genesis heights. This face leads every surface; teach it
-   first.
+   ten, NO seconds.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact. On a live display
+   the minute ONES digit is **how full the current block is, in tenths** (0=just broke …
+   9=nearly done; each step ≈ a minute) — an estimate, wears a `~`; the minute TENS digit is
+   which block of the hour. None for pre-genesis heights. This face leads every surface; teach it
+   first, as a ladder: tenths fill a block, 6 blocks an hour, 144 a day, 28 days a moon,
+   13 moons a year — each digit a container made of the containers below it, readable top→down
+   and bottom→up.
 1. **Calendar** — `from_height(h)` → `{epoch, year, month 1–13, day 1–28, day_of_year, week_of_month,
    beat, diff_epoch, ...}`. `format_date(h, style=…)`: the DEFAULT `"date"` style is the house
    standard — ₿-marked, **marker AFTER**: `0016.05.23 a₿` (BB inverts to day-first

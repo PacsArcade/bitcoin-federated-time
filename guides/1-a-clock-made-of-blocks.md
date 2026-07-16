@@ -22,19 +22,26 @@ goes **up**, and no king, bank, or wizard can turn it back.
 
 ## Reading the clock face
 
-The face reads **hh:mm**, just like the clock you already know — but every tick is a block:
+The face reads **hh:mm**, just like the clock you already know — but every digit is a little
+container made of the containers below it:
 
 ```
-        0 4 : 2 0
-        │ │   │ └─ climbs 0→9 inside the block (~a minute each) · an honest ~guess
-        │ │   └─── which block of this hour (0–5), stepping by ten
+        0 4 : 2 7
+        │ │   │ └─ how FULL this block is: 0=empty … 9=nearly full · the honest ~guess
+        │ │   └─── which block of this hour (0–5) — each block worth ten minutes
         └─┴─────── the block-hour (00–23) — six blocks each
 ```
 
-A BFT **day is 144 blocks**. That's **24 block-hours of 6 blocks each**, and every block is worth
-**ten minutes** on the face. So the time above says: hour 4, block 2 of that hour — and the last
-digit slowly climbs 0→9 as the current block ages, the only digit that's a guess (it wears a `~`).
-When the block breaks: **snap** — it flips to zero and the minutes jump by ten.
+A BFT **day is 144 blocks**: 24 block-hours of 6 blocks each. So `04:27` says, exactly: *hour 4,
+block 2 of that hour, and the current block is about 7/10 full.* The last digit is a glass of
+water slowly filling — the only guess on the whole face (the chain hasn't written that page yet,
+so it wears a `~`). When the block breaks: **snap** — the glass empties to 0 and the tens clicks
+up one block.
+
+Read it back UP the ladder and you've explained time itself: blocks fill by tenths → ten filled
+tenths make a block → six blocks make an hour → 144 make a day → 28 days make a moon → 13 moons
+make a year, and the year is just bitcoin's age. Every big thing is made of the small thing
+below it. That's all a clock has ever been.
 
 No seconds. The fastest hand on this clock takes ten minutes — on purpose. This is a clock for
 people who think in years. (More on *why slow is good* in guide 3.)

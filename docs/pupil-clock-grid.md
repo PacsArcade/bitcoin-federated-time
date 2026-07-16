@@ -10,6 +10,41 @@ fact, and every estimate wears a `~`.*
 
 ---
 
+## The ladder — how to read the whole clock with no concept of time
+
+Every digit on the face is a **container made of the containers below it**. Read it either
+direction; it has to make sense both ways.
+
+**Top → down (big to small): what is each thing made of?**
+
+```
+0 0 1 8 . 0 4 . 2 0     0 4 : 2 7
+└──┬──┘   └┬┘   └┬┘     └┬┘  │ └─ ONES of minutes — how FULL the current block is:
+   │       │     │       │   │     0=empty … 9=nearly full (each step ≈ a minute) · the ~guess
+   │       │     │       │   └─── TENS of minutes — which block of this hour (0–5),
+   │       │     │       │         each block worth ten minutes
+   │       │     │       └─────── HOUR (00–23) — six blocks each
+   │       │     └─────────────── DAY (01–28) — 144 blocks, 24 hours
+   │       └───────────────────── MONTH (01–13) — 28 days, one whole moon
+   └───────────────────────────── YEAR — 13 moons · the year IS bitcoin's age (genesis = 0000)
+```
+
+**Bottom → up (small to big): watch time grow.**
+
+1. Watch the very last digit. The block is **filling like a glass** — `0, 1, 2 … 9`. It's the
+   only guess on the whole clock (the chain hasn't written the page yet), so it wears the `~`.
+2. The glass fills — **the block breaks!** The ones snaps to `0`, and the minute-tens clicks
+   up one: one more block done this hour.
+3. **Six blocks** → the hour turns. `04:50` becomes `05:00`.
+4. **144 blocks** → the day turns: `0018.04.20` becomes `0018.04.21`.
+5. **28 days** → the moon comes back to new → the month turns.
+6. **13 moons** → the year turns, and bitcoin has a birthday. 🎂
+
+So `04:27` says, exactly: *hour 4 · block 2 of that hour · and the current block is ~7/10
+full.* Nothing on the face means anything else.
+
+---
+
 ## How one height becomes everything (the spine)
 
 | Step | Formula | At 958,346 |
@@ -31,7 +66,7 @@ All integer math. Two nodes at the same height always agree on every row.
 |---|---|---|---|---|
 | `04` — the hour cards | The block-hour (0–23). Six blocks each. | `beat // 6` | `26 // 6 = 4` | chain-exact |
 | `2_` — the minute TENS card | Which block of this hour (0–5), worth ten minutes each | `beat mod 6` → shows `(beat mod 6)` as the tens digit | `26 mod 6 = 2` → `:2_` | chain-exact |
-| `_0→9` — the minute ONES card (the live, straining digit) | How far through the CURRENT block, as a climbing minute | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
+| `_0→9` — the minute ONES card (the live, straining digit) | **How FULL the current block is**, in tenths: `0` = just broke, `7` = ~70% full, `9` = nearly done (each step ≈ a minute) | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
 | `~N% of the way to the next block` | The same live progress, in percent | `round(age / 600 × 100)` | 0–99% | **~ estimate** |
 | `0018.04.20 a₿` — the dateline | The BFT date, marker after; the year IS bitcoin's age | spine table above, rendered `yyyy.mm.dd a₿` | `0018.04.20 a₿` | chain-exact |
 | `958,346` — HEIGHT | The chain tip (the time itself) | mempool.space `blocks/tip/height`; offline → `anchor.h + (now − anchor.t)/600s` | `958,346` | LIVE, or **~** when estimated |
