@@ -473,7 +473,7 @@
         <g id="ringfxSq">
           <g class="pixlayer" id="pixSq"></g>
           <g id="ghostsSq"></g>
-          <g class="rewardcoin" id="pillSq"><g class="coin-inner"><circle class="coin-back" r="8.2"/><image class="coin-img" id="coinImgSq" x="-9" y="-9" width="18" height="18" preserveAspectRatio="xMidYMid meet"/></g><circle class="coin-static" r="8"/><text class="coin-static-b">₿</text></g>
+          <g class="rewardcoin" id="pillSq"><g class="coin-inner"><circle class="coin-back" r="12"/><image class="coin-img" id="coinImgSq" x="-13" y="-13" width="26" height="26" preserveAspectRatio="xMidYMid meet"/></g><circle class="coin-static" r="11.5"/><text class="coin-static-b" style="font-size:12px">₿</text></g>
           <g class="pacman" id="pacSq"><image class="pac-sprite" id="pacSpriteSq" preserveAspectRatio="xMidYMid meet"/></g>
         </g>
       </svg>
@@ -1286,10 +1286,11 @@ function applyStrain(nowMs) {
   colonEl.style.opacity = 0.92;                    // the colon holds steady
 
   if (correcting) {
-    /* the honest correction: the whole number was wrong → red-shifted flicker */
-    const on = REDUCED ? true : Math.floor(t * 14) % 3 !== 0;
-    const col = on ? '#ff5b47' : '#ffc9ba';
-    valEls.forEach(el => { el.style.color = col; });
+    /* the honest correction: the whole number was wrong → a STEADY red-shifted hold.
+       NEVER a flicker: the old red/white strobe (~9 changes/sec) was a photosensitive-
+       seizure risk — the all-ages law outranks drama. Nothing on this clock may flash
+       more than 3×/sec (WCAG 2.3.1); the steady red says "correcting" just as honestly. */
+    valEls.forEach(el => { el.style.color = '#ff5b47'; });
     onesFlip.style.boxShadow = '';
   } else {
     valEls.forEach(el => { el.style.color = ''; });          // back to white-on-black
