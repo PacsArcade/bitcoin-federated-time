@@ -270,8 +270,8 @@ def halving(height: Optional[int]) -> Optional[dict[str, Any]]:
 
 
 def cycle(height: Optional[int]) -> Optional[dict[str, Any]]:
-    """Cycle (conjunction) context — the 1,260,000-block 'hour' of the ordinal clock, with the
-    inverse count to the next conjunction (~24-year rhythm; first conjunction ~2032)."""
+    """Cycle (conjunction) context — the 1,260,000-block 'hour' of the ordinal degree notation,
+    with the inverse count to the next conjunction (~24-year rhythm; first conjunction ~2032)."""
     if height is None or height < 0:
         return None
     h = int(height)
