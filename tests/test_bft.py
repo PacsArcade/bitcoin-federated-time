@@ -14,6 +14,18 @@ def test_calendar_boundaries():
     assert bft.from_height(bft.BLOCKS_PER_YEAR - bft.BLOCKS_PER_DAY)["day_of_year"] == 364
 
 
+def test_block_beat_face():
+    # the canonical hh:mm face: 6 blocks an hour, ten minutes a block, no seconds
+    assert bft.block_beat(0)["hhmm"] == "00:00"                          # bitcoin-midnight
+    assert bft.block_beat(26)["hhmm"] == "04:20"                         # beat 26 = the degen beat
+    assert bft.block_beat(143)["hhmm"] == "23:50"                        # last beat of the day
+    assert bft.block_beat(bft.BLOCKS_PER_DAY)["hhmm"] == "00:00"         # the next midnight
+    assert bft.block_beat(958_346)["hhmm"] == "04:20"                    # 0018.04.20 04:20 a₿
+    assert bft.block_beat(-1) is None                                    # no face before genesis
+    b = bft.block_beat(920_986)
+    assert (b["hour"], b["minute"]) == (b["beat"] // 6, (b["beat"] % 6) * 10)
+
+
 def test_month_is_two_difficulty_epochs():
     assert bft.BLOCKS_PER_MONTH == 2 * bft.DIFFICULTY_EPOCH_BLOCKS
     assert bft.BLOCKS_PER_YEAR == 26 * bft.DIFFICULTY_EPOCH_BLOCKS
@@ -71,15 +83,19 @@ def test_gregorian_bridge():
     b = bft.from_gregorian(1990, 5, 15)                     # pre-genesis birthday -> BB inverse
     assert b["before_bitcoin"] is True
     assert b["calendar"]["epoch"] == "BB"
-    assert bft.format_date(b["height"]).startswith("BB ")
+    assert bft.format_date(b["height"]).endswith(" b₿")
+    assert bft.format_date(b["height"], style="short").startswith("BB ")
     assert bft.degree(b["height"]) is None                 # no ordinal clock before genesis
+    assert bft.block_beat(b["height"]) is None             # and no hh:mm face either
 
 
 def test_bitcoin_date_style():
-    assert bft.format_date(0, style="date") == "a₿ 0000.01.01"
-    assert bft.format_date(858_000, style="date") == "a₿ 0016.05.23"     # matches AB 16 · M05 · D23
-    assert bft.before_bitcoin(2008, 10, 31) == "b₿ 2008.31.10"           # day-first inverse
-    assert bft.format_date(bft.height_at(2008, 10, 31), style="date").startswith("b₿ ")
+    # the house standard is the DEFAULT: marker AFTER the date
+    assert bft.format_date(0) == "0000.01.01 a₿"
+    assert bft.format_date(858_000) == "0016.05.23 a₿"                   # matches AB 16 · M05 · D23
+    assert bft.format_date(858_000, style="short") == "AB 16 · M05 · D23"
+    assert bft.before_bitcoin(2008, 10, 31) == "2008.31.10 b₿"           # day-first inverse
+    assert bft.format_date(bft.height_at(2008, 10, 31)).endswith(" b₿")
 
 
 def test_sky_moon_and_animals():
@@ -104,17 +120,25 @@ def test_lore_is_magic_not_leakage():
 
 def test_clock_smoke():
     lines = bft.format_clock(858_000)
-    assert any("Ordinal degree" in ln for ln in lines)
+    assert any("Clock (hh:mm)" in ln for ln in lines)       # the canonical face leads
+    assert any("Ordinal sidebar" in ln for ln in lines)     # the degree reading is labeled lore
     assert any("Counting down" in ln for ln in lines)
+    # the cycle line states % THROUGH and blocks TO the conjunction — never conflated
+    cyc = next(ln for ln in lines if ln.strip().startswith("Cycle"))
+    assert "% through" in cyc and "to the next conjunction" in cyc
 
 
 if __name__ == "__main__":
+    # Windows consoles often default to a legacy codepage that can't print ₿ ° ′ ″ —
+    # reconfigure stdout so the demo below renders everywhere.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in fns:
         fn()
         print(f"  ok  {fn.__name__}")
     print(f"\n{len(fns)} tests passed")
     print("\n--- demo ---")
-    for h in (0, 210_000, 840_000, 858_000, 1_260_000):
+    for h in (0, 210_000, 840_000, 858_000, 958_346, 1_260_000):
         print("\n".join(bft.format_clock(h)))
         print()

@@ -32,7 +32,7 @@ Reference implementation: the `bitcoin-federated-time` package (this repo). Pure
 
 **Never hand-type an example value. Always compute it from the library.** Block math is exact, and
 this content gets etched on-chain — a wrong date or degree is unacceptable. Before you write "block
-858,000 is AB 16 · M05 · D23", run `bft.format_date(858000)` and paste what it returns. This was
+858,000 is 0016.05.23 a₿", run `bft.format_date(858000)` and paste what it returns. This was
 learned the hard way; honor it.
 
 ## The exact spec (memorize the constants)
@@ -41,7 +41,8 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
 
 | Unit | Blocks | ≈ time | Note |
 |---|---|---|---|
-| beat (block) | 1 | ~10 min | the tick |
+| beat (block) | 1 | ~10 min | the tick — ten "minutes" on the hh:mm face |
+| block-hour | 6 | ~1 hour | 24 per day; the hh:mm face's hour |
 | day | 144 | ~1 day | |
 | week | 1,008 | 7 days | |
 | **fortnight / difficulty period** | **2,016** | ~2 weeks | one difficulty adjustment |
@@ -61,15 +62,25 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
   extra month **Sol** and inserted it *after June* — Sol is positionally the 7th month there, not
   the 13th. Be precise about that if it comes up.)
 
-## The five readings
+## The six readings
 
+0. **THE CLOCK FACE — hh:mm block-beat (canonical, house standard).** `block_beat(h)` →
+   `{hhmm "04:20", hour 0–23, minute 0/10..50, beat 0–143, blocks_into_hour 0–5}`. A BFT day =
+   144 blocks on a 24-hour face: **6 blocks an hour, ten "minutes" a block, hh:mm stepping by
+   ten, NO seconds.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact. A live display may
+   estimate progress *inside* the current block as a climbing ones digit (0→9) — that digit is an
+   estimate and wears a `~`. None for pre-genesis heights. This face leads every surface; teach it
+   first.
 1. **Calendar** — `from_height(h)` → `{epoch, year, month 1–13, day 1–28, day_of_year, week_of_month,
-   beat, diff_epoch, ...}`. `format_date(h, style=…)`: `"short"` → `AB 16 · M05 · D23`; `"long"`
-   adds the block + diff-epoch; `"date"` → the ₿-marked `a₿ 0016.05.23` (BB inverts to day-first
-   `b₿ yyyy.dd.mm`). `year_progress(h)` gives blocks-to-next-month/year.
-2. **The ordinal degree clock** — `degree(h)` → `{notation "A°B′C″D‴", hour, minute, second, third,
-   rarity_of_first_sat}`. This is **ordinal theory's own notation**, read as hour°/minute′/second″/
-   third‴:
+   beat, diff_epoch, ...}`. `format_date(h, style=…)`: the DEFAULT `"date"` style is the house
+   standard — ₿-marked, **marker AFTER**: `0016.05.23 a₿` (BB inverts to day-first
+   `yyyy.dd.mm b₿`); `"short"` → `AB 16 · M05 · D23` (teaching scaffolding); `"long"` adds the
+   block + diff-epoch. The display year IS bitcoin's age — genesis opens `0000`.
+   `year_progress(h)` gives blocks-to-next-month/year.
+2. **The ordinal SIDEBAR** — `degree(h)` → `{notation "A°B′C″D‴", hour, minute, second, third,
+   rarity_of_first_sat}`. This is **ordinal theory's own notation**, whose handbook labels the
+   positions hour/minute/second/third — but they are **ordinal indices, not clock time**; never
+   present the degree notation as "the clock face" (the face is hh:mm above):
    - **hour (A°)** = cycle number (÷ 1,260,000)
    - **minute (B′)** = block index within the halving epoch (mod 210,000)
    - **second (C″)** = block index within the difficulty period (mod 2,016)
@@ -130,8 +141,9 @@ game — the package only sets the mood and points seekers onward.
   same tidy 4-week rectangle; the moon rides it; the Cat finally gets a year. Use the illustrated
   `guides/` (start at `guides/README.md`) — they model the tone: concrete, warm, precise, with the
   Great Race told as a story and a kid-safe keys lesson.
-- **For an engineer:** lead with the spec table and the ordinals correspondence; show `format_clock`
-  and `from_gregorian`; be exact about the estimate caveat and the AB/BB epochs.
+- **For an engineer:** lead with the hh:mm face and the spec table, then the ordinals
+  correspondence; show `format_clock` and `from_gregorian`; be exact about the estimate caveat and
+  the AB/BB epochs.
 - **Always:** compute example values from the library; teach the trade-offs honestly (block time is
   an estimate; slowness is a feature, not a bug — a clock for people who plan in decades).
 

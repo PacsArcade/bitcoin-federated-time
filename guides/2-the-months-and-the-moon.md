@@ -57,29 +57,33 @@ the old Asian calendars, falling right out of the block math with nothing bolted
 ## And every year has an animal — even the one who was left out
 
 Each year gets an animal sign. Most people know **twelve**: Rat, Ox, Tiger, Rabbit, Dragon, Snake,
-Horse, Goat, Monkey, Rooster, Dog, Pig. But do you know *why* there are only twelve, and why there's
-no Cat? Here's the story. 🐈
+Horse, Goat, Monkey, Rooster, Dog, Pig. But do you know *why* there are only twelve — and why
+there's no Cat? Here's the story. 🐈
 
-> **The Great Race.** Long, long ago (the story goes), the Jade Emperor — the emperor of the whole
-> sky — called every animal to a **race across a wide, cold river**. "The first twelve to reach the
-> other side," he said, "will each have a year named after them. Forever."
+> **The Great Race.** Long ago — so the story goes — the Jade Emperor, the emperor of the whole
+> sky, called every animal to a **race across a wide, cold river**. "The first twelve to reach the
+> far bank," he said, "will each have a year named after them. Forever."
 >
-> The **Cat** and the **Rat** were best friends, and both were small — too small to swim such a big
-> river. So they made a clever plan together: they would ride across on the back of the kind, strong
-> **Ox**, who couldn't see well and didn't mind passengers.
+> The **Cat** and the **Rat** were best friends, and both were small — far too small to swim such a
+> river. So they made a plan together: they would cross on the back of the kind, strong **Ox**, who
+> didn't see well and didn't mind carrying passengers.
 >
-> But halfway across, the Rat did a sneaky, greedy thing. It **pushed its friend the Cat into the
-> water** and rode on alone. And just as the Ox reached the shore in first place — *plop!* — the Rat
-> leapt off its nose and landed on the bank **first of all**. That's why the Rat is the very first
-> animal, and the patient Ox is second.
+> Halfway across, the Rat did the thing the Cat never forgot: it **pushed its friend into the
+> water** and rode on alone. And just as the Ox waded up the far bank in first place, the Rat
+> leapt over its nose and landed on the shore **first of all**. That is why the Rat's year comes
+> first, and the patient Ox's comes second.
 >
-> The Cat, cold and dripping, climbed out of the river far too late. There was no thirteenth spot.
-> And that — the story says — is why there is **no Cat among the twelve**… and why, to this very day,
-> **cats have never, ever forgiven rats.** 🐀💨🐈
+> The Cat pulled itself out of the river, soaked and shivering, long after the twelfth place was
+> taken. There was no year for the Cat. And that — the story says — is why there is **no Cat among
+> the twelve**, why cats have never forgiven rats, and why every cat you've ever met hates
+> getting wet.
 
-In *this* clock — the one with a thirteenth of everything — we finally do the kind thing. We save the
-Cat a seat. The **13th year is the Astronomical Cat**: the friend who was left out, welcomed home at
-last.
+*(Families tell it a little differently across Asia — and in Vietnam's calendar the Cat **did**
+get a year, where the Rabbit's would be. The Cat was never left out everywhere.)*
+
+In *this* clock — the one with a thirteenth of everything — we finally do the kind thing. We save
+the Cat a seat. The **13th year is the Astronomical Cat**: the friend who was left out, welcomed
+home at last.
 
 ```python
 import bft

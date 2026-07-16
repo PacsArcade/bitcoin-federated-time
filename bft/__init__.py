@@ -2,14 +2,18 @@
 Bitcoin Federated Time (BFT) — the clock that syncs to the block, not the sun.
 
 A block height is a timestamp no authority can edit. This library turns a Bitcoin block
-height into three honest readings of time:
+height into three honest readings of time, plus one sidebar:
 
-  1. A CALENDAR — 13 perfect 28-day months, counted purely in blocks (the "Federated Time"
-     calendar). A month is exactly two difficulty adjustments; a year is 26.
-  2. The ORDINAL CLOCK — Bitcoin's own degree notation A°B′C″D‴, which ordinal theorists
-     already read as hour°/minute′/second″/third‴. Bitcoin was keeping time all along.
+  1. THE CLOCK — the hh:mm block-beat, the canonical face. A BFT day is 144 blocks on a
+     24-hour face: 6 blocks an hour, ten "minutes" a block, no seconds. `block_beat()`.
+  2. A CALENDAR — 13 perfect 28-day months, counted purely in blocks (the "Federated Time"
+     calendar). A month is exactly two difficulty adjustments; a year is 26. Dates render
+     ₿-marked, marker after: `0018.04.20 a₿` (pre-genesis inverts day-first: `b₿`-marked).
   3. The COUNTDOWNS — the inverse of the block count: blocks remaining to the next difficulty
      adjustment, the next halving, the next cycle conjunction, and the last satoshi (~2140).
+  ·  THE ORDINAL SIDEBAR — Bitcoin's degree notation A°B′C″D‴, which ordinal theory labels
+     hour/minute/second/third. Real lore, honestly labeled: those are ordinal INDICES
+     (block-in-halving-epoch, block-in-difficulty-period), not clock time. `degree()`.
 
 "BFT" reads as Byzantine Fault Tolerance too, which is the whole point: the network agrees on
 the height, so the network agrees on the time. And "BTC" gets a second reading here —
@@ -24,7 +28,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 # --- Bitcoin's own intervals (exact, protocol-defined) -----------------------
 DIFFICULTY_EPOCH_BLOCKS = 2_016          # one difficulty adjustment (~2 weeks)
@@ -39,6 +43,7 @@ SECONDS_PER_BLOCK = 600                  # the 10-minute target — the model's 
 
 # --- the Federated Time calendar (block-native, 13x28) -----------------------
 BLOCKS_PER_DAY = 144
+BLOCKS_PER_HOUR = 6                                       # 24 block-hours a day, 10 min a block
 DAYS_PER_WEEK = 7
 DAYS_PER_MONTH = 28
 MONTHS_PER_YEAR = 13
@@ -46,6 +51,29 @@ BLOCKS_PER_WEEK = BLOCKS_PER_DAY * DAYS_PER_WEEK          # 1,008
 BLOCKS_PER_MONTH = BLOCKS_PER_DAY * DAYS_PER_MONTH        # 4,032  (= 2 difficulty epochs)
 DAYS_PER_YEAR = DAYS_PER_MONTH * MONTHS_PER_YEAR          # 364
 BLOCKS_PER_YEAR = BLOCKS_PER_DAY * DAYS_PER_YEAR          # 52,416 (= 26 difficulty epochs)
+
+
+# ============================================================================ #
+# 0. The clock face — hh:mm block-beat (the canonical, house-standard reading)
+# ============================================================================ #
+def block_beat(height: Optional[int]) -> Optional[dict[str, Any]]:
+    """The canonical BFT clock face: **hh:mm block-beat**. A BFT day = 144 blocks on a
+    24-hour face — 6 blocks an hour, ten "minutes" a block, `hh:mm` stepping by ten,
+    **no seconds**. Chain-exact: two nodes at the same height show the same face.
+
+        beat   = height mod 144      → 0..143  (the block within the BFT day)
+        hour   = beat // 6           → 0..23   (the block-hour)
+        minute = (beat mod 6) * 10   → 0,10..50 (which ten-minute beat of the hour)
+
+    Returns None for heights before genesis (no blocks tick there — see the BB inverse).
+    """
+    if height is None or int(height) < 0:
+        return None
+    beat = int(height) % BLOCKS_PER_DAY
+    hour = beat // BLOCKS_PER_HOUR
+    minute = (beat % BLOCKS_PER_HOUR) * 10
+    return {"hhmm": f"{hour:02d}:{minute:02d}", "hour": hour, "minute": minute,
+            "beat": beat, "blocks_into_hour": beat % BLOCKS_PER_HOUR}
 
 
 # ============================================================================ #
@@ -92,18 +120,23 @@ def from_height(height: Optional[int]) -> dict[str, Any]:
 
 
 def format_date(height: Optional[int], month_names: Optional[list[str]] = None,
-                style: str = "short") -> str:
-    """Render the calendar date. `month_names` (13) supplies blessed month lore when set,
-    else 'M01'..'M13'. style: 'short' -> 'AB 16 · M05 · D23'; 'long' adds block + diff-epoch."""
+                style: str = "date") -> str:
+    """Render the calendar date. The default (house-standard) style is 'date' — the ₿-marked
+    bitcoin date, marker AFTER: '0018.04.20 a₿'. `month_names` (13) supplies blessed month
+    lore in the 'short'/'long' styles when set, else 'M01'..'M13'.
+    style: 'date' -> '0018.04.20 a₿'; 'short' -> 'AB 18 · M04 · D20'; 'long' adds
+    block + diff-epoch."""
     d = from_height(height)
     if not d.get("known"):
         return "BFT —"
     if style == "date":
-        # the ₿-marked bitcoin date — unmistakably a *bitcoin* date, year zero-padded to 4.
-        # After Bitcoin is month-first (a₿ yyyy.mm.dd); Before Bitcoin inverts to day-first.
+        # the ₿-marked bitcoin date — unmistakably a *bitcoin* date, year zero-padded to 4,
+        # marker AFTER the date (house standard, per bft-display). The display year IS
+        # bitcoin's age: genesis opens 0000. After Bitcoin is month-first (yyyy.mm.dd a₿);
+        # Before Bitcoin inverts to day-first (yyyy.dd.mm b₿).
         if d["epoch"] == "BB":
-            return f"b₿ {d['year']:04d}.{d['day']:02d}.{d['month']:02d}"
-        return f"a₿ {d['year']:04d}.{d['month']:02d}.{d['day']:02d}"
+            return f"{d['year']:04d}.{d['day']:02d}.{d['month']:02d} b₿"
+        return f"{d['year']:04d}.{d['month']:02d}.{d['day']:02d} a₿"
     if d["epoch"] == "BB":
         bi = d.get("month_index", 0)
         bmonth = (str(month_names[bi]) if month_names and len(month_names) >= MONTHS_PER_YEAR
@@ -159,19 +192,22 @@ def from_gregorian(year: int, month: int, day: int,
 
 
 def before_bitcoin(year: int, month: int, day: int, second: Optional[int] = None) -> str:
-    """Wall-clock label for a date *before* genesis: 'b₿ yyyy.dd.mm[.ss]' — day-first, the mirror
-    of the After-Bitcoin 'a₿ yyyy.mm.dd'. On-chain heights are never negative, so this is only for
-    pre-genesis / negative-time references (the grey side of the clock, before the light)."""
-    base = f"b₿ {year:04d}.{day:02d}.{month:02d}"
-    return base if second is None else f"{base}.{second:02d}"
+    """Wall-clock label for a date *before* genesis: 'yyyy.dd.mm[.ss] b₿' — day-first, the mirror
+    of the After-Bitcoin 'yyyy.mm.dd a₿' (marker after, house standard). On-chain heights are
+    never negative, so this is only for pre-genesis / negative-time references (the grey side of
+    the clock, before the light)."""
+    base = f"{year:04d}.{day:02d}.{month:02d}"
+    return f"{base} b₿" if second is None else f"{base}.{second:02d} b₿"
 
 
 # ============================================================================ #
-# 2. The ordinal clock — Bitcoin's built-in degree notation
+# 2. The ordinal sidebar — Bitcoin's built-in degree notation
 # ============================================================================ #
 def degree(height: Optional[int]) -> Optional[dict[str, Any]]:
-    """Bitcoin's ordinal degree notation A°B′C″D‴ for the FIRST sat of the block — the chain's
-    own clock, which ordinal theory reads as hour°/minute′/second″/third‴:
+    """THE ORDINAL SIDEBAR — Bitcoin's degree notation A°B′C″D‴ for the FIRST sat of the
+    block, which ordinal theory labels hour°/minute′/second″/third‴. Real ordinal-theory
+    lore, honestly framed: these are ordinal INDICES, not clock time — the clock face
+    people read is `block_beat()` (hh:mm). For the sat collectors:
 
         A (hour)   = cycle number                         (every 1,260,000 blocks)
         B (minute) = index of block within the halving epoch (0..209,999)
@@ -266,9 +302,11 @@ def countdown(height: Optional[int]) -> Optional[dict[str, Any]]:
 # The whole clock, one call
 # ============================================================================ #
 def clock(height: Optional[int]) -> dict[str, Any]:
-    """Every reading of the block at `height`: calendar, ordinal degree, halving, cycle, countdown."""
+    """Every reading of the block at `height`: the hh:mm face, calendar, halving, cycle,
+    countdown — and the ordinal-degree sidebar."""
     return {
         "height": height,
+        "beat": block_beat(height),
         "calendar": from_height(height),
         "degree": degree(height),
         "halving": halving(height),
@@ -278,21 +316,27 @@ def clock(height: Optional[int]) -> dict[str, Any]:
 
 
 def format_clock(height: Optional[int], month_names: Optional[list[str]] = None) -> list[str]:
-    """Human-readable multi-line render of the full clock."""
+    """Human-readable multi-line render of the full clock. The hh:mm block-beat face leads
+    (the canonical reading); the ordinal degree notation rides along as a labeled sidebar."""
     d = from_height(height)
     if not d.get("known"):
         return ["BFT — unknown height"]
     if d["epoch"] == "BB":
-        return [d["label"], "(no ordinal clock before genesis — the chain vouches for nothing here)"]
-    deg, hv, cy, cd = degree(height), halving(height), cycle(height), countdown(height)
+        return [format_date(height), "(no clock before genesis — the chain vouches for nothing here)"]
+    bb, deg = block_beat(height), degree(height)
+    hv, cy, cd = halving(height), cycle(height), countdown(height)
     return [
         f"Bitcoin Time Clock — block {int(height):,}",
-        f"  Calendar (BFT):   {format_date(height, month_names)}",
-        f"  Ordinal degree:   {deg['notation']}   ({deg['reading']}; first sat: {deg['rarity_of_first_sat']})",
+        f"  Clock (hh:mm):    {bb['hhmm']}   (beat {bb['beat']}/144 · 6 blocks an hour · ten minutes a block)",
+        f"  Date (BFT):       {format_date(height)}   ({format_date(height, month_names, style='short')})",
+        f"  Level:            {d['diff_epoch']}  ·  re-tunes in {cd['to_difficulty_adjustment']:,} blocks",
         f"  Halving epoch:    {hv['epoch']}  ·  subsidy {hv['subsidy_btc']:g} BTC  ·  {hv['epoch_pct']}% through",
-        f"  Cycle (hour):     {cy['cycle']}  ·  {cy['cycle_pct']}% to the next conjunction",
+        f"  Cycle:            {cy['cycle']}  ·  {cy['cycle_pct']}% through  ·  "
+        f"{cy['blocks_to_next_conjunction']:,} blocks to the next conjunction",
         f"  Counting down:    {cd['to_difficulty_adjustment']:,} → retarget  ·  "
         f"{cd['to_halving']:,} → halving  ·  {cd['to_last_satoshi']:,} → the last sat",
+        f"  Ordinal sidebar:  {deg['notation']}   (degree notation, for the sat collectors — "
+        f"ordinal indices, not clock time; first sat: {deg['rarity_of_first_sat']})",
     ]
 
 

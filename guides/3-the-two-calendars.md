@@ -40,10 +40,10 @@ in friendly, human ways — a date, a moon, a birthday, a countdown.
 
 ## Slow on purpose
 
-One more thing you might have noticed: the block clock is **slow**. Its fastest visible hand takes
-**two whole weeks** to come around. That's not a bug. It's a clock for people who plan in years and
-decades — who look after each other for a long, long time. When you start measuring your life in
-blocks, ten minutes stops feeling long, and a hurried world slows down a little. **Slow is the
-feature.**
+One more thing you might have noticed: the block clock is **slow**. Its fastest tick takes **ten
+whole minutes**, and the network only re-tunes itself once every **two weeks**. That's not a bug.
+It's a clock for people who plan in years and decades — who look after each other for a long, long
+time. When you start measuring your life in blocks, ten minutes stops feeling long, and a hurried
+world slows down a little. **Slow is the feature.**
 
 **Next:** [the hidden thirteenth →](4-the-hidden-thirteenth.md)

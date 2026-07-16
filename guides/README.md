@@ -29,8 +29,8 @@ That count is called the **block height**, and it's the truest clock we've ever 
 
 Everything else in this little library is just a *pretty way to read that one number*:
 
-- as a **calendar** (what day is it?) →  `a₿ 0016.05.23`
-- as a **clock face** (hour, minute, second) →  `0°80986′1690″`
+- as a **clock face** (six blocks an hour, ten minutes a block) →  `04:20`
+- as a **calendar** (what day is it?) →  `0018.04.20 a₿`
 - as a **countdown** (how long until the next big thing?)
 - as the **moon** and a **birthday** and a **secret**.
 
