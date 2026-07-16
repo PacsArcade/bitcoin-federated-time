@@ -6,14 +6,17 @@
 <title>THE CLOCK — pupil study (flip-clock + analog · PAC-MAN eats the mempool)</title>
 <style>
   /* ————————————————————————————————————————————————————————————————
-     PUPIL STUDY for GLYPH's review · 0018.04.15 a₿ · rev 5
+     PUPIL STUDY for GLYPH's review · 0018.04.20 a₿ · rev 6
+     (rev 6: LEVEL badge on BOTH clocks · "the struggling digit" canon term · origin-law
+      block-% seed restored at boot — the stale free-sweep comments were lies, the law held)
      TWO CLOCKS, side by side (they stack on mobile) — a matched pair reading the
      SAME Bitcoin Federated Time:
 
        LEFT — THE SQUARE CLOCK (retro FLIP / split-flap, white-on-black):
-         big mechanical flip digits show hh:mm. ONLY the LIVE minute-ones digit
-         (the block-progress digit) strains AT its flip — trembling on the hinge as
-         the block ages — then FLIPS fully (snap) when it changes / the block breaks.
+         big mechanical flip digits show hh:mm. ONLY the LIVE minute-ones digit —
+         THE STRUGGLING DIGIT (how full the current block is, in tenths) — struggles
+         AT its flip, trembling on the hinge as the block ages, then FLIPS fully
+         (snap) when it changes / the block breaks.
          The hours and minute-tens are calm flip cards that flip cleanly ONLY when
          they actually change (on a block). HEIGHT is a bare number (no ▣), with the
          a₿ date + plain one-liner + payments status around it. Its pixelated-mempool
@@ -400,6 +403,8 @@
   }
   .levelbadge .up   { color: #e8916a; }
   .levelbadge .down { color: #7fbf8f; }
+  /* the square (digital) clock wears the LEVEL too — the HUD is on both clocks */
+  .card-square .levelbadge { font-size: 11.5px; margin: 2px auto 10px; }
   .diffline {
     font-size: 10px; letter-spacing: .06em; color: #7d7690; line-height: 1.6;
     margin: 8px auto 2px; max-width: 40ch; text-wrap: balance; cursor: default;
@@ -467,11 +472,13 @@
         <div class="flip" data-w="0"><span class="flip-val">–</span></div><!-- hour ones  — chain-exact, calm -->
         <span class="flip-colon" id="colon">:</span>
         <div class="flip" data-w="0"><span class="flip-val">–</span></div><!-- minute tens — chain-exact, calm -->
-        <div class="flip live" data-w="1" id="onesflip"><span class="flip-val" id="onesval">–</span><span class="flip-est">~</span></div><!-- minute ones — LIVE, the only card that strains/flips idly -->
+        <div class="flip live" data-w="1" id="onesflip"><span class="flip-val" id="onesval">–</span><span class="flip-est">~</span></div><!-- minute ones — LIVE: the STRUGGLING DIGIT (block fullness in tenths), the only card that struggles/flips idly -->
       </div>
 
       <div class="dateline"><span id="bftdate">————.——.——</span> <span class="ab">a₿</span></div>
       <div class="blockpct" id="blockpct"></div>
+      <div class="levelbadge" id="levelbadgeSq"
+           title="Your arcade LEVEL. The network auto-tunes its difficulty every ~2 weeks to keep blocks about 10 minutes apart. ▲ = getting harder · ▼ = getting easier.">LEVEL —</div>
 
       <div class="oneliner"><b>PAC EATS THE WAITING PAYMENTS</b> · A FULL CIRCLE = A NEW <span class="nb">BLOCK, ~10&nbsp;MIN</span></div>
 
@@ -1387,7 +1394,8 @@ function renderLevel() {
     if (ch > 0.05) arrow = ` <span class="up">▲</span>`;
     else if (ch < -0.05) arrow = ` <span class="down">▼</span>`;
   }
-  $('levelbadge').innerHTML = `${est ? '~' : ''}LEVEL ${epoch}${arrow}`;
+  const levelHtml = `${est ? '~' : ''}LEVEL ${epoch}${arrow}`;   // the HUD line — BOTH clocks wear it (square + analog)
+  document.querySelectorAll('.levelbadge').forEach(el => { el.innerHTML = levelHtml; });
   $('diffline').innerHTML =
     `re-tunes in <span class="r">${est ? '~' : ''}${rem.toLocaleString('en-US')}&nbsp;blocks</span>` +
     ` · auto-adjusts every <span class="nb">~2&nbsp;weeks</span> to keep blocks <span class="nb">~10&nbsp;min&nbsp;apart</span>`;
@@ -1549,7 +1557,8 @@ function applyEstimate() {
   state.height = Math.max(0, est);
   state.lastBlockAt = state.anchor.t + (est - state.anchor.h) * 600000;
   state.lastBlockAtSource = 'est';
-  // (Pac is NOT snapped on an estimated block either — he's a free 60 s sweep now; the minute digit carries the estimated block time.)
+  // Pac needs no snap here: stepRing pins him to block-% every frame (PAC = THE BLOCK HAND),
+  // and the estimated lastBlockAt above is exactly the block-age the % is derived from.
   renderNumbers(); renderStatus();
 }
 
@@ -1702,8 +1711,8 @@ new ResizeObserver(() => rebuildRing(ringSquare)).observe(cardSquare);
 rebuildRing(ringSquare);
 rebuildRing(ringCircle);                                  // fixed 300×300 face — build once
 applyEstimate();                                          // honest ~ estimate first paint (recent anchor) — sets state.lastBlockAt so blockAgeSec() is meaningful
-// (No block%-seed: Pac is a free 60 s sweep starting at 12, all fiat frightened — the minute digit carries block time, not Pac's position.)
-rebuildRing(ringSquare);                                  // re-measure: applyEstimate just filled the height/%-line text, which GROWS the square card — rebuild so the ring's viewBox tracks the TRUE card height (else it letterboxes vertically and the ghost-ring insets go asymmetric top/bottom vs the sides)
+seedInitialState();                                       // THE ORIGIN LAW from frame 0: Pac AT block-% (his lap IS the struggling digit), swept ghosts eaten, the ₿ at 12 — no free sweep, ever
+rebuildRing(ringSquare);                                // re-measure: applyEstimate just filled the height/%-line text, which GROWS the square card — rebuild so the ring's viewBox tracks the TRUE card height (else it letterboxes vertically and the ghost-ring insets go asymmetric top/bottom vs the sides)
 requestAnimationFrame(() => rebuildRing(ringSquare));     // and once more after first layout fully settles (don't rely on ResizeObserver alone)
 poll();
 setInterval(poll, 60000);                                 // per commission: 60 s

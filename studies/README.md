@@ -7,9 +7,10 @@ no build, no server, no dependencies.
 
 The flagship study: **two clocks, side by side, reading the same Bitcoin Federated Time.**
 
-- **The square clock** — a retro split-flap face showing the `hh:mm` block-beat. Only the live
-  minute-ones digit strains and trembles as the block ages (it's the one honest guess on the
-  face, and it wears a `~`); everything else is chain-exact and calm.
+- **The square clock** — a retro split-flap face showing the `hh:mm` block-beat. Only **the
+  struggling digit** — the minute-ones card, how full the current block is — trembles on its
+  hinge as the block ages (it's the one honest guess on the face, and it wears a `~`);
+  everything else is chain-exact and calm.
 - **The circle clock** — an analog face that *is* a full-size 8-bit pixel moon at the current
   block-timed phase, with the BFT hands on top and the difficulty LEVEL below.
 - **The thesis, in PAC-MAN** — every block, bitcoin eats the world's fiat: mempool dots ring each

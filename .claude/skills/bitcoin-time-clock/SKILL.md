@@ -69,7 +69,9 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
    144 blocks on a 24-hour face: **6 blocks an hour, ten "minutes" a block, hh:mm stepping by
    ten, NO seconds.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact. On a live display
    the minute ONES digit is **how full the current block is, in tenths** (0=just broke …
-   9=nearly done; each step ≈ a minute) — an estimate, wears a `~`; the minute TENS digit is
+   9=nearly done; each step ≈ a minute) — an estimate, wears a `~`. Its canon name is **the
+   struggling digit** (it struggles on its hinge as the block ages — say "struggling", never
+   "straining"); the minute TENS digit is
    which block of the hour. None for pre-genesis heights. This face leads every surface; teach it
    first, as a ladder: tenths fill a block, 6 blocks an hour, 144 a day, 28 days a moon,
    13 moons a year — each digit a container made of the containers below it, readable top→down

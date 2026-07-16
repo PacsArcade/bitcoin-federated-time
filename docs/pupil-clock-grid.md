@@ -66,7 +66,7 @@ All integer math. Two nodes at the same height always agree on every row.
 |---|---|---|---|---|
 | `04` — the hour cards | The block-hour (0–23). Six blocks each. | `beat // 6` | `26 // 6 = 4` | chain-exact |
 | `2_` — the minute TENS card | Which block of this hour (0–5), worth ten minutes each | `beat mod 6` → shows `(beat mod 6)` as the tens digit | `26 mod 6 = 2` → `:2_` | chain-exact |
-| `_0→9` — the minute ONES card (the live, straining digit) | **How FULL the current block is**, in tenths: `0` = just broke, `7` = ~70% full, `9` = nearly done (each step ≈ a minute) | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
+| `_0→9` — the minute ONES card (**the struggling digit**) | **How FULL the current block is**, in tenths: `0` = just broke, `7` = ~70% full, `9` = nearly done (each step ≈ a minute) | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
 | `~N% of the way to the next block` | The same live progress, in percent | `round(age / 600 × 100)` | 0–99% | **~ estimate** |
 | `0018.04.20 a₿` — the dateline | The BFT date, marker after; the year IS bitcoin's age | spine table above, rendered `yyyy.mm.dd a₿` | `0018.04.20 a₿` | chain-exact |
 | `958,346` — HEIGHT | The chain tip (the time itself) | mempool.space `blocks/tip/height`; offline → `anchor.h + (now − anchor.t)/600s` | `958,346` | LIVE, or **~** when estimated |

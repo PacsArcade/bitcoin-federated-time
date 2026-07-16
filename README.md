@@ -1,5 +1,8 @@
 # Bitcoin Federated Time (BFT)
 
+> *Prefer your time with tea? There is a second telling of this readme — the Hatter's, from
+> Degen Wonderland: [README-DW.md](README-DW.md). Same math, more madness.* 🎩
+
 **A block height is a timestamp no authority can edit.** This is a tiny, dependency-free Python
 library that reads a Bitcoin block height as time — three honest ways, plus one sidebar:
 
