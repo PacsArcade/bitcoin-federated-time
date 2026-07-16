@@ -688,6 +688,10 @@ const MOONS = [["🌑","New"],["🌒","Waxing Crescent"],["🌓","First Quarter"
 const moonPhase = h => MOONS[Math.round(((bft(h).day - 1) / 28) * 8) % 8];
 
 /* ═══════════════════ state ═══════════════════ */
+/* THE SOURCE SEAM — this STUDY reads mempool.space's public API (plus the honest ~anchor
+   when offline). The production clock reads Pac's Arcade's OWN node (the DW guardrail:
+   "the time comes from our own node, not a 3rd party") — swapping these four constants to
+   the fren-node's endpoints is the entire migration. The block is the truth either way. */
 const TIP_URL = 'https://mempool.space/api/blocks/tip/height';
 const MEMPOOL_URL = 'https://mempool.space/api/mempool';
 const BLOCKS_URL = 'https://mempool.space/api/blocks';

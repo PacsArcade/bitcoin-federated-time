@@ -49,6 +49,16 @@ Defined in blocks, the window needs no wall clock and cannot drift: it opens whe
 is mined and closes when 983,664 breaks the balloons loose. (The *dates* 3–7 Jan are the
 estimate; the *blocks* are the appointment.)
 
+## The Hallows resonance (the admiral's spark, 0018.04.20)
+
+Day 0 — `0018.10.28 a₿` — is **the last day of the tenth month**: structurally, the new
+calendar's own **All Hallows' Eve**. And the chain already blessed that night once —
+**Satoshi published the whitepaper on 31 October 2008** (`2008.31.10 b₿`), actual All
+Hallows' Eve on the old calendar. So the new calendar is born on its own Halloween, under a
+**dark moon**, echoing the night the whitepaper dropped — and the next midnight opens
+`M11·D01`, the hallows' *day*: a new month, on a new moon, on the other side of the veil.
+The Degen Hours end where the whitepaper began. Lore, free of charge, from the math.
+
 ## For the admiral to bless (pick one per line)
 
 | Decision | Option A (as coded today) | Option B |
