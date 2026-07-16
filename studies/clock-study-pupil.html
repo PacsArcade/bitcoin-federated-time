@@ -205,6 +205,13 @@
   @keyframes coinAppear { 0% { transform: scale(0); } 62% { transform: scale(1.16); } 100% { transform: scale(1); } }
   .coin-static, .coin-static-b { display: none; }   /* static gold ₿ fallback — shown only under reduced motion */
   .rewardcoin.fruitlap .coin-static, .rewardcoin.fruitlap .coin-static-b { display: none !important; }   /* a fruit lap never shows the ₿ fallback — the fruit face IS static-safe */
+  /* ——— the FRUIT (laps 1–9): big, seated on a dark plate, bobbing gently ——— */
+  .fruit-plate { fill: #0e0c12; stroke: rgba(247, 147, 26, .35); stroke-width: 1.5;
+                 filter: drop-shadow(0 0 4px rgba(0, 0, 0, .8)); }
+  .fruit-face  { transform-box: fill-box; transform-origin: center;
+                 animation: fruitBob 1.7s ease-in-out infinite;
+                 filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6)); }
+  @keyframes fruitBob { 0%, 100% { transform: translateY(1.2px); } 50% { transform: translateY(-1.2px); } }
   .coin-static   { fill: #f3b40c; filter: drop-shadow(0 0 6px rgba(247, 201, 72, .85)); }
   .coin-static-b { fill: #4a3405; font: 700 8px ui-monospace, Consolas, monospace; text-anchor: middle; dominant-baseline: central; }
   .perimeter.est .rewardcoin { opacity: .5; }   /* estimate → the reward dims (still real) */
@@ -428,8 +435,10 @@
        static gold ₿ (the gif is hidden); ghosts hold position but still show colour/blue state */
     .flip.flipping .flip-val { animation: fadeflap .40s ease; }
     .coin-inner { display: none; }
+    .rewardcoin.fruitlap .coin-inner { display: initial; }   /* fruit laps keep the plate + fruit (their coin parts are already hidden); only the ₿ lap swaps to the static fallback */
     .coin-static, .coin-static-b { display: initial; }
     .rewardcoin.eaten .coin-inner, .rewardcoin.appear .coin-inner { animation: none; }
+    .fruit-face { animation: none; }                         /* the fruit holds still — no bob */
     .pacman.powerup { animation: none; }
     /* the fiat ghost holds STATIC: alive = a rich multi-tone RED, frightened = multi-tone teal
        (its 3 layers stay composited) — the shimmer, bob and blink all stop, colour still tells
@@ -1013,9 +1022,19 @@ function flashBang() {                                      // "HACK THE PLANET"
 function ensureFruitFace(R) {
   if (!R.pill || R.fruitFace) return;
   const inner = R.pill.querySelector('.coin-inner'); if (!inner) return;
+  // the PLATE — a dark backing disc so the origin seam never pokes out under the fruit
+  // (the opaque gold coin used to cover it; emoji are transparent at the edges)
+  const plate = document.createElementNS(SVGNS, 'circle');
+  plate.setAttribute('class', 'fruit-plate');
+  plate.setAttribute('r', R.geom.shape === 'square' ? 12 : 16);
+  plate.style.display = 'none';
+  inner.appendChild(plate);
+  R.fruitPlate = plate;
+  // the FRUIT — big, alive, bobbing (reduced motion stills it)
   const t = document.createElementNS(SVGNS, 'text');
+  t.setAttribute('class', 'fruit-face');
   t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central');
-  t.style.font = `${R.geom.shape === 'square' ? 13 : 17}px ui-monospace, Consolas, monospace`;
+  t.style.font = `${R.geom.shape === 'square' ? 18 : 26}px ui-monospace, Consolas, monospace`;
   t.style.display = 'none';
   inner.appendChild(t);
   R.fruitFace = t;
@@ -1030,6 +1049,7 @@ function setPrize(R, lap) {
   const img  = inner && inner.querySelector('.coin-img');
   if (back) back.style.display = isCoin ? '' : 'none';
   if (img)  img.style.display  = isCoin ? '' : 'none';
+  if (R.fruitPlate) R.fruitPlate.style.display = isCoin ? 'none' : '';
   if (R.fruitFace) {
     R.fruitFace.style.display = isCoin ? 'none' : '';
     if (!isCoin) R.fruitFace.textContent = FRUITS[lap];

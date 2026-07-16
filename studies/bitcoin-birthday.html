@@ -141,10 +141,12 @@
   </div>
 
   <p class="tiny">Signs, moons and animals are for <b>wonder, not finance</b> — no clock tells you
-  what a coin will be worth. Month signs seat the 13 astronomical signs (M01 = Capricorn, the
-  genesis sign; Ophiuchus 12th) and years carry the 13 animals (AB 0 = Ox; the 13th is the
-  Astronomical Cat, welcomed home from the Great Race). Mirror-side signs (the b₿ ghost readings)
-  are a lore proposal awaiting the admiral's sign-off. Estimates wear the ~.</p>
+  what a coin will be worth. <b>Old and new ride side by side</b>: the old world's sun sign and
+  lunar-year animal (cusps approximate; the lunar year turns with the new-year moon, late
+  Jan–mid Feb) beside the new calendar's 13 month-seats (M01 = Capricorn, the genesis sign;
+  Ophiuchus 12th) and 13 year-animals (AB 0 = Ox; the 13th is the Astronomical Cat, welcomed
+  home from the Great Race). <b>Before Bitcoin IS the old world</b> — a b₿ birthday wears the
+  old signs as its own, and the 13-wheel is its mirror seat. Estimates wear the ~.</p>
 </main>
 
 <script>
@@ -187,6 +189,29 @@ const SIGNS = [["Capricorn","♑"],["Aquarius","♒"],["Pisces","♓"],["Aries",
                ["Cancer","♋"],["Leo","♌"],["Virgo","♍"],["Libra","♎"],["Scorpio","♏"],["Ophiuchus","⛎"],["Sagittarius","♐"]];
 const signOf = d => SIGNS[(d.month - 1) % 13];              // M01 = Capricorn, the genesis sign
 
+/* ——— THE OLD WORLD'S SIGNS — side by side with the new (the admiral, 0018.04.20) ———
+   Before Bitcoin IS the old world, so a b₿ birthday wears these as its OWN signs; an a₿
+   birthday keeps them beside the new wheel. Sun-sign cusps are approximate (they shift ±1
+   day by year); the old lunar year turns at the new year moon (late Jan–mid Feb), so
+   early-year births show both possible animals — honest, like everything here. */
+const SUN_SIGNS = [
+  ['♒','Aquarius',1,20],['♓','Pisces',2,19],['♈','Aries',3,21],['♉','Taurus',4,20],
+  ['♊','Gemini',5,21],['♋','Cancer',6,21],['♌','Leo',7,23],['♍','Virgo',8,23],
+  ['♎','Libra',9,23],['♏','Scorpio',10,23],['♐','Sagittarius',11,22],['♑','Capricorn',12,22],
+];
+function sunSign(mo, day) {
+  let cur = SUN_SIGNS[11];                                  // early January still belongs to Capricorn (the wrap)
+  for (const s of SUN_SIGNS) if (mo > s[2] || (mo === s[2] && day >= s[3])) cur = s;
+  return cur;
+}
+const OLD_ANIMALS = [['🐀','Rat'],['🐂','Ox'],['🐅','Tiger'],['🐇','Rabbit'],['🐉','Dragon'],['🐍','Snake'],
+                     ['🐎','Horse'],['🐐','Goat'],['🐒','Monkey'],['🐓','Rooster'],['🐕','Dog'],['🐖','Pig']];
+function oldAnimal(y, mo, day) {
+  const idx = (((y - 4) % 12) + 12) % 12;                   // 1900 = Rat … the classic 12-wheel
+  const early = mo === 1 || (mo === 2 && day <= 20);        // before/near the lunar new year → could be the previous animal
+  return { sign: OLD_ANIMALS[idx], prev: early ? OLD_ANIMALS[(idx + 11) % 12] : null };
+}
+
 const OLD = ts => new Date(ts).toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
 
 function render(prefix, h, ts, isMirror) {
@@ -200,15 +225,29 @@ function render(prefix, h, ts, isMirror) {
     : (d.epoch === 'BB' ? 'your bitcoin birthday — before the light (b₿)' : 'your bitcoin birthday (a₿)');
   el('date').textContent = fmtDate(d);
   el('old').textContent = 'old time: ' + OLD(ts) + (isMirror ? '  ·  the same distance from genesis, mirrored' : '');
-  const moon = moonOf(d), animal = animalOf(d), sign = signOf(d);
+  const moon = moonOf(d), newAnimal = animalOf(d), newSign = signOf(d);
   const beat = blockBeat(h);
+  /* the OLD world's signs (from this card's own Gregorian moment) beside the NEW wheel —
+     side by side. Before the light, the old world's signs lead: they are YOURS there. */
+  const odt = new Date(ts);
+  const sun = sunSign(odt.getUTCMonth() + 1, odt.getUTCDate());
+  const oldA = oldAnimal(odt.getUTCFullYear(), odt.getUTCMonth() + 1, odt.getUTCDate());
+  const bb = d.epoch === 'BB';
+  const oldCells = [
+    ['sun sign · old cal ☀', `${sun[0]} ${sun[1]}`, bb ? "the old world's — yours, before the light" : 'the sun calendar you were handed'],
+    ['year animal · old cal 🏮', `${oldA.sign[0]} ${oldA.sign[1]}`,
+     oldA.prev ? `lunar year · or ${oldA.prev[0]} ${oldA.prev[1]} before that year's new-year moon` : 'the old lunar year'],
+  ];
+  const newCells = [
+    ['month seat · new cal ₿', `${newSign[1]} ${newSign[0]}`, `month ${pad(d.month,2)} of 13${bb ? ' · the mirror seat' : ''}`],
+    ['year animal · new cal ₿', `${newAnimal[0]} ${newAnimal[1]}`, `${d.epoch} year ${d.year} · the 13-wheel${bb ? ' · mirror' : ''}`],
+  ];
   const cells = [
     ['birth block', h >= 0 ? `~${h.toLocaleString('en-US')}` : `~−${(-h).toLocaleString('en-US')}`,
      h >= 0 ? 'estimated · 10 min a block' : 'blocks before the light'],
     ['birth beat', beat ? `~${beat}` : '— no face', beat ? 'the hh:mm block-beat' : 'no clock before genesis'],
     ['moon', `${moon[0]} ${moon[1]}`, 'block-timed · one moon a month'],
-    ['month sign', `${sign[1]} ${sign[0]}`, `month ${pad(d.month,2)} of 13${d.epoch==='BB' ? ' · mirror' : ''}`],
-    ['year animal', `${animal[0]} ${animal[1]}`, `${d.epoch} year ${d.year}${d.epoch==='BB' ? ' · mirror' : ''}`],
+    ...(bb ? [...oldCells, ...newCells] : [...newCells, ...oldCells]),
   ];
   el('grid').innerHTML = cells.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
@@ -216,7 +255,7 @@ function render(prefix, h, ts, isMirror) {
     const omens = [];
     if (d.epoch === 'AB' && d.month === 13) omens.push('born in the thirteenth month');
     if (d.day === 13) omens.push('born on a thirteenth day');
-    if (animal[1] === 'Astronomical Cat') omens.push('born in a year of the Cat');
+    if (newAnimal[1] === 'Astronomical Cat') omens.push('born in a year of the Cat');
     const o = el('omen');
     o.classList.toggle('hidden', omens.length === 0);
     o.textContent = omens.length ? '🐈 a thirteen! ' + omens.join(' · ') + ' — the clock whispers for you. keep going.' : '';
