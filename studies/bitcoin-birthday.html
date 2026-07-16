@@ -75,6 +75,8 @@
   .cell .v small { display: block; margin-top: 2px; font-size: 10px; color: var(--dim); }
   .est { color: var(--ember-dim); }
   .omen { margin-top: 14px; font-size: 11px; letter-spacing: .1em; color: #b9a7d9; }
+  .drift { margin-top: 12px; font-size: 10.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
+  .drift b { color: var(--ember-dim); }
 
   .mirrorline { text-align: center; font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
                 color: var(--dimmer); margin: 4px 0 16px; }
@@ -113,6 +115,12 @@
     <div class="sub" id="main-old"></div>
     <div class="grid" id="main-grid"></div>
     <div class="omen hidden" id="main-omen"></div>
+  </section>
+
+  <section class="card hidden" id="next-card">
+    <h2>your bitcoin birthday, returning — what it was, and what it's going to</h2>
+    <div class="grid" id="next-grid"></div>
+    <p class="drift" id="next-drift"></p>
   </section>
 
   <p class="mirrorline hidden" id="mirror-line">· · ·  the mirror — the same distance on the other side of the light  · · ·</p>
@@ -215,6 +223,36 @@ function render(prefix, h, ts, isMirror) {
   }
 }
 
+/* THE RETURNS — the same month·day seat on the a₿ calendar, the next few times it comes
+   around, each with its OLD-CALENDAR landing (a ~estimate at 10-min blocks). This is the
+   "what it was → what it's going to" view: a bitcoin birthday is fixed in blocks, so it
+   walks ~1¼ days up the old calendar every year. It's the old calendar that drifts. */
+function renderReturns(d, birthTs) {
+  const seat = (d.month - 1) * BLOCKS_PER_MONTH + (d.day - 1) * BLOCKS_PER_DAY;  // block-of-year where the date opens
+  const nowH = Math.max(0, Math.round((Date.now() - GENESIS_UNIX_MS) / BLOCK_MS));
+  let y = Math.floor(nowH / BLOCKS_PER_YEAR);
+  if (y * BLOCKS_PER_YEAR + seat <= nowH) y += 1;                // the next time the seat opens
+  const rows = [];
+  const oldFmt = ts => new Date(ts).toLocaleDateString('en-GB',
+    { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  rows.push(['what it was', oldFmt(birthTs),
+    d.epoch === 'BB' ? 'your old-calendar birthday · before the light' : 'your old-calendar birthday']);
+  for (let i = 0; i < 3; i++) {
+    const h = (y + i) * BLOCKS_PER_YEAR + seat;
+    const when = GENESIS_UNIX_MS + h * BLOCK_MS;                 // ~estimate, 10-min blocks from genesis
+    rows.push([`a₿ ${pad(y + i, 4)}.${pad(d.month, 2)}.${pad(d.day, 2)}`,
+               `≈ ${oldFmt(when)}`,
+               `block ~${h.toLocaleString('en-US')}${d.epoch === 'BB' ? ' · a₿-side seat' : ''}`]);
+  }
+  document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
+    `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
+  document.getElementById('next-drift').innerHTML =
+    `Your bitcoin birthday is fixed in <b>blocks</b> — the same month·day seat, every 52,416 blocks. ` +
+    `On the old calendar it lands <b>~1¼ days earlier each year</b> (a 364-day year vs the sun's 365¼). ` +
+    `The block dates are exact; the old-calendar landings are ~estimates at ten minutes a block.`;
+  document.getElementById('next-card').classList.remove('hidden');
+}
+
 function update() {
   const dv = document.getElementById('d').value;
   if (!dv) return;
@@ -224,6 +262,7 @@ function update() {
   const ts = Date.UTC(+m[1], +m[2] - 1, +m[3], +tv[0] || 0, +tv[1] || 0);
   const h = Math.round((ts - GENESIS_UNIX_MS) / BLOCK_MS);       // negative = Before Bitcoin
   render('main', h, ts, false);
+  renderReturns(bftDate(h), ts);                                 // what it was → what it's going to (old cal ↔ a₿)
   /* THE MIRROR — the same block-distance on the other side of genesis: everyone gets
      both readings (before AND after), in old time and bitcoin time. */
   const mirrorTs = GENESIS_UNIX_MS - (ts - GENESIS_UNIX_MS);

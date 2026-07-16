@@ -69,10 +69,12 @@ All integer math. Two nodes at the same height always agree on every row.
 | `_0→9` — the minute ONES card (**the struggling digit**) | **How FULL the current block is**, in tenths: `0` = just broke, `7` = ~70% full, `9` = nearly done (each step ≈ a minute) | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
 | `~N% of the way to the next block` | The same live progress, in percent | `round(age / 600 × 100)` | 0–99% | **~ estimate** |
 | `0018.04.20 a₿` — the dateline | The BFT date, marker after; the year IS bitcoin's age | spine table above, rendered `yyyy.mm.dd a₿` | `0018.04.20 a₿` | chain-exact |
+| `OLD CAL · 16 JUL 2026` — under the dateline | The same moment on the Gregorian calendar, side by side — watch the two drift | the tip block is *now*, so its old-calendar reading is the wall date | `16 JUL 2026` | wall-clock fact |
 | `958,346` — HEIGHT | The chain tip (the time itself) | mempool.space `blocks/tip/height`; offline → `anchor.h + (now − anchor.t)/600s` | `958,346` | LIVE, or **~** when estimated |
 | `N payments waiting` | The mempool count | mempool.space `/api/mempool` count | live only | LIVE |
 | `next block ~N% full` | How full the next block template is | mempool vsize vs ~1 MvB, capped at 100% | live only | LIVE / **~** |
-| The PAC ring dots | Waiting payments as mempool dots; Pac's lap = the block's ~10 minutes; the power pill at 12 o'clock = the next block | dots refill on block-break; Pac's angle = `age/600 × 360°` clockwise from 12 | — | **~** (the lap), dots = LIVE |
+| The PAC ring | **Pac laps the ring TEN times per block — his lap counter IS the struggling digit.** Dots = waiting payments; the board refills every lap | lap = `floor(age/600 × 10)` (0–9) · Pac's angle = `frac(age/600 × 10) × 360°` clockwise from 12 | — | **~** (the lap), dots = LIVE |
+| The prize at 12 o'clock | **The fruit ladder** — one prize per lap: 🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ (classic arcade points in the tooltips; the Key ninth — it unlocks the tenth lap). **The tenth lap's prize is the ₿**, eaten at the block-break BANG. A long block parks Pac at 12, waiting beside it | prize = `FRUITS[lap]` for laps 0–8; the ₿ coin for lap 9 | — | chain-timed art |
 
 ### The flip-card back — the Day-0 countdown
 

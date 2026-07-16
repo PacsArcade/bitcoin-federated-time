@@ -14,8 +14,10 @@ The flagship study: **two clocks, side by side, reading the same Bitcoin Federat
 - **The circle clock** — an analog face that *is* a full-size 8-bit pixel moon at the current
   block-timed phase, with the BFT hands on top and the difficulty LEVEL below.
 - **The thesis, in PAC-MAN** — every block, bitcoin eats the world's fiat: mempool dots ring each
-  clock, Pac laps the ring as the block ages, and the gold reward coin at 12 o'clock (the only
-  gold — gold is money, and the reward *is* money) gets eaten at every block-break.
+  clock and **Pac laps the ring ten times per block — his lap counter IS the struggling digit.**
+  Each lap's prize waits at 12 o'clock: the classic **fruit ladder** (🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ —
+  the Key ninth, because it unlocks the tenth lap), and the tenth lap's prize is the gold ₿
+  itself (the only gold — gold is money, and the reward *is* money), eaten at every block-break.
 - **The flip side** — tap a clock to flip it: the Day-0 countdown, split-flap style, counting
   down to the appointed block. At zero: balloons, and THANK YOU, SATOSHI.
 
@@ -29,8 +31,11 @@ window are specified (pending sign-off) in [`docs/degen-hours.md`](../docs/degen
 Enter any old-calendar birthday and read it back in bitcoin time: your ~birth block, your
 `hh:mm` birth beat, your block-timed moon, your **month sign** (the 13 astronomical signs,
 Ophiuchus seated), your **year animal** (the 13 animals, the Astronomical Cat welcomed home) —
-and **the mirror**: the same distance on the other side of genesis, so every birthday gets both
-its `a₿` and `b₿` reading, in old time and bitcoin time.
+plus **the returns** (what it was on the old calendar, and the next three times your bitcoin
+birthday comes around, each with its ≈ old-calendar landing — it walks ~1¼ days up the old
+year every year, because it's the old calendar that drifts) — and **the mirror**: the same
+distance on the other side of genesis, so every birthday gets both its `a₿` and `b₿` reading,
+in old time and bitcoin time.
 
 Runs entirely in the browser. Nothing you type leaves your device — no keys, no data.
 
