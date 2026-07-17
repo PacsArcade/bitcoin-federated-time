@@ -5,7 +5,8 @@ A block height is a timestamp no authority can edit. This library turns a Bitcoi
 height into three honest readings of time, plus one sidebar:
 
   1. THE CLOCK — the hh:mm block-beat, the canonical face. A BFT day is 144 blocks on a
-     24-hour face: 6 blocks an hour, ten "minutes" a block, no seconds. `block_beat()`.
+     24-hour face: 6 blocks an hour, ten "minutes" a block; no second digits on the cards —
+     a live display reads the seconds off the Pac ring (block-age mod 60, ~). `block_beat()`.
   2. A CALENDAR — 13 perfect 28-day months, counted purely in blocks (the "Federated Time"
      calendar). A month is exactly two difficulty adjustments; a year is 26. Dates render
      ₿-marked, marker after: `0018.04.20 a₿` (pre-genesis inverts day-first: `b₿`-marked).
@@ -59,7 +60,10 @@ BLOCKS_PER_YEAR = BLOCKS_PER_DAY * DAYS_PER_YEAR          # 52,416 (= 26 difficu
 def block_beat(height: Optional[int]) -> Optional[dict[str, Any]]:
     """The canonical BFT clock face: **hh:mm block-beat**. A BFT day = 144 blocks on a
     24-hour face — 6 blocks an hour, ten "minutes" a block, `hh:mm` stepping by ten,
-    **no seconds**. Chain-exact: two nodes at the same height show the same face.
+    **no second digits**. Chain-exact: two nodes at the same height show the same face.
+    (Seconds DO exist, as an honest live estimate: the pac-ring formula, seconds =
+    wall-seconds-since-last-block mod 60 — one Pac lap per "minute", angle ÷ 6°. This
+    function is chain-exact only, so it never guesses them.)
 
         beat   = height mod 144      → 0..143  (the block within the BFT day)
         hour   = beat // 6           → 0..23   (the block-hour)

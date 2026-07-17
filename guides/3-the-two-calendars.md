@@ -36,7 +36,7 @@ clock is honest.
 ```
 
 That's the difference, and it's the reason this little library exists: to read the **honest** clock
-in friendly, human ways — a date, a moon, a birthday, a countdown.
+in warm, human ways — a date, a moon, a birthday, a countdown.
 
 ## Slow on purpose
 

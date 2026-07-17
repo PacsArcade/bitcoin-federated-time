@@ -6,8 +6,9 @@
 key and shipped on the 420 day itself. Happy 420. 🍒🗝️₿*
 
 - **`block_beat()`** — the canonical `hh:mm` block-beat face (6 blocks an hour, ten minutes a
-  block, no seconds) now leads every surface; the ordinal degree notation stays as an
-  honestly-labeled sidebar for the sat collectors.
+  block; no second digits — the seconds read off the Pac ring, `block-age mod 60`, always `~`)
+  now leads every surface; the ordinal degree notation stays as an honestly-labeled sidebar
+  for the sat collectors.
 - **Marker after, everywhere:** `format_date()` defaults to the house style — `0018.04.20 a₿`,
   pre-genesis day-first `0025.13.09 b₿`.
 - **`bft.holidays`** — the chain's feast days: the storied table (genesis → the fifth

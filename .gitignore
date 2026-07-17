@@ -6,3 +6,8 @@ dist/
 .pytest_cache/
 .venv/
 venv/
+
+# never ship these — Pac's ruling (local review docs + the retired lyrics readme)
+/DW-PRESS-REVIEW.md
+/DW-PRESS-VERBIAGE-REVIEW.md
+/bitcoin_federated_time_readme.md

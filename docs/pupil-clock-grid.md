@@ -74,6 +74,7 @@ All integer math. Two nodes at the same height always agree on every row.
 | `N payments waiting` | The mempool count | mempool.space `/api/mempool` count | live only | LIVE |
 | `next block ~N% full` | How full the next block template is | mempool vsize vs ~1 MvB, capped at 100% | live only | LIVE / **~** |
 | The PAC ring | **Pac laps the ring TEN times per block — his lap counter IS the struggling digit.** Dots = waiting payments; the board refills every lap | lap = `floor(age/600 × 10)` (0–9) · Pac's angle = `frac(age/600 × 10) × 360°` clockwise from 12 | — | **~** (the lap), dots = LIVE |
+| The seconds (read them off Pac) | **Pac IS the seconds hand** — one lap per "minute", so his position is the seconds | **the pac-ring formula:** `seconds = age mod 60` = Pac's angle ÷ 6° | — | **~ estimate** |
 | The prize at 12 o'clock | **The fruit ladder** — one prize per lap: 🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ (classic arcade points in the tooltips; the Key ninth — it unlocks the tenth lap). **The tenth lap's prize is the ₿**, eaten at the block-break BANG. A long block parks Pac at 12, waiting beside it | prize = `FRUITS[lap]` for laps 0–8; the ₿ coin for lap 9 | — | chain-timed art |
 
 ### The flip-card back — the Day-0 countdown
@@ -83,7 +84,7 @@ All integer math. Two nodes at the same height always agree on every row.
 | `block 983,664` — the target | The appointed Day-0 height (see `docs/degen-hours.md` — under review) | constant `GO_TARGET_HEIGHT` | appointed |
 | `N blocks to go` | Blocks between the tip and Day 0 | `983,664 − height` (floored at 0) | chain-exact given the height |
 | `DDD:HH:MM:SS` | The same distance as wall time | `blocks_to_go × 600 s`, ticking down against a fixed anchor, re-anchored when the chain moves | **~ estimate** |
-| Balloons + THANK YOU, SATOSHI | Fires once, when blocks-to-go hits 0 | `height ≥ 983,664` | chain-exact |
+| The Day-0 surprise | Fires once, when blocks-to-go hits 0 — no spoilers here; be there (or dig in the source, if you must) | `height ≥ 983,664` | chain-exact |
 
 ---
 

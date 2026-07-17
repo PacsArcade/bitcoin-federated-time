@@ -32,7 +32,7 @@ Reference implementation: the `bitcoin-federated-time` package (this repo). Pure
 many sessions; even signed off on one of the requests for some testing). The it-could-be-better
 moment came at Portland's **Bitcoin is for Everyone**, where the auditorium screen carried the
 generic ordinal time clock, exactly as the handbook lays it out. Ordinal theory names the
-positions; **it didn't break the clock down to this level — the degens went deeper**, to the
+positions; **it didn't break the clock down to this level — the degenz went deeper**, to the
 meaning behind bitcoin: the heart of it, displayed as 8-bit nostalgic art. Credit the theory
 honestly; never imply BFT is merely a restatement of it.
 
@@ -75,11 +75,13 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
 0. **THE CLOCK FACE — hh:mm block-beat (canonical, house standard).** `block_beat(h)` →
    `{hhmm "04:20", hour 0–23, minute 0/10..50, beat 0–143, blocks_into_hour 0–5}`. A BFT day =
    144 blocks on a 24-hour face: **6 blocks an hour, ten "minutes" a block, hh:mm stepping by
-   ten, NO seconds.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact. On a live display
-   the minute ONES digit is **how full the current block is, in tenths** (0=just broke …
-   9=nearly done; each step ≈ a minute) — an estimate, wears a `~`. Its canon name is **the
-   struggling digit** (it struggles on its hinge as the block ages — say "struggling", never
-   "straining"); the minute TENS digit is
+   ten, no second DIGITS on the cards.** hour = beat//6; minute = (beat mod 6)×10. Chain-exact.
+   On a live display the minute ONES digit is **how full the current block is, in tenths**
+   (0=just broke … 9=nearly done; each step ≈ a minute) — an estimate, wears a `~`. Its canon
+   name is **the struggling digit** (it struggles on its hinge as the block ages — say
+   "struggling", never "straining"). **Seconds exist too — the pac-ring formula:** Pac laps
+   the ring once per "minute", so `seconds = wall-seconds-since-last-block mod 60` = Pac's
+   angle ÷ 6°; always an estimate, always `~`; the minute TENS digit is
    which block of the hour. None for pre-genesis heights. This face leads every surface; teach it
    first, as a ladder: tenths fill a block, 6 blocks an hour, 144 a day, 28 days a moon,
    13 moons a year — each digit a container made of the containers below it, readable top→down
@@ -136,7 +138,7 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   key, passphrase, or puzzle *solution*, and a test guards this. If you extend the lore, keep it
   atmosphere only. When teaching keys to anyone (especially kids), the rule is absolute: **never
   share your seed words, never type them into a website; anyone who asks is a scammer** (in the kids'
-  guide, "a dragon in a friend's coat").
+  guide, "a dragon in a fren's coat").
 
 ## The magic (the 12 → 13 motif)
 

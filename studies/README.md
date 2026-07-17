@@ -12,14 +12,14 @@ The flagship study: **two clocks, side by side, reading the same Bitcoin Federat
   hinge as the block ages (it's the one honest guess on the face, and it wears a `~`);
   everything else is chain-exact and calm.
 - **The circle clock** — an analog face that *is* a full-size 8-bit pixel moon at the current
-  block-timed phase, with the BFT hands on top and the difficulty LEVEL below.
+  block-timed phase, with the BFT hands on top and the live height + arcade LEVEL below.
 - **The thesis, in PAC-MAN** — every block, bitcoin eats the world's fiat: mempool dots ring each
   clock and **Pac laps the ring ten times per block — his lap counter IS the struggling digit.**
   Each lap's prize waits at 12 o'clock: the classic **fruit ladder** (🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ —
   the Key ninth, because it unlocks the tenth lap), and the tenth lap's prize is the gold ₿
   itself (the only gold — gold is money, and the reward *is* money), eaten at every block-break.
 - **The flip side** — tap a clock to flip it: the Day-0 countdown, split-flap style, counting
-  down to the appointed block. At zero: balloons, and THANK YOU, SATOSHI.
+  down to the appointed block. At zero: a surprise the arcade has been saving. Be there.
 
 It reads the live tip from mempool.space when the network allows, and falls back to an honest,
 `~`-marked anchor estimate offline. **Every number on the face is translated, with formulas, in

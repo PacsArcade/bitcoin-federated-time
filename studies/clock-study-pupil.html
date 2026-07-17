@@ -9,7 +9,7 @@
      PUPIL STUDY for GLYPH's review · 0018.04.20 a₿ · rev 7
      (rev 6: LEVEL badge on BOTH clocks · "the struggling digit" canon term · origin-law
       block-% seed restored at boot — the stale free-sweep comments were lies, the law held)
-     (rev 7, the admiral's lap law: PAC LAPS TEN TIMES PER BLOCK — his lap counter IS the
+     (rev 7, Pac's lap law: PAC LAPS TEN TIMES PER BLOCK — his lap counter IS the
       struggling digit. THE FRUIT LADDER at 12 o'clock: 🍒🍓🍊🥨🍎🍈👾🔔🗝️ one per lap,
       the KEY ninth because it unlocks the TENTH lap — the ₿, eaten at the BANG. Old-cal
       (Gregorian) conversion line added under the a₿ dateline.)
@@ -587,7 +587,7 @@
       </svg>
 
       <div class="bang" id="bang">HACK THE PLANET</div>
-      <div class="creed">21,000,000 · <span class="nb">nothing more</span></div>
+      <div class="creed">HEIGHT · <span class="nb" id="heightnumC">—</span></div>
       <div class="moonname" id="moonname"></div>
       <div class="levelbadge" id="levelbadge"
            title="Your arcade LEVEL. The network re-tunes its difficulty every ~2 weeks to keep blocks about 10 minutes apart. ▲ = getting harder · ▼ = getting easier.">LEVEL —</div>
@@ -657,7 +657,7 @@
 
   <footer class="foot">
     <div>PUPIL STUDY for GLYPH's review · 0018.04.20 a₿ · rev 7 — ten laps a block · the fruit ladder · ₿ on the tenth</div>
-    <div class="keys">click / tap a clock to FLIP it → the Day-0 countdown · study keys — B: break block (Pac eats the coin, fiat go teal) · R: correction · O: offline estimate · Z: preview Day 0 (balloons + THANK YOU, SATOSHI)</div>
+    <div class="keys">click / tap a clock to FLIP it → the Day-0 countdown · study keys — B: break block (Pac eats the coin, fiat go teal) · R: correction · O: offline estimate · Z: preview Day 0 (the surprise — GLYPH's bench only, no peeking)</div>
   </footer>
 </main>
 
@@ -737,7 +737,7 @@ const analogMin = $('a-min'), analogHour = $('a-hour');
 const analogTicks = [];
 
 /* ═══════════════════ the PAC-RING engine — one factory, two instances ═══════════
-   THE ORIGIN LAW (rev 7): a fixed origin at 12 o'clock. Pac travels clockwise from there;
+   THE ORIGIN LAW (rev 7, Pac's law): a fixed origin at 12 o'clock. Pac travels clockwise from there;
    ONE FULL LAP = ONE TENTH OF A BLOCK — TEN LAPS PER BLOCK, and Pac's lap counter IS the
    struggling digit. Each lap's PRIZE waits at 12 (the fruit ladder, cherry → key); the
    TENTH lap's prize is the ₿ itself, eaten at the block-break BANG.
@@ -778,7 +778,7 @@ const GHOST_BMP = [
   '00011111000', '00111111100', '01111111110', '11111111111', '11111111111',
   '11111111111', '11111111111', '11111111111', '11111111111', '11111111111', '11011011011',
 ];
-/* ═══ THE FRUIT LADDER — the lap prizes at 12 o'clock (the admiral, 0018.04.20) ═══
+/* ═══ THE FRUIT LADDER — the lap prizes at 12 o'clock (Pac, 0018.04.20) ═══
    Pac laps the ring TEN times per block (one lap per tenth = one step of the struggling digit).
    Each lap's prize waits at 12: the classic Pac-Man arcade fruit ladder, lightly adapted
    (Ms. Pac-Man's pretzel rides 4th) — and the KEY comes ninth, because the key unlocks the
@@ -1378,7 +1378,9 @@ function renderNumbers() {
     const d = new Date();
     oc.textContent = `old cal · ${d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).toUpperCase()}`;
   }
-  $('heightnum').textContent = `${state.est ? '~' : ''}${state.height.toLocaleString('en-US')}`;
+  const hTxt = `${state.est ? '~' : ''}${state.height.toLocaleString('en-US')}`;
+  $('heightnum').textContent = hTxt;
+  const hC = $('heightnumC'); if (hC) hC.textContent = hTxt;   // the round clock tells the same truth
   const [, mName] = moonPhase(state.height);
   $('moonname').textContent = mName;
   renderMoon((bft(state.height).day - 1) / 28);   // the 8-bit moon fills the face at the current phase
@@ -1709,7 +1711,7 @@ async function poll() {
 
 /* ═══════════════════ animation loop ═══════════════════ */
 let lastT = performance.now();
-/* the shared lap math — TEN LAPS PER BLOCK (the admiral's law, 0018.04.20):
+/* the shared lap math — TEN LAPS PER BLOCK (Pac's law, 0018.04.20):
      lap     = floor(blockProg × 10)  → 0..9 — Pac's lap counter IS THE STRUGGLING DIGIT
      lapFrac = frac(blockProg × 10)   → Pac's position within THIS lap (0 at 12 o'clock)
    One lap = one tenth of the block ≈ one "minute". Computed ONCE per frame and shared by both

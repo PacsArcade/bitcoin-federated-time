@@ -13,6 +13,25 @@ Look back at everything you've learned. Count it.
 Every time, the world hands you **twelve** — and keeps a **thirteenth** just out of sight. The
 twelve, everybody gets. The thirteenth, you have to **find**.
 
+## The thirteenth animal — the Astronomical Cat 🐈
+
+Take the animals. The Great Race crowned its **original twelve**, in the order they reached
+the far bank:
+
+```
+   1 Rat   2 Ox    3 Tiger   4 Rabbit   5 Dragon   6 Snake
+   7 Horse 8 Goat  9 Monkey 10 Rooster 11 Dog     12 Pig
+```
+
+And you know who's missing. The **Cat** helped make the plan, got pushed into the cold river
+by its best fren, and climbed out too late — no year, no seat, left out of the sky entirely
+(the whole story is in [guide 2](2-the-months-and-the-moon.md)).
+
+In *this* calendar, we set that right. **We brought the Astronomical Cat back and gave them a
+place amongst the frens**: seat thirteen, a whole year of their own, once every thirteen
+years. The one who was left out is exactly the kind of fren this clock was built to find —
+that's the pattern, and the Cat is its proof, purring.
+
 ## The lost thirteenth wallet
 
 There's a story the clock tells. (It's a story — a game — not a promise about money.)
@@ -42,7 +61,7 @@ Every wallet has secret words — like the **one and only key** to a treasure ch
 and it never changes:
 
 > 🐉 **Never tell your secret words to anyone. Never type them into a website. Nobody who is kind
-> will ever ask for them.** If someone asks, they are a dragon wearing a friend's coat. Close the
+> will ever ask for them.** If someone asks, they are a dragon wearing a fren's coat. Close the
 > door.
 
 You can look for the *thirteenth* wallet — that's a game, and it's yours to win. But **your own**

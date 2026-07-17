@@ -1,13 +1,15 @@
 # Bitcoin Federated Time (BFT)
 
-> *Prefer your time with tea? There is a second telling of this readme — the Hatter's, from
-> Degen Wonderland: [README-DW.md](README-DW.md). Same math, more madness.* 🎩
+> *Prefer your time with tea? There is a second telling of this clock — the Hatter's, down in
+> [Degen Wonderland](https://github.com/DegenWonderland). Same math, more madness. Follow the
+> white rabbit.* 🎩🐇
 
 **A block height is a timestamp no authority can edit.** This is a tiny, dependency-free Python
 library that reads a Bitcoin block height as time — three honest ways, plus one sidebar:
 
 1. **The clock** — the `hh:mm` **block-beat**: a BFT day is 144 blocks on a 24-hour face,
-   6 blocks an hour, ten "minutes" a block, no seconds. The face people read.
+   6 blocks an hour, ten "minutes" a block. No second digits on the cards — the seconds live
+   on the Pac ring (below). The face people read.
 2. **A calendar** — 13 perfect 28-day months, counted purely in blocks: `0018.04.20 a₿`.
 3. **The countdowns** — the *inverse* of the block count: blocks remaining to the next difficulty
    retarget, the next halving, the next cycle, and the last satoshi (~year 2140).
@@ -89,11 +91,14 @@ The canonical face. All of it is chain-exact — two nodes at the same height sh
 | beat | `height mod 144` | 0–143 (the block within the BFT day) |
 | **hh** | `beat // 6` | 0–23 (the block-hour) |
 | **mm** | `(beat mod 6) × 10` | 00, 10, 20, 30, 40, 50 |
+| *ones of minutes* | `floor(block-age / 60)`, capped at 9 | how full the current block is, in tenths — **~** |
+| *seconds* | **the Pac-ring formula:** `block-age mod 60` — Pac laps once a "minute", so his angle ÷ 6° IS the seconds hand | 0–59 — **~** |
 
-Six blocks an hour, ten minutes a block, **no seconds** — the fastest hand on this clock is a
-ten-minute beat, and that's the point (see "the long view"). A live display may honestly estimate
-the progress *inside* the current beat from wall time; that sub-beat digit wears a `~` because the
-chain hasn't vouched for it yet.
+Six blocks an hour, ten minutes a block, **no second digits on the cards** — the chain-exact
+face is calm on purpose (see "the long view"). The live column is honest about being a guess:
+the minute-ones digit is the current block filling in tenths, and the seconds are read off the
+ring — both estimated from wall time since the last block, both wearing the `~`, because the
+chain hasn't vouched for that page yet.
 
 ### 2. The calendar
 
@@ -207,7 +212,7 @@ straight from the handbook. Watching it, one thing was plain: **it could be bett
 wrong — just not deep enough. The notation names the positions; it doesn't take you down to
 the *meaning*.
 
-So we went deeper — we're degens; that's the job. Ordinal theory didn't break the clock down
+So we went deeper — we're degenz; that's the job. Ordinal theory didn't break the clock down
 to this level. We kept digging until the `hh:mm` face, the 13-month calendar, the block-timed
 moon, the countdowns, and the lore all fell out of the **same block math** — until we hit
 **the heart of bitcoin**. And we display it the way the arcade remembers everything worth
@@ -215,10 +220,11 @@ keeping: **8-bit, nostalgic, alive.**
 
 ## Prior art & credit
 
-- **Ordinal theory** and degree notation: Casey Rodarmor, the
-  [Ordinal Theory Handbook](https://docs.ordinals.com/overview.html). The hour/minute/second/third
-  labels are theirs; this library keeps them, honestly labeled, as the sidebar — and digs on
-  past them.
+- **Ordinal theory** and degree notation: Casey Rodarmor, who created it; raphjaph and the
+  `ord` maintainers and contributors who carry it; and the community's
+  [Ordinal Theory Handbook](https://docs.ordinals.com/overview.html). The
+  hour/minute/second/third labels are theirs; this library keeps them, honestly labeled, as
+  the sidebar — and digs on past them.
 - Block-time calculators and hardware **block clocks** exist, and the generic ordinal time
   clock has graced conference screens. What didn't exist, as far as we found, is a small
   **library + spec** unifying an `hh:mm` block-beat face, a block-native 13-month calendar,

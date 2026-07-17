@@ -64,11 +64,11 @@ there's no Cat? Here's the story. 🐈
 > sky, called every animal to a **race across a wide, cold river**. "The first twelve to reach the
 > far bank," he said, "will each have a year named after them. Forever."
 >
-> The **Cat** and the **Rat** were best friends, and both were small — far too small to swim such a
+> The **Cat** and the **Rat** were best frens, and both were small — far too small to swim such a
 > river. So they made a plan together: they would cross on the back of the kind, strong **Ox**, who
 > didn't see well and didn't mind carrying passengers.
 >
-> Halfway across, the Rat did the thing the Cat never forgot: it **pushed its friend into the
+> Halfway across, the Rat did the thing the Cat never forgot: it **pushed its fren into the
 > water** and rode on alone. And just as the Ox waded up the far bank in first place, the Rat
 > leapt over its nose and landed on the shore **first of all**. That is why the Rat's year comes
 > first, and the patient Ox's comes second.
@@ -82,7 +82,7 @@ there's no Cat? Here's the story. 🐈
 get a year, where the Rabbit's would be. The Cat was never left out everywhere.)*
 
 In *this* clock — the one with a thirteenth of everything — we finally do the kind thing. We save
-the Cat a seat. The **13th year is the Astronomical Cat**: the friend who was left out, welcomed
+the Cat a seat. The **13th year is the Astronomical Cat**: the fren who was left out, welcomed
 home at last.
 
 ```python

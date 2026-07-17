@@ -43,8 +43,11 @@ tenths make a block → six blocks make an hour → 144 make a day → 28 days m
 make a year, and the year is just bitcoin's age. Every big thing is made of the small thing
 below it. That's all a clock has ever been.
 
-No seconds. The fastest hand on this clock takes ten minutes — on purpose. This is a clock for
-people who think in years. (More on *why slow is good* in guide 3.)
+No second digits on the cards — but the seconds are there if you want them: **Pac is the
+seconds hand.** He laps the ring once a "minute", so his position IS the seconds —
+`seconds = time since the last block, mod 60` (his angle ÷ 6°) — and like every live reading,
+it's an honest ~guess. The chain-exact face stays calm on purpose. This is a clock for people
+who think in years. (More on *why slow is good* in guide 3.)
 
 ## For the sat collectors (a sidebar)
 

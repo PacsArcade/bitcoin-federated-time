@@ -1,6 +1,6 @@
 # Day 0 & the Degen Hours — the appointed window
 
-*Decision paper · double-checked numbers · **PROPOSAL — awaiting the admiral's key-signed
+*Decision paper · double-checked numbers · **PROPOSAL — awaiting Pac's key-signed
 sign-off.** Nothing below is canon until he blesses it.*
 
 ## The two moments that make the window
@@ -23,7 +23,7 @@ arrival is not.**
 | **The exact anniversary** | 2027-01-03 18:15:05 UTC | **~982,945** | ~983,370 | **982,944** · 983,088 |
 | **The new moon** | 2027-01-07 ~20:24 UTC | **~983,534** | ~983,969 | 983,520 · **983,664** |
 
-Three things worth the admiral's eye:
+Three things worth Pac's eye:
 
 1. **The appointed Day-0 height 983,664 checks out.** It sits inside the new moon's plausibility
    band (it corresponds to ~597 s/block — real blocks have averaged slightly under 600). It is a
@@ -43,13 +43,13 @@ Three things worth the admiral's eye:
 > From the midnight of bitcoin's exact 18th anniversary to the appointed new-moon midnight:
 > **exactly 720 blocks = 5 BFT days = 120 block-hours** of liminal time.
 > Bitcoin is already 18 on the sun's clock; the new calendar hasn't been born on the moon's.
-> The hours in between belong to the degens.
+> The hours in between belong to the degenz.
 
 Defined in blocks, the window needs no wall clock and cannot drift: it opens when block 982,944
 is mined and closes when 983,664 breaks the balloons loose. (The *dates* 3–7 Jan are the
 estimate; the *blocks* are the appointment.)
 
-## The Hallows resonance (the admiral's spark, 0018.04.20)
+## The Hallows resonance (Pac's spark, 0018.04.20)
 
 Day 0 — `0018.10.28 a₿` — is **the last day of the tenth month**: structurally, the new
 calendar's own **All Hallows' Eve**. And the chain already blessed that night once —
@@ -59,7 +59,7 @@ Hallows' Eve on the old calendar. So the new calendar is born on its own Hallowe
 `M11·D01`, the hallows' *day*: a new month, on a new moon, on the other side of the veil.
 The Degen Hours end where the whitepaper began. Lore, free of charge, from the math.
 
-## For the admiral to bless (pick one per line)
+## For Pac to bless (pick one per line)
 
 | Decision | Option A (as coded today) | Option B |
 |---|---|---|
