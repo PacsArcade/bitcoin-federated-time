@@ -29,7 +29,7 @@
     color-scheme: dark;
     --ember-dim: #F7931A;      /* brand-orange — the calm floor */
     --ember:     #FF6400;      /* the true 624 nm peak */
-    --paper: #e8e2d8; --dim: #8a7f6a; --dimmer: #6d6684;
+    --paper: #e8e2d8; --dim: #8a7f6a; --dimmer: #8a84a0;
     --panel: #14111a; --edge: rgba(255,255,255,.07);
     --ghost: #45c6b4;          /* the b₿ / mirror side — teal-mint, the ghost palette */
   }
@@ -55,7 +55,7 @@
           text-transform: uppercase; color: var(--dim); }
   input { background: #0a0907; color: var(--paper); border: 1px solid var(--edge); border-radius: 8px;
           padding: 11px 13px; font: inherit; font-size: 16px; }
-  input:focus { outline: none; border-color: rgba(247,147,26,.55); }
+  input:focus { outline: 2px solid rgba(247,147,26,.55); outline-offset: 2px; border-color: rgba(247,147,26,.55); }
   .in .note { flex-basis: 100%; font-size: 12px; color: var(--dimmer); letter-spacing: .06em; line-height: 1.65; }
 
   .card { border: 1px solid var(--edge); border-radius: 14px; padding: 20px 20px 16px; margin-bottom: 16px;
@@ -86,7 +86,6 @@
   .bb .signgroup.mine { border-color: rgba(69, 198, 180, .45); }
   .signgroup.mine .sg-head { color: var(--ember-dim); }
   .bb .signgroup.mine .sg-head { color: var(--ghost); }
-  .est { color: var(--ember-dim); }
   .nb { white-space: nowrap; text-transform: none; }
   .omen { margin-top: 14px; font-size: 13px; letter-spacing: .1em; color: #b9a7d9; }
   .drift { margin-top: 12px; font-size: 12.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
@@ -104,7 +103,7 @@
 </head>
 <body>
 <main>
-  <p class="kick">BITCOIN FEDERATED TIME ▸ STUDIES ▸ THE BITCOIN BIRTHDAY</p>
+  <p class="kick">BITCOIN FEDERATED TIME ▸ THE OBSERVATORY ▸ THE BITCOIN BIRTHDAY</p>
   <h1>When were you born,<br><b class="nb">in bitcoin time?</b></h1>
   <p class="lede">Pick your old-calendar birthday and read it back on the clock no one can turn
   back: your block, your beat, your moon, your month sign, your year animal — and the mirror of
@@ -123,6 +122,7 @@
     not the ledger. What's exact is the math; what the chain vouches for is a real height.</p>
   </div>
 
+  <div aria-live="polite"><!-- results speak when they render -->
   <section class="card hidden" id="main-card">
     <h2 id="main-title">your bitcoin birthday</h2>
     <div class="bigdate" id="main-date"></div>
@@ -133,7 +133,7 @@
   </section>
 
   <section class="card hidden" id="next-card">
-    <h2>your bitcoin birthday, returning — what it was, and what it's going to</h2>
+    <h2>your bitcoin birthday, returning — what it was, and where it's going</h2>
     <div class="grid" id="next-grid"></div>
     <p class="drift" id="next-drift"></p>
   </section>
@@ -147,6 +147,7 @@
     <div class="grid" id="mirror-grid"></div>
     <div class="signsplit" id="mirror-signs"></div>
   </section>
+  </div><!-- /aria-live -->
 
   <div class="foot">
     <p class="k">no keys, no data</p>
@@ -158,12 +159,15 @@
 
   <p class="tiny">Signs, moons and animals are for <b>wonder, not finance</b> — no clock tells you what a
   coin will be worth. The moon shown is <b>the calendar's</b> block-timed moon, not the
-  sky's phase on your night: two moons, both honest, because we say which is which. <b>Old and new ride side by side</b>: the old world's sun sign and
-  lunar-year animal (cusps approximate; the lunar year turns with the new-year moon, late
-  Jan–mid Feb) beside the new calendar's 13 month-seats (M01 = Capricorn, the genesis sign;
-  Ophiuchus 12th) and 13 year-animals (AB 0 = Ox; the 13th is the Astronomical Cat, welcomed
-  home from the Great Race). <b>Before Bitcoin IS the old world</b> — a b₿ birthday wears the
-  old signs as its own, and the 13-wheel is its mirror seat. Estimates wear the ~.</p>
+  sky's phase on your night: two moons, both honest, because we say which is which.
+  <b>Old and new ride side by side</b>: the old world's sun sign and lunar-year animal
+  (cusps approximate; the lunar year turns with the new-year moon, late Jan–mid Feb) beside
+  the new calendar's 13 month-seats (M01 = Capricorn, the genesis sign; Ophiuchus 12th) and
+  13 year-animals (AB 0 = Ox; the 13th is the Astronomical Cat, welcomed home from the
+  Great Race).</p>
+  <p class="tiny"><b>Before Bitcoin IS the old world</b> — a b₿ birthday wears the old signs as
+  its own; its seat on the 13-wheel is the mirror seat — a <b>lore proposal</b>, on the page
+  for wonder while it awaits its blessing. Estimates wear the ~.</p>
 </main>
 
 <script>
@@ -225,8 +229,12 @@ const OLD_ANIMALS = [['🐀','Rat'],['🐂','Ox'],['🐅','Tiger'],['🐇','Rabb
                      ['🐎','Horse'],['🐐','Goat'],['🐒','Monkey'],['🐓','Rooster'],['🐕','Dog'],['🐖','Pig']];
 function oldAnimal(y, mo, day) {
   const idx = (((y - 4) % 12) + 12) % 12;                   // 1900 = Rat … the classic 12-wheel
-  const early = mo === 1 || (mo === 2 && day <= 20);        // before/near the lunar new year → could be the previous animal
-  return { sign: OLD_ANIMALS[idx], prev: early ? OLD_ANIMALS[(idx + 11) % 12] : null };
+  const cur = OLD_ANIMALS[idx], prev = OLD_ANIMALS[(idx + 11) % 12];
+  if (mo === 1 && day <= 20)                                // the lunar new year never lands this early — the previous animal is CERTAIN
+    return { sign: prev, note: `lunar year — the new-year moon hadn't turned yet; ${cur[0]} ${cur[1]} after it` };
+  if (mo === 1 || (mo === 2 && day <= 20))                  // genuinely either/or — the new-year moon lands Jan 21–Feb 20
+    return { sign: cur, note: `lunar year · or ${prev[0]} ${prev[1]} before that year's new-year moon` };
+  return { sign: cur, note: 'the old lunar year' };
 }
 
 const OLD = ts => new Date(ts).toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
@@ -254,17 +262,17 @@ function render(prefix, h, ts, isMirror) {
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`;
   const cells = [
     ['birth block', h >= 0 ? `~${h.toLocaleString('en-US')}` : `~−${(-h).toLocaleString('en-US')}`,
-     h >= 0 ? 'estimated · 10 min a block' : 'blocks before the light'],
+     h >= 0 ? 'estimated · 10 min a block' : 'estimated · blocks before the light'],
     ['birth beat', beat ? `~${beat}` : '— no face', beat ? 'the hh:mm block-beat' : 'no clock before genesis'],
-    ['moon', `${moon[0]} ${moon[1]}`, "the calendar's moon · block-timed, not the sky's"],
+    bb ? ['moon', '— no moon', "the calendar's moon starts at the light"]
+       : ['moon', `${moon[0]} ${moon[1]}`, "the calendar's moon · block-timed, not the sky's"],
   ];
   el('grid').innerHTML = cells.map(cell).join('');
   /* the SIGN SPLIT — grouped by area: the old world one side, the new calendar the other.
      Whichever side is YOURS wears the accent (b₿ births belong to the old world). */
   const oldCells = [
-    ['sun sign', `${sun[0]} ${sun[1]}`, 'the sun calendar you were handed'],
-    ['year animal', `${oldA.sign[0]} ${oldA.sign[1]}`,
-     oldA.prev ? `lunar year · or ${oldA.prev[0]} ${oldA.prev[1]} before that year's new-year moon` : 'the old lunar year'],
+    ['sun sign', `${sun[0]} ${sun[1]}`, 'the sun calendar you were handed · cusps shift ~a day'],
+    ['year animal', `${oldA.sign[0]} ${oldA.sign[1]}`, oldA.note],
   ];
   const newCells = [
     ['month seat', `${newSign[1]} ${newSign[0]}`, `month ${pad(d.month,2)} of 13`],
@@ -283,7 +291,7 @@ function render(prefix, h, ts, isMirror) {
     const omens = [];
     if (d.epoch === 'AB' && d.month === 13) omens.push('born in the thirteenth month');
     if (d.day === 13) omens.push('born on a thirteenth day');
-    if (newAnimal[1] === 'Astronomical Cat') omens.push('born in a year of the Cat');
+    if (d.epoch === 'AB' && newAnimal[1] === 'Astronomical Cat') omens.push('born in a year of the Cat');
     const o = el('omen');
     o.classList.toggle('hidden', omens.length === 0);
     o.textContent = omens.length ? '🐈 a thirteen! ' + omens.join(' · ') + ' — the clock whispers for you. keep going.' : '';
@@ -308,8 +316,8 @@ function renderReturns(d, birthTs) {
     const h = (y + i) * BLOCKS_PER_YEAR + seat;
     const when = GENESIS_UNIX_MS + h * BLOCK_MS;                 // ~estimate, 10-min blocks from genesis
     rows.push([`<span class="nb">${pad(y + i, 4)}.${pad(d.month, 2)}.${pad(d.day, 2)}&nbsp;a₿</span>`,
-               `~ ${oldFmt(when)}`,
-               `block ~${h.toLocaleString('en-US')}${d.epoch === 'BB' ? ' · a₿-side seat' : ''}`]);
+               `~${oldFmt(when)}`,
+               `block ${h.toLocaleString('en-US')}${d.epoch === 'BB' ? ' · a₿-side seat' : ''}`]);
   }
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
@@ -322,9 +330,12 @@ function renderReturns(d, birthTs) {
 
 function update() {
   const dv = document.getElementById('d').value;
-  if (!dv) return;
+  const hideAll = () => ['main-card', 'next-card', 'mirror-card', 'mirror-line'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.add('hidden');
+  });
+  if (!dv) { hideAll(); return; }                            // a cleared input never shows a stale birthday
   const m = dv.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!m) return;
+  if (!m) { hideAll(); return; }
   const tv = (document.getElementById('t').value || '12:00').split(':');
   const ts = Date.UTC(+m[1], +m[2] - 1, +m[3], +tv[0] || 0, +tv[1] || 0);
   const h = Math.round((ts - GENESIS_UNIX_MS) / BLOCK_MS);       // negative = Before Bitcoin
