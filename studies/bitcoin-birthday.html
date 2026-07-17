@@ -43,41 +43,41 @@
     min-height: 100svh; display: grid; place-items: start center; padding: 34px 16px 60px;
   }
   main { width: min(720px, 96vw); }
-  .kick { font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: var(--dimmer); }
-  h1 { font-size: clamp(19px, 4.6vw, 26px); letter-spacing: .06em; margin: 8px 0 6px; font-weight: 600; }
+  .kick { font-size: 11.5px; letter-spacing: .34em; text-transform: uppercase; color: var(--dimmer); }
+  h1 { font-size: clamp(23px, 5.6vw, 32px); letter-spacing: .06em; margin: 10px 0 8px; font-weight: 600; }
   h1 b { color: var(--ember-dim); }
-  .lede { font-size: 12.5px; line-height: 1.7; color: var(--dim); max-width: 58ch; margin-bottom: 22px; }
+  .lede { font-size: 15px; line-height: 1.75; color: var(--dim); max-width: 58ch; margin-bottom: 24px; }
 
   .in { border: 1px solid var(--edge); border-radius: 14px; background: linear-gradient(165deg, #14111a, #0e0c12);
         padding: 18px 18px 14px; display: flex; flex-wrap: wrap; gap: 14px; align-items: end; margin-bottom: 22px; }
-  label { display: flex; flex-direction: column; gap: 7px; font-size: 9px; letter-spacing: .22em;
+  label { display: flex; flex-direction: column; gap: 7px; font-size: 10.5px; letter-spacing: .22em;
           text-transform: uppercase; color: var(--dim); }
   input { background: #0a0907; color: var(--paper); border: 1px solid var(--edge); border-radius: 8px;
-          padding: 9px 11px; font: inherit; font-size: 14px; }
+          padding: 11px 13px; font: inherit; font-size: 16px; }
   input:focus { outline: none; border-color: rgba(247,147,26,.55); }
-  .in .note { flex-basis: 100%; font-size: 10px; color: var(--dimmer); letter-spacing: .08em; line-height: 1.6; }
+  .in .note { flex-basis: 100%; font-size: 12px; color: var(--dimmer); letter-spacing: .06em; line-height: 1.65; }
 
   .card { border: 1px solid var(--edge); border-radius: 14px; padding: 20px 20px 16px; margin-bottom: 16px;
           background: linear-gradient(165deg, #14111a 0%, #0e0c12 55%, #0b0d0c 100%);
           box-shadow: 0 20px 60px rgba(0,0,0,.45); }
   .card.ab { border-color: rgba(247,147,26,.35); }
   .card.bb { border-color: rgba(69,198,180,.3); }
-  .card h2 { font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+  .card h2 { font-size: 11.5px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
   .bigdate { font-size: clamp(26px, 6.5vw, 40px); letter-spacing: .04em; font-weight: 600; line-height: 1.15;
              font-variant-numeric: tabular-nums; }
   .ab .bigdate { color: var(--ember-dim); text-shadow: 0 0 18px rgba(247,147,26,.3); }
   .bb .bigdate { color: var(--ghost);     text-shadow: 0 0 18px rgba(69,198,180,.25); }
-  .sub { margin-top: 6px; font-size: 12px; color: var(--dim); letter-spacing: .06em; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 16px; }
+  .sub { margin-top: 7px; font-size: 13.5px; color: var(--dim); letter-spacing: .06em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 16px; }
   .cell { border: 1px solid var(--edge); border-radius: 10px; padding: 10px 12px; background: rgba(0,0,0,.25); }
-  .cell .k { font-size: 8.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--dimmer); }
-  .cell .v { margin-top: 5px; font-size: 15px; letter-spacing: .03em; }
-  .cell .v small { display: block; margin-top: 2px; font-size: 10px; color: var(--dim); }
+  .cell .k { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--dimmer); }
+  .cell .v { margin-top: 6px; font-size: 17.5px; letter-spacing: .03em; }
+  .cell .v small { display: block; margin-top: 3px; font-size: 12px; color: var(--dim); }
   /* ——— the SIGN SPLIT: the old world on one side, the new calendar on the other ——— */
   .signsplit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
   @media (max-width: 520px) { .signsplit { grid-template-columns: 1fr; } }
   .signgroup { border: 1px solid var(--edge); border-radius: 10px; padding: 12px 14px; background: rgba(0,0,0,.25); }
-  .signgroup .sg-head { font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dimmer);
+  .signgroup .sg-head { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--dimmer);
                         padding-bottom: 8px; margin-bottom: 10px; border-bottom: 1px solid var(--edge); }
   .signgroup .cell { border: none; background: none; padding: 0; margin-bottom: 12px; }
   .signgroup .cell:last-child { margin-bottom: 0; }
@@ -86,17 +86,17 @@
   .signgroup.mine .sg-head { color: var(--ember-dim); }
   .bb .signgroup.mine .sg-head { color: var(--ghost); }
   .est { color: var(--ember-dim); }
-  .omen { margin-top: 14px; font-size: 11px; letter-spacing: .1em; color: #b9a7d9; }
-  .drift { margin-top: 12px; font-size: 10.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
+  .omen { margin-top: 14px; font-size: 13px; letter-spacing: .1em; color: #b9a7d9; }
+  .drift { margin-top: 12px; font-size: 12.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
   .drift b { color: var(--ember-dim); }
 
-  .mirrorline { text-align: center; font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
+  .mirrorline { text-align: center; font-size: 11.5px; letter-spacing: .4em; text-transform: uppercase;
                 color: var(--dimmer); margin: 4px 0 16px; }
   .foot { border: 1px solid var(--edge); border-radius: 12px; padding: 14px 16px; margin-top: 8px; }
-  .foot .k { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: #7fbf8f; }
-  .foot p { margin-top: 7px; font-size: 11px; line-height: 1.65; color: var(--dim); }
+  .foot .k { font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: #7fbf8f; }
+  .foot p { margin-top: 8px; font-size: 13px; line-height: 1.65; color: var(--dim); }
   .foot b { color: var(--paper); }
-  .tiny { margin-top: 14px; font-size: 9.5px; line-height: 1.6; color: var(--dimmer); letter-spacing: .06em; }
+  .tiny { margin-top: 14px; font-size: 11.5px; line-height: 1.6; color: var(--dimmer); letter-spacing: .06em; }
   .hidden { display: none; }
 </style>
 </head>

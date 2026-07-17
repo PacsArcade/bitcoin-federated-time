@@ -692,10 +692,17 @@ const moonPhase = h => MOONS[Math.round(((bft(h).day - 1) / 28) * 8) % 8];
    when offline). The production clock reads Pac's Arcade's OWN node (the DW guardrail:
    "the time comes from our own node, not a 3rd party") — swapping these four constants to
    the fren-node's endpoints is the entire migration. The block is the truth either way. */
-const TIP_URL = 'https://mempool.space/api/blocks/tip/height';
-const MEMPOOL_URL = 'https://mempool.space/api/mempool';
-const BLOCKS_URL = 'https://mempool.space/api/blocks';
-const DIFF_URL = 'https://mempool.space/api/v1/difficulty-adjustment';
+/* THE SOURCE ORDER (Pac's law, 0018.04.21): OUR OWN NODE FIRST, the public explorer as
+   the honest fallback. Set ARCADE_NODE to the arcade's public time endpoint when it stands
+   up (it mirrors the explorer's routes below); null → the fallback carries alone. Every
+   request walks the bases in order and takes the first honest answer. */
+const ARCADE_NODE = null;   // e.g. 'https://node.frens.earth' — the machine we hold (pending its public endpoint)
+const EXPLORER = 'https://mempool.space';
+const API_BASES = [ARCADE_NODE, EXPLORER].filter(Boolean);
+const TIP_PATH = '/api/blocks/tip/height';
+const MEMPOOL_PATH = '/api/mempool';
+const BLOCKS_PATH = '/api/blocks';
+const DIFF_PATH = '/api/v1/difficulty-adjustment';
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* OFFLINE ANCHOR — the honest cold-boot / no-network estimate. Blocks have come
@@ -1600,10 +1607,19 @@ async function getText(url) {
     return await r.text();
   } finally { clearTimeout(t); }
 }
+/* walk the bases in order — the arcade's own node first, the explorer as fallback — and
+   take the first honest answer. One failing base never darkens the clock. */
+async function apiGet(path) {
+  let lastErr = null;
+  for (const base of API_BASES) {
+    try { return await getText(base + path); } catch (e) { lastErr = e; }
+  }
+  throw lastErr || new Error('no source answered');
+}
 
 async function fetchTipTime(h) {
   try {
-    const blocks = JSON.parse(await getText(BLOCKS_URL));
+    const blocks = JSON.parse(await apiGet(BLOCKS_PATH));
     const b = blocks.find(x => x.height === h) || blocks[0];
     if (b && Number.isFinite(b.timestamp) && b.height === state.height) {
       state.lastBlockAt = Math.min(b.timestamp * 1000, Date.now());   // miner skew clamp
@@ -1615,7 +1631,7 @@ async function fetchTipTime(h) {
 
 async function fetchDifficulty() {
   try {
-    const d = JSON.parse(await getText(DIFF_URL));
+    const d = JSON.parse(await apiGet(DIFF_PATH));
     state.diff = {
       change: Number.isFinite(d.difficultyChange) ? d.difficultyChange : null,
       remaining: Number.isFinite(d.remainingBlocks) ? d.remainingBlocks : null,
@@ -1677,7 +1693,7 @@ async function poll() {
   if (state.offlineSim) { applyEstimate(); return; }
   let h = null;
   try {
-    h = parseInt((await getText(TIP_URL)).trim(), 10);
+    h = parseInt((await apiGet(TIP_PATH)).trim(), 10);
     if (!Number.isFinite(h) || h <= 0) h = null;
   } catch { /* fall through */ }
 
@@ -1701,7 +1717,7 @@ async function poll() {
   state.lastWasLive = true;
 
   try {
-    const mem = JSON.parse(await getText(MEMPOOL_URL));
+    const mem = JSON.parse(await apiGet(MEMPOOL_PATH));
     if (Number.isFinite(mem.vsize)) state.memFill = Math.min(1, mem.vsize / 1e6);   // vsize / 1 MvB
     if (Number.isFinite(mem.count)) state.memCount = mem.count;
   } catch { /* keep last known weight */ }
