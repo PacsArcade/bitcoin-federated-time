@@ -83,7 +83,7 @@
 
   .stage { display: flex; flex-direction: column; align-items: center; gap: 22px; width: 100%; }
   .clockrow {
-    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;   /* both clock boxes stand the SAME height (Pac, 0018.04.21) */
     gap: clamp(16px, 2.4vw, 30px); width: 100%;
   }
 
@@ -94,7 +94,7 @@
   }
   .card-square { width: min(500px, 94vw); }
   .card-circle { width: min(330px, 94vw); }
-  .flip3d { position: relative; transform-style: preserve-3d; transition: transform .62s cubic-bezier(.4, .15, .2, 1); }
+  .flip3d { position: relative; transform-style: preserve-3d; transition: transform .62s cubic-bezier(.4, .15, .2, 1); height: 100%; }
   .card.flipped .flip3d { transform: rotateY(180deg); }
   .face {
     border-radius: 20px;
@@ -105,7 +105,7 @@
     backface-visibility: hidden; -webkit-backface-visibility: hidden;
   }
   .face-front { position: relative; padding: 40px 34px 32px; }
-  .card-circle .face-front { padding: 28px 20px 24px; display: flex; flex-direction: column; align-items: center; }
+  .card-circle .face-front { padding: 22px 18px 18px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; }
   .face-back  { position: absolute; inset: 0; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 30px 24px; }
   .card.blockpulse .face {
     box-shadow: 0 0 26px rgba(247, 147, 26, .38), 0 0 78px rgba(247, 147, 26, .22), 0 30px 80px rgba(0, 0, 0, .60);
@@ -181,7 +181,7 @@
   /* ——— perimeter PAC ring — shared visuals; framing differs square vs circle ——— */
   .perimeter { pointer-events: none; overflow: visible; }
   .ringframe { position: absolute; inset: 0; width: 100%; height: 100%; }   /* square: hugs the card edge */
-  .clockface { position: relative; display: block; width: clamp(238px, 82vw, 286px); height: auto; margin: 2px auto 0; }
+  .clockface { position: relative; display: block; width: clamp(214px, 74vw, 256px); height: auto; margin: 0 auto; }
   .track { fill: none; stroke: none; }   /* ring line removed — only the square mempool dots + Pac remain (path kept for getPointAtLength) */
   .pix { fill: #f7931a; }
   .pix.front { fill: #ffd9a0; filter: drop-shadow(0 0 4px rgba(247, 147, 26, .95)); }
@@ -411,7 +411,7 @@
   .creed { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #8a7f6a; margin: 4px 0 2px; }
   .creed .nb { color: rgba(247, 201, 72, .85); }
 
-  .moonname { font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #b9b2c6; margin: 4px 0 10px; }
+  .moonname { font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #b9b2c6; margin: 2px 0 6px; }
   .levelbadge {
     color: #f7931a; letter-spacing: .18em; font-weight: 600; font-size: 13px;
     text-shadow: 0 0 10px rgba(247, 147, 26, .25); cursor: default;
@@ -656,8 +656,10 @@
   <div class="inscription">TICK TOCK — IT ALL COMES BACK TO THE BLOCK.</div>
 
   <footer class="foot">
-    <div>PUPIL STUDY for GLYPH's review · <span class="nb">0018.04.20 a₿</span> · rev 7 — ten laps a block · the fruit ladder · ₿ on the tenth</div>
-    <div class="keys">click / tap a clock to FLIP it → the Day-0 countdown · study keys — B: break block (Pac eats the coin, fiat go teal) · R: correction · O: offline estimate · Z: preview Day 0 (the surprise — GLYPH's bench only, no peeking)</div>
+    <div>THE CLOCK · a Pac's Arcade study · <span class="nb">0018.04.20 a₿</span></div>
+    <div class="keys">click / tap a clock to FLIP it → the Day-0 countdown</div>
+    <!-- workbench, not for the face: rev 7 — ten laps a block · the fruit ladder · ₿ on the tenth.
+         study keys (still live): B break block · R correction · O offline estimate · Z preview Day 0. -->
   </footer>
 </main>
 
