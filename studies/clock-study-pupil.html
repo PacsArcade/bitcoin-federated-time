@@ -122,7 +122,7 @@
      shared .flipclock / .flip / .flip-val styling so the back reads as the same
      mechanical clock, just running backwards toward zero. Layout: kicker → title →
      target-block line → the countdown flip clock (DDD:HH:MM:SS) → blocks-to-go → note.
-     At Day 0 it fires balloons + THANK YOU, SATOSHI. */
+     At Day 0 it fires balloons + the Day-0 surprise. */
   .d0-timer { position: relative; z-index: 2; display: flex; flex-direction: column;
               align-items: center; justify-content: center; gap: 8px; width: 100%; }
   .d0-head  { display: flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -135,7 +135,7 @@
 
   /* the countdown flip clock — REUSES .flipclock / .flip; just scaled to fit DDD:HH:MM:SS */
   .flipclock.countdown { align-items: flex-start; gap: 5px; flex-wrap: nowrap;
-                         font-size: clamp(24px, 5.4vw, 40px); margin: 8px auto 4px; padding: 12px 12px; }
+                         font-size: clamp(19px, 5.4vw, 40px); margin: 8px auto 4px; padding: 12px 12px; }
   .card-circle .flipclock.countdown { font-size: clamp(18px, 5vw, 29px); gap: 4px; padding: 10px 8px; }
   .cd-unit   { display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .cd-digits { display: inline-flex; gap: 5px; }
@@ -148,7 +148,7 @@
   .d0-blocks b { color: #F7931A; font-weight: 700; font-variant-numeric: tabular-nums; }
   .d0-note   { font-size: 10.5px; line-height: 1.4; color: #7d7566; text-wrap: balance; max-width: 34ch; }
 
-  /* ——— DAY 0 celebration — fires ONLY at zero: balloons + THANK YOU, SATOSHI ——— */
+  /* ——— DAY 0 celebration — fires ONLY at zero: balloons + the Day-0 surprise ——— */
   .d0-cheer  { display: none; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
   .d0-cheer-emoji { font-size: 22px; letter-spacing: .16em; }
   .d0-cheer-big { font-size: clamp(26px, 7vw, 46px); font-weight: 700; line-height: 1.04; letter-spacing: .03em;
@@ -369,7 +369,7 @@
     line-height: 1.7; max-width: 44ch; margin: 0 auto 12px; text-wrap: balance;
   }
   .oneliner b { color: #f7931a; font-weight: 600; }
-  .nb { white-space: nowrap; }
+  .nb { white-space: nowrap; text-transform: none; }
 
   .status { font-size: 12.5px; letter-spacing: .08em; color: #7d7690; min-height: 16px; }
   .status .dot { opacity: .5; padding: 0 2px; }
@@ -427,7 +427,7 @@
   .diffline .r { color: rgba(247, 147, 26, .8); }
 
   /* ——— shared bottom inscription + footer ——— */
-  .inscription { font-size: 10px; letter-spacing: .32em; color: #57516b; text-align: center; }
+  .inscription { font-size: 11px; letter-spacing: .32em; color: #57516b; text-align: center; }
   .foot { text-align: center; font-size: 12.5px; letter-spacing: .18em; color: #56506a; }
   .foot .keys { margin-top: 7px; font-size: 11.5px; letter-spacing: .10em; color: #3f3a52; }
 
@@ -453,7 +453,7 @@
     .card.flipped .face-front { opacity: 0; }
     .card.flipped .face-back  { opacity: 1; }
     /* Day-0 celebration holds steady: no floating balloons, no glow flash — the static
-       balloon emojis + THANK YOU, SATOSHI text carry the payoff instead. */
+       balloon emojis + the Day-0 surprise text carry the payoff instead. */
     .balloon { animation: none !important; display: none; }
     .d0-cheer-big.flash { animation: none; }
   }
@@ -656,7 +656,7 @@
   <div class="inscription">TICK TOCK — IT ALL COMES BACK TO THE BLOCK.</div>
 
   <footer class="foot">
-    <div>PUPIL STUDY for GLYPH's review · 0018.04.20 a₿ · rev 7 — ten laps a block · the fruit ladder · ₿ on the tenth</div>
+    <div>PUPIL STUDY for GLYPH's review · <span class="nb">0018.04.20 a₿</span> · rev 7 — ten laps a block · the fruit ladder · ₿ on the tenth</div>
     <div class="keys">click / tap a clock to FLIP it → the Day-0 countdown · study keys — B: break block (Pac eats the coin, fiat go teal) · R: correction · O: offline estimate · Z: preview Day 0 (the surprise — GLYPH's bench only, no peeking)</div>
   </footer>
 </main>
@@ -1404,7 +1404,7 @@ function renderNumbers() {
    ~estimate: we anchor a target timestamp = now + blocksToGo × ~10 min and tick DOWN to it
    every second, re-anchoring only when the chain moves (blocks-to-go changes) so the seconds
    run smoothly. Digits flip via cdSet() — the SAME split-flap animation the front uses
-   (shared .flip / .flipping). At 0 it fires balloons + THANK YOU, SATOSHI. Both cards. */
+   (shared .flip / .flipping). At 0 it fires balloons + the Day-0 surprise. Both cards. */
 let goTargetMs = null;      // estimated arrival timestamp for Day 0 (honest ~estimate)
 let goBlocksAnchor = null;  // blocks-to-go captured when goTargetMs was last set
 const BLOCK_MS = 600000;    // ~10 minutes per block
@@ -1465,7 +1465,7 @@ function tickGoTimer() {
   });
 }
 
-/* ═══ DAY 0 — the payoff: balloons float up + THANK YOU, SATOSHI (fires ONCE at zero) ═══ */
+/* ═══ DAY 0 — the payoff: balloons float up + the Day-0 surprise (fires ONCE at zero) ═══ */
 function fireDayZero() {
   d0Fired = true;
   if (REDUCED) return;   // reduced motion → static cheer (emoji balloons + steady text), no motion
@@ -1788,7 +1788,7 @@ function simOffline() {
   state.offlineSim = !state.offlineSim; markSim();
   if (state.offlineSim) applyEstimate(); else poll();
 }
-/* Force Day 0 to preview the celebration (balloons + THANK YOU, SATOSHI). Toggles back off.
+/* Force Day 0 to preview the celebration (balloons + the Day-0 surprise). Toggles back off.
    Trigger with the Z key or window.study.dayZero() in the console. */
 function simDayZero() { markSim(); goForceZero = !goForceZero; renderGoTimer(); }
 addEventListener('keydown', e => {

@@ -86,6 +86,7 @@
   .signgroup.mine .sg-head { color: var(--ember-dim); }
   .bb .signgroup.mine .sg-head { color: var(--ghost); }
   .est { color: var(--ember-dim); }
+  .nb { white-space: nowrap; text-transform: none; }
   .omen { margin-top: 14px; font-size: 13px; letter-spacing: .1em; color: #b9a7d9; }
   .drift { margin-top: 12px; font-size: 12.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
   .drift b { color: var(--ember-dim); }
@@ -234,9 +235,9 @@ function render(prefix, h, ts, isMirror) {
   el('card').classList.remove('hidden');
   el('card').classList.toggle('ab', d.epoch === 'AB');
   el('card').classList.toggle('bb', d.epoch === 'BB');
-  el('title').textContent = isMirror
-    ? (d.epoch === 'BB' ? 'the mirror — before the light (b₿)' : 'the mirror — after the light (a₿)')
-    : (d.epoch === 'BB' ? 'your bitcoin birthday — before the light (b₿)' : 'your bitcoin birthday (a₿)');
+  el('title').innerHTML = isMirror
+    ? (d.epoch === 'BB' ? 'the mirror — before the light (<span class="nb">b₿</span>)' : 'the mirror — after the light (<span class="nb">a₿</span>)')
+    : (d.epoch === 'BB' ? 'your bitcoin birthday — before the light (<span class="nb">b₿</span>)' : 'your bitcoin birthday (<span class="nb">a₿</span>)');
   el('date').textContent = fmtDate(d);
   el('old').textContent = 'old time: ' + OLD(ts) + (isMirror ? '  ·  the same distance from genesis, mirrored' : '');
   const moon = moonOf(d), newAnimal = animalOf(d), newSign = signOf(d);
@@ -304,8 +305,8 @@ function renderReturns(d, birthTs) {
   for (let i = 0; i < 3; i++) {
     const h = (y + i) * BLOCKS_PER_YEAR + seat;
     const when = GENESIS_UNIX_MS + h * BLOCK_MS;                 // ~estimate, 10-min blocks from genesis
-    rows.push([`${pad(y + i, 4)}.${pad(d.month, 2)}.${pad(d.day, 2)}&nbsp;a₿`,
-               `≈ ${oldFmt(when)}`,
+    rows.push([`<span class="nb">${pad(y + i, 4)}.${pad(d.month, 2)}.${pad(d.day, 2)}&nbsp;a₿</span>`,
+               `~ ${oldFmt(when)}`,
                `block ~${h.toLocaleString('en-US')}${d.epoch === 'BB' ? ' · a₿-side seat' : ''}`]);
   }
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
