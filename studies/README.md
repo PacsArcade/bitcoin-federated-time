@@ -12,7 +12,7 @@ The flagship study: **two clocks, side by side, reading the same Bitcoin Federat
   hinge as the block ages (it's the one honest guess on the face, and it wears a `~`);
   everything else is chain-exact and calm.
 - **The circle clock** — an analog face that *is* a full-size 8-bit pixel moon at the current
-  block-timed phase, with the BFT hands on top and the live height + arcade LEVEL below.
+  SKY's real phase — computed in your browser, correct lit limb, check it against your window — with the BFT hands on top and the live height + arcade LEVEL below. (The calendar's symbolic block-moon rides the birthday page, labeled as the calendar's.)
 - **The thesis, in PAC-MAN** — every block, bitcoin eats the world's fiat: mempool dots ring each
   clock and **Pac laps the ring ten times per block — his lap counter IS the struggling digit.**
   Each lap's prize waits at 12 o'clock: the classic **fruit ladder** (🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ —

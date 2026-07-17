@@ -95,7 +95,8 @@ All integer math. Two nodes at the same height always agree on every row.
 | The hour hand (calm) | The block-hour on a 12-hour face, stepping 5° per block | `(hour mod 12) × 30° + (beat mod 6) × 5°` | `4×30 + 2×5 = 130°` | chain-exact |
 | The minute hand (struggles) | The ten-minute beats plus live progress in this block | `((beat mod 6) + sub) / 6 × 360°`, `sub = age/600` | `(2+sub)/6 × 360 = 120°→180°` | **~** (the `sub` part) |
 | The lit hour tick | Which of the 12 marks is "now" | `(beat // 6) mod 12` | `4` | chain-exact |
-| The 8-bit moon face + name | The block-timed moon: one lunation per 28-day month | `round((day−1)/28 × 8) mod 8` → 8 phases; D01 new · ~D15 full | day 20 → index 5 → 🌖 Waning Gibbous | chain-exact |
+| The 8-bit moon face + name | **THE SKY'S MOON** — the real phase, computed locally; waxing lights the RIGHT limb, waning the LEFT (northern-hemisphere view). Check it against your window | `age = (now − 2000-01-06 18:14 UTC) mod 29.5306 d` → phase + lit-side geometry | 🌒 waxing crescent, right limb (tonight) | sky fact (~±0.6 d) |
+| The calendar's moon (for the record) | The block-timed SYMBOLIC moon — one lunation per 28-day BFT month, D01 new · ~D15 full — rides the BIRTHDAY page + the package, labeled as the calendar's | `round((day−1)/28 × 8) mod 8` | day 20 → 🌖 Waning Gibbous | calendar lore |
 | `LEVEL 475` | The arcade level = difficulty epoch | `height // 2016` | `475` | chain-exact |
 | `re-tunes in N blocks` | Blocks left in this difficulty period | `2016 − (height mod 2016)` (or the API's remaining, when live) | `1,270` | chain-exact / LIVE |
 | `▲ / ▼` beside LEVEL | Estimated difficulty change direction at the next re-tune | mempool.space `difficultyChange` sign | live only | LIVE **~** |

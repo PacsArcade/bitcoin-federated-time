@@ -576,7 +576,7 @@
           <g class="rewardcoin" id="pillC"><g class="coin-inner"><circle class="coin-back" r="10.8"/><image class="coin-img" id="coinImgC" x="-12" y="-12" width="24" height="24" preserveAspectRatio="xMidYMid meet"/></g><circle class="coin-static" r="10.5"/><text class="coin-static-b" style="font-size:12px">₿</text></g>
           <g class="pacman" id="pacC"><image class="pac-sprite" id="pacSpriteC" preserveAspectRatio="xMidYMid meet"/></g>
         </g>
-        <!-- inner analog face = the full-size 8-bit PIXEL MOON (current BFT phase) -->
+        <!-- inner analog face = the full-size 8-bit PIXEL MOON (the SKY's real phase) -->
         <g id="moonpix"></g>
         <circle class="a-rim" cx="150" cy="150" r="96"/>
         <g id="a-ticks"></g>
@@ -588,7 +588,7 @@
 
       <div class="bang" id="bang">HACK THE PLANET</div>
       <div class="creed">HEIGHT · <span class="nb" id="heightnumC">—</span></div>
-      <div class="moonname" id="moonname"></div>
+      <div class="moonname" id="moonname" title="the sky's moon — real phase, computed in your browser (northern-hemisphere view). the calendar's block-timed moon rides the birthday page."></div>
       <div class="levelbadge" id="levelbadge"
            title="Your arcade LEVEL. The network re-tunes its difficulty every ~2 weeks to keep blocks about 10 minutes apart. ▲ = getting harder · ▼ = getting easier.">LEVEL —</div>
       <div class="diffline" id="diffline"
@@ -685,7 +685,19 @@ const beatIndex = h => ((h % BLOCKS_PER_DAY) + BLOCKS_PER_DAY) % BLOCKS_PER_DAY;
 const bftHM = h => { const i = beatIndex(h); return [Math.floor(i / 6), (i % 6) * 10]; };
 const MOONS = [["🌑","New"],["🌒","Waxing Crescent"],["🌓","First Quarter"],["🌔","Waxing Gibbous"],
                ["🌕","Full"],["🌖","Waning Gibbous"],["🌗","Last Quarter"],["🌘","Waning Crescent"]];
-const moonPhase = h => MOONS[Math.round(((bft(h).day - 1) / 28) * 8) % 8];
+const moonPhase = h => MOONS[Math.round(((bft(h).day - 1) / 28) * 8) % 8];   // the CALENDAR's symbolic moon (rides the birthday page)
+/* THE SKY'S MOON (Pac's law, 0018.04.21 — he held his phone to the sky and the site lost):
+   the analog face shows the REAL moon, computed locally — mean synodic month from a known
+   new moon (2000-01-06 18:14 UTC). Approximation honest to ~±0.6 d; northern-hemisphere
+   view (waxing lights the RIGHT limb, waning the LEFT — the renderer already knew). */
+const SYNODIC_DAYS = 29.530588853;
+const NEWMOON_EPOCH_MS = Date.UTC(2000, 0, 6, 18, 14);
+function realMoon(nowMs = Date.now()) {
+  const age = (((nowMs - NEWMOON_EPOCH_MS) / 86400000) % SYNODIC_DAYS + SYNODIC_DAYS) % SYNODIC_DAYS;
+  const frac = age / SYNODIC_DAYS;                        // 0 = new · .5 = full · →1 new again
+  const idx = Math.round(frac * 8) % 8;
+  return { frac, name: MOONS[idx][1], emoji: MOONS[idx][0] };
+}
 
 /* ═══════════════════ state ═══════════════════ */
 /* THE SOURCE SEAM — this STUDY reads mempool.space's public API (plus the honest ~anchor
@@ -1388,9 +1400,9 @@ function renderNumbers() {
   const hTxt = `${state.est ? '~' : ''}${state.height.toLocaleString('en-US')}`;
   $('heightnum').textContent = hTxt;
   const hC = $('heightnumC'); if (hC) hC.textContent = hTxt;   // the round clock tells the same truth
-  const [, mName] = moonPhase(state.height);
-  $('moonname').textContent = mName;
-  renderMoon((bft(state.height).day - 1) / 28);   // the 8-bit moon fills the face at the current phase
+  const sky = realMoon();
+  $('moonname').textContent = sky.name;
+  renderMoon(sky.frac);   // the 8-bit moon wears the SKY's real phase — check it against your window
   // analog: light the current block-hour mark on the 12-hour face
   const hr12 = Math.floor(beatIndex(state.height) / 6) % 12;
   analogTicks.forEach((tk, i) => tk.classList.toggle('now', i === hr12));
