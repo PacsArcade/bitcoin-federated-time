@@ -8,8 +8,10 @@
 library that reads a Bitcoin block height as time — three honest ways, plus one sidebar:
 
 1. **The clock** — the `hh:mm` **block-beat**: a BFT day is 144 blocks on a 24-hour face,
-   6 blocks an hour, ten "minutes" a block. No second digits on the cards — the seconds live
-   on the Pac ring (below). The face people read.
+   6 blocks an hour, ten "minutes" a block — and yes, **seconds**: they ride the Pac ring.
+   **`seconds = time since the last block, mod 60`** — Pac laps once a minute, so his angle
+   ÷ 6° *is* the seconds hand (a live `~`estimate, like all sub-block time). The face people
+   read.
 2. **A calendar** — 13 perfect 28-day months, counted purely in blocks: `0018.04.20 a₿`.
 3. **The countdowns** — the *inverse* of the block count: blocks remaining to the next difficulty
    retarget, the next halving, the next cycle, and the last satoshi (~year 2140).
