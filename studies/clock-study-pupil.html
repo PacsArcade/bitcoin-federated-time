@@ -105,7 +105,7 @@
     backface-visibility: hidden; -webkit-backface-visibility: hidden;
   }
   .face-front { position: relative; padding: 40px 34px 32px; }
-  .card-circle .face-front { padding: 22px 18px 18px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; }
+  .card-circle .face-front { padding: 20px 10px 16px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; }
   .face-back  { position: absolute; inset: 0; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 30px 24px; }
   .card.blockpulse .face {
     box-shadow: 0 0 26px rgba(247, 147, 26, .38), 0 0 78px rgba(247, 147, 26, .22), 0 30px 80px rgba(0, 0, 0, .60);
@@ -181,7 +181,7 @@
   /* ——— perimeter PAC ring — shared visuals; framing differs square vs circle ——— */
   .perimeter { pointer-events: none; overflow: visible; }
   .ringframe { position: absolute; inset: 0; width: 100%; height: 100%; }   /* square: hugs the card edge */
-  .clockface { position: relative; display: block; width: clamp(214px, 74vw, 256px); height: auto; margin: 0 auto; }
+  .clockface { position: relative; display: block; width: clamp(228px, 82vw, 272px); height: auto; margin: 0 auto; }
   .track { fill: none; stroke: none; }   /* ring line removed — only the square mempool dots + Pac remain (path kept for getPointAtLength) */
   .pix { fill: #f7931a; }
   .pix.front { fill: #ffd9a0; filter: drop-shadow(0 0 4px rgba(247, 147, 26, .95)); }
@@ -503,7 +503,7 @@
       <div class="levelbadge" id="levelbadgeSq"
            title="Your arcade LEVEL. The network re-tunes its difficulty every ~2 weeks to keep blocks about 10 minutes apart. ▲ = getting harder · ▼ = getting easier.">LEVEL —</div>
 
-      <div class="oneliner"><b>PAC EATS THE WAITING PAYMENTS</b> · TEN LAPS = A NEW <span class="nb">BLOCK, ~10&nbsp;MIN</span> · FRUIT EVERY LAP · <span class="nb">₿ ON THE TENTH</span></div>
+      <div class="oneliner"><b class="nb">PAC EATS THE WAITING PAYMENTS</b> <span class="nb">TEN LAPS = A NEW BLOCK, ~10 MIN</span> <span class="nb">FRUIT EVERY LAP · ₿ ON THE TENTH</span></div>
 
       <div class="status">
         <span id="src" class="src">SYNCING</span><span class="dot">·</span><span id="memline">payments —</span><span id="note" class="note"></span><span id="simbadge" class="sim" hidden>SIM</span>
@@ -514,10 +514,10 @@
         <div class="flip-hint">↻ FLIP BACK</div>
         <div class="d0-timer">
           <div class="d0-head">
-            <div class="d0-kick">COUNTDOWN TO DAY 0</div>
+            <div class="d0-kick">THE COUNTDOWN</div>
             <div class="d0-title">DAY 0 — THE NEW MOON</div>
           </div>
-          <div class="d0-target">DAY 0 · BLOCK <span class="d0-block">983,664</span> · <span class="nb">0018.10.28&nbsp;a₿</span></div>
+          <div class="d0-target">BLOCK <span class="d0-block">983,664</span> · <span class="nb">0018.10.28&nbsp;a₿</span></div>
           <div class="d0-oldcal">OLD CAL · ~7 JAN 2027</div>
           <div class="flipclock countdown" role="timer" aria-label="Countdown to Day 0 — the new moon, block 983,664">
             <div class="cd-unit">
@@ -598,17 +598,17 @@
       <div class="levelbadge" id="levelbadge"
            title="Your arcade LEVEL. The network re-tunes its difficulty every ~2 weeks to keep blocks about 10 minutes apart. ▲ = getting harder · ▼ = getting easier.">LEVEL —</div>
       <div class="diffline" id="diffline"
-           title="The game re-tunes its level every ~2 weeks to keep blocks ~10 min apart.">re-tunes in <span class="r">~—&nbsp;blocks</span> · once every <span class="nb">~2&nbsp;weeks</span> to keep blocks <span class="nb">~10&nbsp;min&nbsp;apart</span></div>
+           title="The game re-tunes its level every ~2 weeks to keep blocks ~10 min apart."><span class="nb">re-tunes in <span class="r">~— blocks</span></span> <span class="nb">once every ~2 weeks</span> <span class="nb">to keep blocks ~10 min apart</span></div>
       <div class="flip-hint">↻ FLIP</div>
       </div><!-- /face-front -->
       <div class="face face-back" aria-hidden="true">
         <div class="flip-hint">↻ FLIP BACK</div>
         <div class="d0-timer">
           <div class="d0-head">
-            <div class="d0-kick">COUNTDOWN TO DAY 0</div>
+            <div class="d0-kick">THE COUNTDOWN</div>
             <div class="d0-title">DAY 0 — THE NEW MOON</div>
           </div>
-          <div class="d0-target">DAY 0 · BLOCK <span class="d0-block">983,664</span> · <span class="nb">0018.10.28&nbsp;a₿</span></div>
+          <div class="d0-target">BLOCK <span class="d0-block">983,664</span> · <span class="nb">0018.10.28&nbsp;a₿</span></div>
           <div class="d0-oldcal">OLD CAL · ~7 JAN 2027</div>
           <div class="flipclock countdown" role="timer" aria-label="Countdown to Day 0 — the new moon, block 983,664">
             <div class="cd-unit">
@@ -1574,8 +1574,8 @@ function renderLevel() {
   const levelHtml = `${est ? '~' : ''}LEVEL ${epoch}${arrow}`;   // the HUD line — BOTH clocks wear it (square + analog)
   document.querySelectorAll('.levelbadge').forEach(el => { el.innerHTML = levelHtml; });
   $('diffline').innerHTML =
-    `re-tunes in <span class="r">${est ? '~' : ''}${rem.toLocaleString('en-US')}&nbsp;blocks</span>` +
-    ` · once every <span class="nb">~2&nbsp;weeks</span> to keep blocks <span class="nb">~10&nbsp;min&nbsp;apart</span>`;
+    `<span class="nb">re-tunes in <span class="r">${est ? '~' : ''}${rem.toLocaleString('en-US')} blocks</span></span>` +
+    ` <span class="nb">once every ~2 weeks</span> <span class="nb">to keep blocks ~10 min apart</span>`;
 }
 
 function renderStatus() {
