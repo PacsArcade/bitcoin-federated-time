@@ -16,7 +16,8 @@
                              moment (2009-01-03 18:15:05 UTC); negative = Before Bitcoin
        · the birth beat    — the hh:mm block-beat face (post-genesis only; no face
                              before the light)
-       · the moon          — block-timed, one lunation per 28-day month
+       · the moon          — THE CALENDAR'S moon: block-timed, one symbolic lunation
+                             per 28-day month (not the sky's phase on your night)
        · the MONTH SIGN    — the 13 astronomical signs incl. Ophiuchus (M01 = Capricorn)
        · the YEAR ANIMAL   — the 13 animals incl. the Astronomical Cat (AB 0 = Ox)
        · THE MIRROR        — the same distance on the OTHER side of genesis: everyone
@@ -155,8 +156,9 @@
     fren's coat.</p>
   </div>
 
-  <p class="tiny">Signs, moons and animals are for <b>wonder, not finance</b> — no clock tells you
-  what a coin will be worth. <b>Old and new ride side by side</b>: the old world's sun sign and
+  <p class="tiny">Signs, moons and animals are for <b>wonder, not finance</b> — no clock tells you what a
+  coin will be worth. The moon shown is <b>the calendar's</b> block-timed moon, not the
+  sky's phase on your night: two moons, both honest, because we say which is which. <b>Old and new ride side by side</b>: the old world's sun sign and
   lunar-year animal (cusps approximate; the lunar year turns with the new-year moon, late
   Jan–mid Feb) beside the new calendar's 13 month-seats (M01 = Capricorn, the genesis sign;
   Ophiuchus 12th) and 13 year-animals (AB 0 = Ox; the 13th is the Astronomical Cat, welcomed
@@ -254,7 +256,7 @@ function render(prefix, h, ts, isMirror) {
     ['birth block', h >= 0 ? `~${h.toLocaleString('en-US')}` : `~−${(-h).toLocaleString('en-US')}`,
      h >= 0 ? 'estimated · 10 min a block' : 'blocks before the light'],
     ['birth beat', beat ? `~${beat}` : '— no face', beat ? 'the hh:mm block-beat' : 'no clock before genesis'],
-    ['moon', `${moon[0]} ${moon[1]}`, 'block-timed · one moon a month'],
+    ['moon', `${moon[0]} ${moon[1]}`, "the calendar's moon · block-timed, not the sky's"],
   ];
   el('grid').innerHTML = cells.map(cell).join('');
   /* the SIGN SPLIT — grouped by area: the old world one side, the new calendar the other.

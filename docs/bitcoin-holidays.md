@@ -39,11 +39,11 @@ year until the 12th halving (block 2,520,000, ~2056) finally rolls into month 2.
 
 | Day | Holiday | Why |
 |---|---|---|
-| `M01·D01` | **New Year** | Every year opens on a new moon — 52,416 blocks, no exceptions. |
+| `M01·D01` | **New Year** | Every year opens on the **calendar's** new moon — 52,416 blocks, no exceptions. The sky agreed once, at Day 0 (a real new moon, ~7 Jan 2027), then drifts ~9.6 days of phase a year; the calendar's moon keeps the feast. |
 | `M10·D28` | **The Hallows** | The last day of the tenth month: the new calendar's All Hallows' Eve, honoring the whitepaper's 31 Oct 2008. In year 0018 this is **Day 0** — block 983,664 opens it. |
 | `M13·D01` | **Sol's Seat opens** | The thirteenth month begins; every day of it is a whisper day. |
 | `M13·D13` | **The Thirteenth of the Thirteenth** | The loudest whisper of the year. |
-| `M13·D28` | **Year's End** | The 364th day; the year completes with the moon. |
+| `M13·D28` | **Year's End** | The 364th day; the year completes with the calendar's moon. |
 | every D13 · all of M13 | **Whisper days** (rhythm) | The thirteens — the clock may speak (`bft.lore.whisper`). |
 | every 210,000 blocks | **Halving Day** | Epic sats are minted; the subsidy halves. |
 | every 1,260,000 blocks | **The Conjunction** | Halving meets retarget: the ~24-year hour ticks; a legendary sat is born. First: ~2032. |

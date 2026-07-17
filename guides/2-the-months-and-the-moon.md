@@ -40,8 +40,9 @@ after June —
 
 ## The moon comes free
 
-Here's the loveliest part. A **28-day month is one whole trip of the moon.** So the moon rides the
-calendar without anyone winding it — the same picture, every month:
+Here's the loveliest part. A **28-day month is almost exactly one trip of the moon** —
+the real moon takes about a day and a half longer. So this calendar keeps **its own
+moon**: the same picture, every month, and nobody has to wind it:
 
 ```
    D01   🌑  new moon      · the month begins
@@ -51,8 +52,15 @@ calendar without anyone winding it — the same picture, every month:
    D28   🌑  new again     · the month ends
 ```
 
-Because every month *starts* on a new moon, **every new year starts on a new moon too** — just like
-the old Asian calendars, falling right out of the block math with nothing bolted on.
+That means there are **two moons**, and both are telling the truth. The **sky's moon**
+is the real one over your head — go outside any night and check it. The **calendar's
+moon** is this one — a drawing that keeps perfect calendar time and slowly drifts away
+from the sky, about a day and a half each month. They shook hands once, on Day 0: the
+whole calendar *begins* on a real new moon. After that, the drawing keeps its own beat.
+
+Because every month *starts* on the calendar's new moon, **every new year starts on a
+new moon too — the calendar's** — just like the old Asian calendars, falling right out
+of the block math with nothing bolted on.
 
 ## And every year has an animal — even the one who was left out
 
@@ -91,7 +99,8 @@ bft.moon_phase(920000)     # 🌒 Waxing Crescent
 bft.year_animal(920000)    # 🐍 Snake
 ```
 
-The moon and the animals here are for **wonder, not money** — no clock tells you what a coin will be
-worth. But keep an eye on that thirteenth. It keeps coming up… →
+The moon and the animals here are for **wonder, not money** — and if you want *tonight's*
+real moon, the sky shows it for free — no clock tells you what a coin will be worth. But
+keep an eye on that thirteenth. It keeps coming up… →
 
 **Next:** [the two calendars →](3-the-two-calendars.md)

@@ -106,9 +106,15 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
    `to_conjunction`, `to_last_satoshi`. `halving(h)` and `cycle(h)` give epoch/subsidy/progress.
    There are **no negative heights on-chain**; "counting backward" means these remaining-block
    countdowns, plus the conceptual BB epoch for pre-genesis input.
-4. **The sky (`bft.sky`)** — `moon_phase(h)` (one lunation per 28-day month; D01 new, ~D15 full),
-   `year_animal(h)` (13 signs: the twelve + the **Astronomical Cat** as the thirteenth; AB 0 = Ox).
-   Signs and moons are **wonder, not finance**.
+4. **The sky (`bft.sky`) — serves THE CALENDAR'S MOON, never the sky's.** `moon_phase(h)`
+   = the block-timed SYMBOLIC lunation (one per 28-day month; D01 new, ~D15 full, D28
+   home). NOT the astronomical phase: it drifts ~1.5 days/month from the real ~29.53-day
+   moon (~9.6 days of phase per BFT year); they agree at Day 0 (block 983,664 = the real
+   new moon of ~7 Jan 2027) and drift after. Surfaces showing the REAL moon (the pupil
+   study's analog face — computed locally, waxing lights the right limb, N hemisphere)
+   must be labeled THE SKY'S MOON; never present either moon as the other.
+   `year_animal(h)` (13 signs: the twelve + the **Astronomical Cat** as the thirteenth;
+   AB 0 = Ox). Signs and moons are **wonder, not finance**.
 5. **The Gregorian bridge** — `height_at(y,m,d,H,M,S)` estimates the block height for a UTC datetime
    (negative = BB); `from_gregorian(...)` returns the full clock plus `estimate=True`,
    `before_bitcoin`. `before_bitcoin(y,m,d,sec)` renders the pre-genesis `b₿` label.
@@ -132,6 +138,11 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   loosely tracks reality. Date the *height* (which every node agrees on); label Gregorian
   conversions as estimates.
 - **Wonder, not finance.** No clock tells you a price. Signs/moons/animals are flavor. No price talk.
+- **Two moons, both labeled.** The calendar's moon (`bft.sky`) is symbolic and
+  block-timed; the sky's moon is the real phase. "The calendar begins on a real new
+  moon" is true AT DAY 0 and drifts after; "every month / every new year begins on a
+  new moon" is true only of the CALENDAR's moon. Never let one moon wear the other's
+  name — Pac photographed the sky and caught a display near-opposite once. Never again.
 - **The ticker is just Bitcoin.** "Bitcoin Time Clock" is a lens.
 - **NEVER put real key material anywhere.** `bft.lore` is fiction — the Legend of the Thirteenth and
   breadcrumbs toward the Degen Wonderland hunt. It must never contain a real seed phrase, private

@@ -1,12 +1,17 @@
 """
 bft.sky — the moon and the thirteen animals ride the block calendar for free.
 
-The 28-day BFT month is one whole moon. Because the phase is a pure function of the day-of-month,
-the moon is *block-timed* like everything else: it drifts from the ~29.53-day astronomical moon on
-purpose, the same way the 364-day year drifts from the sun. The chain is still the clock.
+There are TWO moons, and this module serves exactly one. THE CALENDAR'S MOON (here): a
+block-timed, symbolic lunation — a pure function of the day-of-month, one whole cycle per
+28-day BFT month. It drifts from the ~29.53-day astronomical moon on purpose (~1.5 days a
+month, ~9.6 days of phase per BFT year), the same way the 364-day year drifts from the
+sun. The chain is still the clock. THE SKY'S MOON (not here): the real phase overhead —
+compute it astronomically and label it the sky's. The two agree at Day 0 (block 983,664,
+anchored to the real new moon of ~7 Jan 2027) and part ways after.
 
-And because every month begins on **D01, a new moon**, every BFT new year (M01·D01) is a new-moon,
-Asian-calendar-style new year — the shape falls out of the block math with nothing bolted on. Each
+And because every month begins on **D01, a calendar new moon**, every BFT new year
+(M01·D01) is a new-moon, Asian-calendar-style new year — on the calendar's moon; the
+shape falls out of the block math with nothing bolted on. Each
 year carries one of **thirteen** animal signs: the traditional twelve, plus the **Cat** as the 13th
 — the famous "left-out" sign of the Great Race (the rat tricked it out of the race) and a real sign
 in the Vietnamese zodiac. We seat it thirteenth to match the 13-month year and Ophiuchus, the 13th
@@ -37,8 +42,9 @@ YEAR_ANIMALS = [
 
 
 def moon_phase(height: Optional[int]) -> dict[str, Any]:
-    """The BFT moon — one synodic cycle per BFT month, a pure function of the day-of-month.
-    D01 = 🌑 new, ~D15 = 🌕 full, back to new by D28. Returns
+    """THE CALENDAR'S MOON — one symbolic, block-timed lunation per BFT month, a pure function
+    of the day-of-month. NOT the sky's phase: it drifts ~1.5 days/month from the real
+    ~29.53-day synodic moon. D01 = 🌑 new, ~D15 = 🌕 full, back to new by D28. Returns
     {known, index 0..7, emoji, name, illumination 0..1, day}."""
     d = from_height(height)
     if not d.get("known") or d.get("epoch") == "BB":

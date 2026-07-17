@@ -158,10 +158,19 @@ you're already telling Bitcoin time; this library reads it back to you.
 
 ## The sky comes free (`bft.sky`)
 
-A 28-day month is one whole trip of the moon, so the moon rides the calendar for nothing — and
-because every month begins on a new moon, every BFT new year is a new-moon new year. Each year also
-carries one of **thirteen** animal signs: the traditional twelve, plus the **Astronomical Cat** as
-the thirteenth (the sign left out of the Great Race).
+There are two moons in this house, and both are honest because we label them. **The
+calendar's moon** lives here: a 28-day month is *almost* one trip of the real moon
+(~29.53 days), so BFT keeps a block-timed, symbolic lunation — D01 new, D15 full, D28
+home — that drifts from the sky ~1.5 days a month **on purpose**, the same way the
+364-day year drifts from the sun. **The sky's moon** is the one over your head; ask the
+sky, not this module. They agree at Day 0 — the calendar begins on a **real** new moon
+(block 983,664, ~7 Jan 2027) — and part ways after, ~9.6 days of phase per BFT year.
+
+So every BFT month begins on a *calendar* new moon, and every BFT new year is a
+new-moon new year **on the calendar's moon** — true by construction, checkable by
+anyone. Each year also carries one of **thirteen** animal signs: the traditional
+twelve, plus the **Astronomical Cat** as the thirteenth (the sign left out of the
+Great Race).
 
 ```python
 import bft
@@ -170,7 +179,8 @@ bft.year_animal(920_000)         # {'emoji': '🐍', 'name': 'Snake', ...}
 bft.format_date(858_000)         # '0016.05.23 a₿'  — the ₿-marked bitcoin date
 ```
 
-Signs and moons are for wonder, not finance — the same house rule as the rest of BFT.
+Signs and moons are for wonder, not finance — and the calendar's moon never pretends to
+be the sky's. Same house rule as the rest of BFT.
 
 ## Little guides & studies
 
