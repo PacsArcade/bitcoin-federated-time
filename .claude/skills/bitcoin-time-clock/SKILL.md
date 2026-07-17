@@ -143,6 +143,30 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   moon" is true AT DAY 0 and drifts after; "every month / every new year begins on a
   new moon" is true only of the CALENDAR's moon. Never let one moon wear the other's
   name — Pac photographed the sky and caught a display near-opposite once. Never again.
+- **Your sky's hue (the opt-in pattern).** The pupil's moon can warm toward ember when
+  the real moon rides low — computed from the moon's ALTITUDE, which needs location:
+  always OPT-IN, one tap, in-memory only, never stored/sent, dies with the tab, and the
+  tooltip says so. Below the horizon → the disc dims and says "below your horizon"
+  (honesty over decoration). Smoke deepens the real red — model only what's verifiable.
+
+## House copy laws (learned 0018.04.20–21 — bind ALL public surfaces, art included)
+
+- **The marker never wraps, never shouts:** date+marker is one unbreakable unit
+  (`.nb { white-space: nowrap; text-transform: none; }`) — no `text-transform: uppercase`
+  may ever touch `a₿`/`b₿`.
+- **Ye grammar shoppe rides every review** (persona: olde English — the shoppe, the
+  colour): "**an** ~estimate", never "a ~estimate"; inscriptions take NO trailing period
+  (`TICK TOCK — IT ALL COMES BACK TO THE BLOCK`).
+- **Separators never dangle:** interpuncts (`·`) must live INSIDE unbreakable phrases —
+  wrapped lines are whole thoughts, never orphaned dots.
+- **Nothing flashes faster than 3×/sec** (photosensitive safety — the all-ages law
+  outranks drama; a correction is a steady hold, not a strobe).
+- **The twelve have names.** DW's artists (Whisper is one) are living people — their
+  names never appear in negative or morbid phrasing, in any copy, review, or summary.
+- **Unratified lore wears its label in VISIBLE copy** — source comments don't count;
+  the public reads the page, not the source.
+- **Bench notes stay off the face:** rev stamps, study hotkeys, and workbench copy live
+  in source comments; the public footer carries the name, the date, and the instruction.
 - **The ticker is just Bitcoin.** "Bitcoin Time Clock" is a lens.
 - **NEVER put real key material anywhere.** `bft.lore` is fiction — the Legend of the Thirteenth and
   breadcrumbs toward the Degen Wonderland hunt. It must never contain a real seed phrase, private
