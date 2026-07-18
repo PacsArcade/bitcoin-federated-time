@@ -87,6 +87,20 @@
   .signgroup.mine .sg-head { color: var(--ember-dim); }
   .bb .signgroup.mine .sg-head { color: var(--ghost); }
   .nb { white-space: nowrap; text-transform: none; }
+  /* ——— the TWO CALENDARS, side by side: the old page vs the new page (Pac's picture) ——— */
+  .calpair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+  @media (max-width: 560px) { .calpair { grid-template-columns: 1fr; } }
+  .calpage { border: 1px solid var(--edge); border-radius: 10px; padding: 12px 12px 10px; background: rgba(0,0,0,.25); }
+  .calpage h3 { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+  .calpage .cap { font-size: 11px; color: var(--dimmer); letter-spacing: .04em; margin-top: 8px; line-height: 1.5; }
+  .calgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 8px; }
+  .calgrid .wd { font-size: 9px; letter-spacing: .08em; color: var(--dimmer); text-align: center; padding: 2px 0; }
+  .calgrid .day { font-size: 12px; text-align: center; padding: 5px 0; border-radius: 6px; color: var(--dim);
+                  font-variant-numeric: tabular-nums; }
+  .calgrid .day.pad { visibility: hidden; }
+  .calgrid .day.hit { font-weight: 700; color: #0a0907; }
+  .calgrid .day.hit.emb { background: var(--ember-dim); box-shadow: 0 0 12px rgba(247,147,26,.45); }
+  .calgrid .day.hit.gho { background: var(--ghost); box-shadow: 0 0 12px rgba(69,198,180,.4); }
   .omen { margin-top: 14px; font-size: 13px; letter-spacing: .1em; color: #b9a7d9; }
   .drift { margin-top: 12px; font-size: 12.5px; line-height: 1.65; color: var(--dim); letter-spacing: .04em; }
   .drift b { color: var(--ember-dim); }
@@ -132,8 +146,17 @@
     <div class="omen hidden" id="main-omen"></div>
   </section>
 
+  <section class="card hidden" id="cal-card">
+    <h2>the two calendars — your day, before and after</h2>
+    <div class="calpair">
+      <div class="calpage" id="cal-old"></div>
+      <div class="calpage" id="cal-new"></div>
+    </div>
+    <p class="drift" id="cal-note"></p>
+  </section>
+
   <section class="card hidden" id="next-card">
-    <h2>your bitcoin birthday, returning — what it was, and where it's going</h2>
+    <h2>your bitcoin birthday, coming back — same month · same day, once every bitcoin year</h2>
     <div class="grid" id="next-grid"></div>
     <p class="drift" id="next-drift"></p>
   </section>
@@ -311,39 +334,88 @@ function render(prefix, h, ts, isMirror) {
   }
 }
 
-/* THE RETURNS — the same month·day seat on the a₿ calendar, the next few times it comes
-   around, each with its OLD-CALENDAR landing (an ~estimate at 10-min blocks). This is the
-   "what it was → what it's going to" view: a bitcoin birthday is fixed in blocks, so it
-   walks ~1¼ days up the old calendar every year. It's the old calendar that drifts. */
+/* THE RETURNS — plain telling: your bitcoin birthday is the same bitcoin month·day,
+   coming back once every bitcoin year (52,416 blocks — exact). Each return leads with
+   its OLD-CALENDAR landing (an ~estimate at 10-min blocks); the exact a₿ date and
+   block ride small beneath. b₿ births get the bridge (the new calendar keeps your day)
+   and the honest day-first/month-first note; the drift is two frens walking laps. */
 function renderReturns(d, birthTs) {
   const seat = (d.month - 1) * BLOCKS_PER_MONTH + (d.day - 1) * BLOCKS_PER_DAY;  // block-of-year where the date opens
   const nowH = Math.max(0, Math.round((Date.now() - GENESIS_UNIX_MS) / BLOCK_MS));
   let y = Math.floor(nowH / BLOCKS_PER_YEAR);
-  if (y * BLOCKS_PER_YEAR + seat <= nowH) y += 1;                // the next time the seat opens
-  const rows = [];
+  if (y * BLOCKS_PER_YEAR + seat <= nowH) y += 1;                // the next time the date opens
+  const bb = d.epoch === 'BB';
+  const mm = pad(d.month, 2), dd = pad(d.day, 2);
+  document.querySelector('#next-card h2').textContent =
+    'your bitcoin birthday, coming back — same month · same day, once every bitcoin year';
   const oldFmt = ts => new Date(ts).toLocaleDateString('en-GB',
     { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  rows.push(['what it was', oldFmt(birthTs),
-    d.epoch === 'BB' ? 'your old-calendar birthday · before the light' : 'your old-calendar birthday']);
+  const rows = [['your birthday', oldFmt(birthTs),
+    bb ? 'born before bitcoin — the new calendar keeps your day anyway'
+       : 'your old-calendar day']];
+  const labels = ['next', 'then', 'and then'];
   for (let i = 0; i < 3; i++) {
-    const h = (y + i) * BLOCKS_PER_YEAR + seat;
+    const h = (y + i) * BLOCKS_PER_YEAR + seat;                  // exact — the calendar defines it
     const when = GENESIS_UNIX_MS + h * BLOCK_MS;                 // ~estimate, 10-min blocks from genesis
-    rows.push([`<span class="nb">${pad(y + i, 4)}.${pad(d.month, 2)}.${pad(d.day, 2)}&nbsp;a₿</span>`,
-               `~${oldFmt(when)}`,
-               `block ${h.toLocaleString('en-US')}${d.epoch === 'BB' ? ' · a₿-side seat' : ''}`]);
+    rows.push([labels[i], `~${oldFmt(when)}`,
+      `<span class="nb">${pad(y + i, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${h.toLocaleString('en-US')}`]);
   }
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
+  const opening = bb
+    ? `You were born before bitcoin — so the new calendar keeps a day for you: ` +
+      `<b>day ${dd} of month ${mm}</b>, coming back once every bitcoin year at an exact block.`
+    : `Your bitcoin birthday is the same bitcoin month and day — <b>day ${dd} of month ${mm}</b> — ` +
+      `coming back once every bitcoin year at an exact block.`;
+  const flip = bb
+    ? ` One honest note on the digits: before the light, dates are written day-first — ` +
+      `<span class="nb">${fmtDate(d)}</span> means day ${dd} of month ${mm} — and after, month-first: ` +
+      `<span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> is that same day. ` +
+      `Nothing flipped — mirrored, because before-days count backward toward the light.`
+    : '';
   document.getElementById('next-drift').innerHTML =
-    `Your bitcoin birthday is fixed in <b>blocks</b> — the same month·day seat, every 52,416 blocks. ` +
-    `On the old calendar it lands <b>~1¼ days earlier each year</b> (a 364-day year vs the sun's 365¼). ` +
-    `The block dates are exact; the old-calendar landings are ~estimates at ten minutes a block.`;
+    opening +
+    ` On the old calendar it arrives <b>~1¼ days earlier each year</b>: the sun's lap is ` +
+    `365 days and a bit, bitcoin's is a tidy 364, so bitcoin comes round the corner a little ` +
+    `sooner every time. Not lost — just early.` +
+    flip +
+    ` Block numbers are exact; old-calendar landings wear the ~.`;
   document.getElementById('next-card').classList.remove('hidden');
+}
+
+/* THE TWO CALENDARS, SIDE BY SIDE (Pac's picture): the page you were handed — the messy
+   old month with your day circled — beside the new page: the perfect 4×7 rectangle where
+   your day sits in the SAME spot every year, forever. 364 = exactly 52 weeks, so the new
+   calendar is perennial: same date, same weekday, every single year. */
+const MONTHS_OLD = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WD = ['S','M','T','W','T','F','S'];
+function renderCalendars(d, ts) {
+  const bb = d.epoch === 'BB';
+  const dt = new Date(ts);
+  const oy = dt.getUTCFullYear(), om = dt.getUTCMonth(), od = dt.getUTCDate();
+  const first = new Date(Date.UTC(oy, om, 1)).getUTCDay();
+  const ndays = new Date(Date.UTC(oy, om + 1, 0)).getUTCDate();
+  let g = WD.map(w => `<div class="wd">${w}</div>`).join('');
+  for (let i = 0; i < first; i++) g += '<div class="day pad">·</div>';
+  for (let day = 1; day <= ndays; day++)
+    g += `<div class="day${day === od ? (' hit ' + (bb ? 'gho' : 'emb')) : ''}">${day}</div>`;
+  document.getElementById('cal-old').innerHTML =
+    `<h3>the old page — ${MONTHS_OLD[om]} ${oy}</h3><div class="calgrid">${g}</div>` +
+    `<p class="cap">${ndays} days this time — a different shape every year, and your day wanders the week.</p>`;
+  let n = '';
+  for (let day = 1; day <= 28; day++)
+    n += `<div class="day${day === d.day ? ' hit emb' : ''}">${day}</div>`;
+  document.getElementById('cal-new').innerHTML =
+    `<h3>the new page — month ${pad(d.month, 2)}, every year</h3><div class="calgrid">${n}</div>` +
+    `<p class="cap">4 weeks · 28 days — the same perfect page, every month of every year. Your day never moves, and it lands on the same weekday forever.</p>`;
+  document.getElementById('cal-note').innerHTML =
+    `364 days = exactly 52 weeks: the new calendar repeats perfectly, forever. The old page above is the one that keeps changing shape.`;
+  document.getElementById('cal-card').classList.remove('hidden');
 }
 
 function update() {
   const dv = document.getElementById('d').value;
-  const hideAll = () => ['main-card', 'next-card', 'mirror-card', 'mirror-line'].forEach(id => {
+  const hideAll = () => ['main-card', 'cal-card', 'next-card', 'mirror-card', 'mirror-line'].forEach(id => {
     const el = document.getElementById(id); if (el) el.classList.add('hidden');
   });
   if (!dv) { hideAll(); return; }                            // a cleared input never shows a stale birthday
@@ -353,6 +425,7 @@ function update() {
   const ts = Date.UTC(+m[1], +m[2] - 1, +m[3], +tv[0] || 0, +tv[1] || 0);
   const h = Math.round((ts - GENESIS_UNIX_MS) / BLOCK_MS);       // negative = Before Bitcoin
   render('main', h, ts, false);
+  renderCalendars(bftDate(h), ts);   // the two calendars, side by side — before and after
   renderReturns(bftDate(h), ts);                                 // what it was → what it's going to (old cal ↔ a₿)
   /* THE MIRROR — the same block-distance on the other side of genesis: everyone gets
      both readings (before AND after), in old time and bitcoin time. */
