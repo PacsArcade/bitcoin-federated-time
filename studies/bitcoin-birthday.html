@@ -227,6 +227,11 @@ const moonOf = d => MOONS[Math.round(((d.day - 1) / 28) * 8) % 8];   // the CALE
 /* THE SKY'S MOON ON YOUR NIGHT — real astronomy, and the sky doesn't care about genesis:
    it works for 1983 as happily as 2083 (mean synodic month from a known new moon, ~±0.6 d).
    Pac's law: before-bitcoin frens still had a moon — show them the old moon AND the new. */
+/* THE HONEST "NOW" — real blocks ran faster than 10 minutes for 17 years, so the genesis
+   model lags the real chain by months. "Now" and future landings anchor to a real recent
+   block (same pattern as the pupil clock). Birth estimates keep the genesis model — for
+   pre-2009 there are no real blocks, and the page says ~estimate either way. */
+const ANCHOR_H = 957877, ANCHOR_T = 1783959226000;   // real block · 2026-07-13
 const SYNODIC = 29.530588853, NM_EPOCH = Date.UTC(2000, 0, 6, 18, 14);
 function skyMoonAt(ts) {
   const age = (((ts - NM_EPOCH) / 86400000) % SYNODIC + SYNODIC) % SYNODIC;
@@ -341,7 +346,7 @@ function render(prefix, h, ts, isMirror) {
    lesson — the drift belongs to the OLD calendar, not to your day). */
 function renderReturns(d, birthTs, h) {
   const seat = (d.month - 1) * BLOCKS_PER_MONTH + (d.day - 1) * BLOCKS_PER_DAY;  // block-of-year where the date opens
-  const nowH = Math.max(0, Math.round((Date.now() - GENESIS_UNIX_MS) / BLOCK_MS));
+  const nowH = Math.max(0, ANCHOR_H + Math.floor((Date.now() - ANCHOR_T) / BLOCK_MS));   // anchored to a real block — we are in year 0018, and the math must know it
   let y = Math.floor(nowH / BLOCKS_PER_YEAR);
   if (y * BLOCKS_PER_YEAR + seat <= nowH) y += 1;                // the next time the date opens
   const bb = d.epoch === 'BB';
@@ -351,7 +356,7 @@ function renderReturns(d, birthTs, h) {
   const oldFmt = ts => new Date(ts).toLocaleDateString('en-GB',
     { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
   const hNext = y * BLOCKS_PER_YEAR + seat;                      // exact — the calendar defines it
-  const whenNext = GENESIS_UNIX_MS + hNext * BLOCK_MS;           // ~estimate, 10-min blocks from genesis
+  const whenNext = ANCHOR_T + (hNext - ANCHOR_H) * BLOCK_MS;     // ~estimate, 10-min blocks from the real anchor
   const rows = [
     ['your birthday', oldFmt(birthTs),
      bb ? 'born before bitcoin — the new calendar keeps your day anyway'
@@ -359,7 +364,7 @@ function renderReturns(d, birthTs, h) {
     ['your bitcoin day', `day ${dd} · month ${mm}`,
      'the same, every bitcoin year — it never moves'],
     ['next · on the old calendar', `~${oldFmt(whenNext)}`,
-     `in bitcoin it's always <span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
+     `that's <span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
   ];
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
