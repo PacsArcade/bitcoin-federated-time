@@ -158,6 +158,12 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   captions, aria labels, art engravings. Reviewers MUST grep for reversed prose
   (`day \d+ .{0,12}month`, `dd.mm` renders) — QA and publishing both missed a day-first
   cell once; that never happens again.
+- **The order law binds NOTATION, never time itself (Pac's teaching).** yyyy.mm.dd is how
+  we WRITE time — it is not a claim that time moves one way. BFT's negative time (b₿, the
+  mirror, the wheel turning backward as happily as forward) is a GATEWAY fiat calendars
+  cannot comprehend — a limit proposed by fiat time standards, and we do not live there.
+  Never write "time only flows one way" in this house. Question everything; the
+  possibilities are endless; keep the wonder honestly labeled, as always.
 - **The honest "now" is a REAL block.** Never compute "now" or future landings from the
   genesis 10-minute model — it lags the real chain by months (it once served a "next
   birthday" in year 0017, already past, while the chain stood in 0018). Anchor now/future
