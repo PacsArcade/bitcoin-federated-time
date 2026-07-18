@@ -158,8 +158,9 @@
   </div>
 
   <p class="tiny">Signs, moons and animals are for <b>wonder, not finance</b> — no clock tells you what a
-  coin will be worth. The moon shown is <b>the calendar's</b> block-timed moon, not the
-  sky's phase on your night: two moons, both honest, because we say which is which.
+  coin will be worth. Two moons ride the sign columns, both honest because we say which is
+  which: <b>the sky's</b> real moon on your birth night (~mean-lunation, ±about half a day)
+  with the old world, and <b>the calendar's</b> block-timed moon with the new.
   <b>Old and new ride side by side</b>: the old world's sun sign and lunar-year animal
   (cusps approximate; the lunar year turns with the new-year moon, late Jan–mid Feb) beside
   the new calendar's 13 month-seats (M01 = Capricorn, the genesis sign; Ophiuchus 12th) and
@@ -199,7 +200,15 @@ const blockBeat = h => {                    // the canonical hh:mm face — AB o
 };
 const MOONS = [["🌑","New"],["🌒","Waxing Crescent"],["🌓","First Quarter"],["🌔","Waxing Gibbous"],
                ["🌕","Full"],["🌖","Waning Gibbous"],["🌗","Last Quarter"],["🌘","Waning Crescent"]];
-const moonOf = d => MOONS[Math.round(((d.day - 1) / 28) * 8) % 8];
+const moonOf = d => MOONS[Math.round(((d.day - 1) / 28) * 8) % 8];   // the CALENDAR's moon (block-timed)
+/* THE SKY'S MOON ON YOUR NIGHT — real astronomy, and the sky doesn't care about genesis:
+   it works for 1983 as happily as 2083 (mean synodic month from a known new moon, ~±0.6 d).
+   Pac's law: before-bitcoin frens still had a moon — show them the old moon AND the new. */
+const SYNODIC = 29.530588853, NM_EPOCH = Date.UTC(2000, 0, 6, 18, 14);
+function skyMoonAt(ts) {
+  const age = (((ts - NM_EPOCH) / 86400000) % SYNODIC + SYNODIC) % SYNODIC;
+  return MOONS[Math.round((age / SYNODIC) * 8) % 8];
+}
 const ANIMALS = [["🐀","Rat"],["🐂","Ox"],["🐅","Tiger"],["🐇","Rabbit"],["🐉","Dragon"],["🐍","Snake"],
                  ["🐎","Horse"],["🐐","Goat"],["🐒","Monkey"],["🐓","Rooster"],["🐕","Dog"],["🐖","Pig"],
                  ["🐈","Astronomical Cat"]];
@@ -264,17 +273,21 @@ function render(prefix, h, ts, isMirror) {
     ['birth block', h >= 0 ? `~${h.toLocaleString('en-US')}` : `~−${(-h).toLocaleString('en-US')}`,
      h >= 0 ? 'estimated · 10 min a block' : 'estimated · blocks before the light'],
     ['birth beat', beat ? `~${beat}` : '— no face', beat ? 'the hh:mm block-beat' : 'no clock before genesis'],
-    bb ? ['moon', '— no moon', "the calendar's moon starts at the light"]
-       : ['moon', `${moon[0]} ${moon[1]}`, "the calendar's moon · block-timed, not the sky's"],
   ];
   el('grid').innerHTML = cells.map(cell).join('');
   /* the SIGN SPLIT — grouped by area: the old world one side, the new calendar the other.
-     Whichever side is YOURS wears the accent (b₿ births belong to the old world). */
+     BOTH moons ride the columns (Pac's law): the sky's real moon on your night rides with
+     the old world; the calendar's block-timed moon rides with the new. Whichever side is
+     YOURS wears the accent (b₿ births belong to the old world). */
+  const sky = skyMoonAt(ts);
   const oldCells = [
+    ['moon that night', `${sky[0]} ${sky[1]}`, "~the sky's real moon on your birth night"],
     ['sun sign', `${sun[0]} ${sun[1]}`, 'the sun calendar you were handed · cusps shift ~a day'],
     ['year animal', `${oldA.sign[0]} ${oldA.sign[1]}`, oldA.note],
   ];
   const newCells = [
+    bb ? ['calendar moon', '—', "the calendar's moon starts at the light"]
+       : ['calendar moon', `${moon[0]} ${moon[1]}`, "block-timed · the calendar's, not the sky's"],
     ['month seat', `${newSign[1]} ${newSign[0]}`, `month ${pad(d.month,2)} of 13`],
     ['year animal', `${newAnimal[0]} ${newAnimal[1]}`, `${d.epoch} year ${d.year} · the 13-wheel`],
   ];
