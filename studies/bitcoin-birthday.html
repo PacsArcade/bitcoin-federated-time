@@ -334,12 +334,12 @@ function render(prefix, h, ts, isMirror) {
   }
 }
 
-/* THE RETURNS — plain telling: your bitcoin birthday is the same bitcoin month·day,
-   coming back once every bitcoin year (52,416 blocks — exact). Each return leads with
-   its OLD-CALENDAR landing (an ~estimate at 10-min blocks); the exact a₿ date and
-   block ride small beneath. b₿ births get the bridge (the new calendar keeps your day)
-   and the honest day-first/month-first note; the drift is two frens walking laps. */
-function renderReturns(d, birthTs) {
+/* THE RETURNS — one seat, one wheel: your bitcoin day is found ONCE (birth moment →
+   blocks before/after the light → the 13×28 wheel), and then it never moves — same
+   month, same day, every bitcoin year, forever. We show the seat and the SINGLE next
+   landing; no parade of drifting years (Pac: illustrating the change teaches the wrong
+   lesson — the drift belongs to the OLD calendar, not to your day). */
+function renderReturns(d, birthTs, h) {
   const seat = (d.month - 1) * BLOCKS_PER_MONTH + (d.day - 1) * BLOCKS_PER_DAY;  // block-of-year where the date opens
   const nowH = Math.max(0, Math.round((Date.now() - GENESIS_UNIX_MS) / BLOCK_MS));
   let y = Math.floor(nowH / BLOCKS_PER_YEAR);
@@ -347,26 +347,31 @@ function renderReturns(d, birthTs) {
   const bb = d.epoch === 'BB';
   const mm = pad(d.month, 2), dd = pad(d.day, 2);
   document.querySelector('#next-card h2').textContent =
-    'your bitcoin birthday, coming back — same month · same day, once every bitcoin year';
+    'your bitcoin day — same month · same day, every bitcoin year, forever';
   const oldFmt = ts => new Date(ts).toLocaleDateString('en-GB',
     { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  const rows = [['your birthday', oldFmt(birthTs),
-    bb ? 'born before bitcoin — the new calendar keeps your day anyway'
-       : 'your old-calendar day']];
-  const labels = ['next', 'then', 'and then'];
-  for (let i = 0; i < 3; i++) {
-    const h = (y + i) * BLOCKS_PER_YEAR + seat;                  // exact — the calendar defines it
-    const when = GENESIS_UNIX_MS + h * BLOCK_MS;                 // ~estimate, 10-min blocks from genesis
-    rows.push([labels[i], `~${oldFmt(when)}`,
-      `<span class="nb">${pad(y + i, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${h.toLocaleString('en-US')}`]);
-  }
+  const hNext = y * BLOCKS_PER_YEAR + seat;                      // exact — the calendar defines it
+  const whenNext = GENESIS_UNIX_MS + hNext * BLOCK_MS;           // ~estimate, 10-min blocks from genesis
+  const rows = [
+    ['your birthday', oldFmt(birthTs),
+     bb ? 'born before bitcoin — the new calendar keeps your day anyway'
+        : 'your old-calendar day'],
+    ['your bitcoin day', `day ${dd} · month ${mm}`,
+     'the same, every bitcoin year — it never moves'],
+    ['the next one', `~${oldFmt(whenNext)}`,
+     `<span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
+  ];
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
   const opening = bb
-    ? `You were born before bitcoin — so the new calendar keeps a day for you: ` +
-      `<b>day ${dd} of month ${mm}</b>, coming back once every bitcoin year at an exact block.`
-    : `Your bitcoin birthday is the same bitcoin month and day — <b>day ${dd} of month ${mm}</b> — ` +
-      `coming back once every bitcoin year at an exact block.`;
+    ? `<b>How your day was found:</b> your birth sits ~${(-h).toLocaleString('en-US')} blocks ` +
+      `before the light. The new calendar's wheel — 13 months of 28 days — turns exactly the ` +
+      `same backward as forward, so we rolled it back that far and it stopped on ` +
+      `<b>day ${dd} of month ${mm}</b>. That same seat exists on the wheel going forward — ` +
+      `and it's yours: the same month and day, every bitcoin year, forever.`
+    : `<b>How your day was found:</b> your birth block landed on <b>day ${dd} of month ${mm}</b> ` +
+      `of the 13×28 wheel — and that seat is yours: the same month and day, every bitcoin ` +
+      `year, forever.`;
   const flip = bb
     ? ` One honest note on the digits: before the light, dates are written day-first — ` +
       `<span class="nb">${fmtDate(d)}</span> means day ${dd} of month ${mm} — and after, month-first: ` +
@@ -375,9 +380,9 @@ function renderReturns(d, birthTs) {
     : '';
   document.getElementById('next-drift').innerHTML =
     opening +
-    ` On the old calendar it arrives <b>~1¼ days earlier each year</b>: the sun's lap is ` +
-    `365 days and a bit, bitcoin's is a tidy 364, so bitcoin comes round the corner a little ` +
-    `sooner every time. Not lost — just early.` +
+    ` Your day never moves; only the <b>old</b> calendar slides underneath it, arriving ` +
+    `~1¼ days earlier each of its years (the sun's lap is 365 days and a bit, bitcoin's ` +
+    `is a tidy 364).` +
     flip +
     ` Block numbers are exact; old-calendar landings wear the ~.`;
   document.getElementById('next-card').classList.remove('hidden');
@@ -426,7 +431,7 @@ function update() {
   const h = Math.round((ts - GENESIS_UNIX_MS) / BLOCK_MS);       // negative = Before Bitcoin
   render('main', h, ts, false);
   renderCalendars(bftDate(h), ts);   // the two calendars, side by side — before and after
-  renderReturns(bftDate(h), ts);                                 // what it was → what it's going to (old cal ↔ a₿)
+  renderReturns(bftDate(h), ts, h);                                 // what it was → what it's going to (old cal ↔ a₿)
   /* THE MIRROR — the same block-distance on the other side of genesis: everyone gets
      both readings (before AND after), in old time and bitcoin time. */
   const mirrorTs = GENESIS_UNIX_MS - (ts - GENESIS_UNIX_MS);
