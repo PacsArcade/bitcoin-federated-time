@@ -361,7 +361,7 @@ function renderReturns(d, birthTs, h) {
     ['your birthday', oldFmt(birthTs),
      bb ? 'born before bitcoin — the new calendar keeps your day anyway'
         : 'your old-calendar day'],
-    ['your bitcoin day', `day ${dd} · month ${mm}`,
+    ['your bitcoin day', `month ${mm} · day ${dd}`,
      'the same, every bitcoin year — it never moves'],
     ['next · on the old calendar', `~${oldFmt(whenNext)}`,
      `that's <span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
@@ -372,9 +372,9 @@ function renderReturns(d, birthTs, h) {
     ? `<b>How your day was found:</b> your birth sits ~${(-h).toLocaleString('en-US')} blocks ` +
       `before the light. The new calendar's wheel — 13 months of 28 days — turns exactly the ` +
       `same backward as forward, so we rolled it back that far and it stopped on ` +
-      `<b>day ${dd} of month ${mm}</b>. That same seat exists on the wheel going forward — ` +
+      `<b>month ${mm}, day ${dd}</b>. That same seat exists on the wheel going forward — ` +
       `and it's yours: the same month and day, every bitcoin year, forever.`
-    : `<b>How your day was found:</b> your birth block landed on <b>day ${dd} of month ${mm}</b> ` +
+    : `<b>How your day was found:</b> your birth block landed on <b>month ${mm}, day ${dd}</b> ` +
       `of the 13×28 wheel — and that seat is yours: the same month and day, every bitcoin ` +
       `year, forever.`;
   document.getElementById('next-drift').innerHTML =

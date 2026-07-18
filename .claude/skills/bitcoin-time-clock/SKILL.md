@@ -151,6 +151,18 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
 
 ## House copy laws (learned 0018.04.20–21 — bind ALL public surfaces, art included)
 
+- **THE TIME ORDER LAW — big to small, ALWAYS, everywhere.** `yyyy.mm.dd hh:mm:ss`, ONE
+  order for BOTH epochs (`0018.04.20 a₿` / `0003.06.09 b₿` — the day-first b₿ inversion is
+  DEAD, Pac's ruling). The law binds PROSE too: "month 09, day 13" — never "day 13 of
+  month 09"; year before month before day before hour, in cells, tooltips, paragraphs,
+  captions, aria labels, art engravings. Reviewers MUST grep for reversed prose
+  (`day \d+ .{0,12}month`, `dd.mm` renders) — QA and publishing both missed a day-first
+  cell once; that never happens again.
+- **The honest "now" is a REAL block.** Never compute "now" or future landings from the
+  genesis 10-minute model — it lags the real chain by months (it once served a "next
+  birthday" in year 0017, already past, while the chain stood in 0018). Anchor now/future
+  to a real recent block (the pupil's RECENT_ANCHOR pattern); the genesis model is only
+  for pre-2009 estimates, ~-marked.
 - **The marker never wraps, never shouts:** date+marker is one unbreakable unit
   (`.nb { white-space: nowrap; text-transform: none; }`) — no `text-transform: uppercase`
   may ever touch `a₿`/`b₿`.
