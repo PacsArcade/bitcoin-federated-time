@@ -74,7 +74,7 @@ print("\n".join(bft.format_clock(958_346)))
 ```python
 bft.from_gregorian(1995, 6, 15, 12, 0)   # a Gregorian UTC birthday → the full clock
 # {'height': -712982, 'before_bitcoin': True, 'estimate': True, 'calendar': {...}}
-bft.format_date(bft.height_at(1995, 6, 15))   # '0013.24.08 b₿'  — before genesis, inverted day-first
+bft.format_date(bft.height_at(1995, 6, 15))   # '0013.08.24 b₿'  — before genesis, same format
 bft.format_date(bft.height_at(2015, 7, 20))   # '0006.08.09 a₿'
 ```
 
@@ -107,7 +107,7 @@ chain hasn't vouched for that page yet.
 - **Epoch:** the genesis block (height 0, 2009-01-03) starts the clock. Heights ≥ 0 are **After
   Bitcoin (a₿)**; negatives are **Before Bitcoin (b₿)**, the inverse.
 - **The date:** `yyyy.mm.dd a₿`, marker after, year zero-padded to four — **the display year is
-  bitcoin's age** (genesis opens `0000`). Before Bitcoin inverts day-first: `yyyy.dd.mm b₿`.
+  bitcoin's age** (genesis opens `0000`). Before Bitcoin reads identically: `yyyy.mm.dd b₿` — one order, both epochs.
 - **Units:** day = 144 blocks · week = 1,008 · **fortnight = 2,016 (one difficulty period)** ·
   **month = 4,032 (two difficulty periods) = 28 days** · **year = 52,416 (26 periods) = 364 days**.
 - **13 months of 28 days = 364 days.** No leap hacks, no intercalary day. It drifts ~1.24 days/year

@@ -25,9 +25,9 @@ this doc recomputes every BFT label through the library. Try it live:
 | 840,000 | `0016.01.10 a₿` | exact | **The Fourth Halving** | 6.25 → 3.125 — mined on 4/20, because of course it was. |
 | 1,050,000 | `0020.01.12 a₿` | exact | **The Fifth Halving** (next) | 3.125 → 1.5625 — the block is fixed; only the wall-clock date drifts. |
 
-**Before the light (b₿, day-first):** **Whitepaper Day** — 31 Oct 2008, All Hallows' Eve —
-computes to `0000.09.03 b₿` (~height −9,217). **Satoshi's chosen birthday** — 5 Apr 1975,
-lore-grade — computes to `0033.08.12 b₿`. *(An earlier research draft composed these two
+**Before the light (b₿):** **Whitepaper Day** — 31 Oct 2008, All Hallows' Eve —
+computes to `0000.03.09 b₿` (~height −9,217). **Satoshi's chosen birthday** — 5 Apr 1975,
+lore-grade — computes to `0033.12.08 b₿`. *(An earlier research draft composed these two
 labels differently; the values here come straight from `bft.format_date()` — compute, don't
 copy.)*
 

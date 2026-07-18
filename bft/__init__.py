@@ -9,7 +9,7 @@ height into three honest readings of time, plus one sidebar:
      a live display reads the seconds off the Pac ring (block-age mod 60, ~). `block_beat()`.
   2. A CALENDAR — 13 perfect 28-day months, counted purely in blocks (the "Federated Time"
      calendar). A month is exactly two difficulty adjustments; a year is 26. Dates render
-     ₿-marked, marker after: `0018.04.20 a₿` (pre-genesis inverts day-first: `b₿`-marked).
+     ₿-marked, marker after: `0018.04.20 a₿` — one format, both epochs (pre-genesis wears `b₿`).
   3. The COUNTDOWNS — the inverse of the block count: blocks remaining to the next difficulty
      adjustment, the next halving, the next cycle conjunction, and the last satoshi (~2140).
   ·  THE ORDINAL SIDEBAR — Bitcoin's degree notation A°B′C″D‴, which ordinal theory labels
@@ -127,7 +127,8 @@ def format_date(height: Optional[int], month_names: Optional[list[str]] = None,
                 style: str = "date") -> str:
     """Render the calendar date. The default (house-standard) style is 'date' — the ₿-marked
     bitcoin date, marker AFTER: '0018.04.20 a₿'. `month_names` (13) supplies blessed month
-    lore in the 'short'/'long' styles when set, else 'M01'..'M13'.
+    lore in the 'short'/'long' styles when set, else 'M01'..'M13'. One date order for
+    both epochs: yyyy.mm.dd, marker after ('0018.04.20 a₿' / '0003.06.09 b₿').
     style: 'date' -> '0018.04.20 a₿'; 'short' -> 'AB 18 · M04 · D20'; 'long' adds
     block + diff-epoch."""
     d = from_height(height)
@@ -135,11 +136,10 @@ def format_date(height: Optional[int], month_names: Optional[list[str]] = None,
         return "BFT —"
     if style == "date":
         # the ₿-marked bitcoin date — unmistakably a *bitcoin* date, year zero-padded to 4,
-        # marker AFTER the date (house standard, per bft-display). The display year IS
-        # bitcoin's age: genesis opens 0000. After Bitcoin is month-first (yyyy.mm.dd a₿);
-        # Before Bitcoin inverts to day-first (yyyy.dd.mm b₿).
+        # marker AFTER the date (house standard). The display year IS bitcoin's age:
+        # genesis opens 0000. ONE order for both epochs — yyyy.mm.dd (Pac's law, no inversion).
         if d["epoch"] == "BB":
-            return f"{d['year']:04d}.{d['day']:02d}.{d['month']:02d} b₿"
+            return f"{d['year']:04d}.{d['month']:02d}.{d['day']:02d} b₿"
         return f"{d['year']:04d}.{d['month']:02d}.{d['day']:02d} a₿"
     if d["epoch"] == "BB":
         bi = d.get("month_index", 0)
@@ -196,11 +196,11 @@ def from_gregorian(year: int, month: int, day: int,
 
 
 def before_bitcoin(year: int, month: int, day: int, second: Optional[int] = None) -> str:
-    """Wall-clock label for a date *before* genesis: 'yyyy.dd.mm[.ss] b₿' — day-first, the mirror
-    of the After-Bitcoin 'yyyy.mm.dd a₿' (marker after, house standard). On-chain heights are
+    """Wall-clock label for a date *before* genesis: 'yyyy.mm.dd[.ss] b₿' — the SAME format as
+    After Bitcoin, marker swapped (Pac's law: one date order, both epochs). On-chain heights are
     never negative, so this is only for pre-genesis / negative-time references (the grey side of
     the clock, before the light)."""
-    base = f"{year:04d}.{day:02d}.{month:02d}"
+    base = f"{year:04d}.{month:02d}.{day:02d}"
     return f"{base} b₿" if second is None else f"{base}.{second:02d} b₿"
 
 

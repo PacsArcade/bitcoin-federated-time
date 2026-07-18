@@ -88,8 +88,8 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
    and bottom→up.
 1. **Calendar** — `from_height(h)` → `{epoch, year, month 1–13, day 1–28, day_of_year, week_of_month,
    beat, diff_epoch, ...}`. `format_date(h, style=…)`: the DEFAULT `"date"` style is the house
-   standard — ₿-marked, **marker AFTER**: `0016.05.23 a₿` (BB inverts to day-first
-   `yyyy.dd.mm b₿`); `"short"` → `AB 16 · M05 · D23` (teaching scaffolding); `"long"` adds the
+   standard — ₿-marked, **marker AFTER**, ONE order for both epochs — `yyyy.mm.dd` (full form
+   `yyyy.mm.dd hh:mm:ss a₿`): `0016.05.23 a₿` / `0003.06.09 b₿` — never day-first; `"short"` → `AB 16 · M05 · D23` (teaching scaffolding); `"long"` adds the
    block + diff-epoch. The display year IS bitcoin's age — genesis opens `0000`.
    `year_progress(h)` gives blocks-to-next-month/year.
 2. **The ordinal SIDEBAR** — `degree(h)` → `{notation "A°B′C″D‴", hour, minute, second, third,

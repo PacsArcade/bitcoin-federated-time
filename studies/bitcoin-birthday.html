@@ -11,7 +11,7 @@
      or seen by anyone. That is the lesson as much as the feature.
 
      WHAT IT SHOWS, for any old-calendar birthday:
-       · the bitcoin date  — '0018.04.20 a₿' (marker after; b₿ day-first before genesis)
+       · the bitcoin date  — '0018.04.20 a₿' (marker after; yyyy.mm.dd BOTH epochs)
        · the birth block   — ~estimated at a steady 10-min block from the TRUE genesis
                              moment (2009-01-03 18:15:05 UTC); negative = Before Bitcoin
        · the birth beat    — the hh:mm block-beat face (post-genesis only; no face
@@ -214,7 +214,7 @@ function bftDate(h) {                       // package from_height, both epochs
   return { epoch: 'BB', year, month: Math.floor(doy / 28) + 1, day: (doy % 28) + 1, beat: null };
 }
 const fmtDate = d => d.epoch === 'BB'
-  ? `${pad(d.year,4)}.${pad(d.day,2)}.${pad(d.month,2)} b₿`      // day-first inverse, marker after
+  ? `${pad(d.year,4)}.${pad(d.month,2)}.${pad(d.day,2)} b₿`      // ONE order both epochs (Pac's law): yyyy.mm.dd, marker after
   : `${pad(d.year,4)}.${pad(d.month,2)}.${pad(d.day,2)} a₿`;
 const blockBeat = h => {                    // the canonical hh:mm face — AB only
   if (h < 0) return null;
@@ -358,8 +358,8 @@ function renderReturns(d, birthTs, h) {
         : 'your old-calendar day'],
     ['your bitcoin day', `day ${dd} · month ${mm}`,
      'the same, every bitcoin year — it never moves'],
-    ['the next one', `~${oldFmt(whenNext)}`,
-     `<span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
+    ['next · on the old calendar', `~${oldFmt(whenNext)}`,
+     `in bitcoin it's always <span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> · block ${hNext.toLocaleString('en-US')}`],
   ];
   document.getElementById('next-grid').innerHTML = rows.map(([k, v, s]) =>
     `<div class="cell"><div class="k">${k}</div><div class="v">${v}<small>${s}</small></div></div>`).join('');
@@ -372,18 +372,11 @@ function renderReturns(d, birthTs, h) {
     : `<b>How your day was found:</b> your birth block landed on <b>day ${dd} of month ${mm}</b> ` +
       `of the 13×28 wheel — and that seat is yours: the same month and day, every bitcoin ` +
       `year, forever.`;
-  const flip = bb
-    ? ` One honest note on the digits: before the light, dates are written day-first — ` +
-      `<span class="nb">${fmtDate(d)}</span> means day ${dd} of month ${mm} — and after, month-first: ` +
-      `<span class="nb">${pad(y, 4)}.${mm}.${dd}&nbsp;a₿</span> is that same day. ` +
-      `Nothing flipped — mirrored, because before-days count backward toward the light.`
-    : '';
   document.getElementById('next-drift').innerHTML =
     opening +
     ` Your day never moves; only the <b>old</b> calendar slides underneath it, arriving ` +
     `~1¼ days earlier each of its years (the sun's lap is 365 days and a bit, bitcoin's ` +
     `is a tidy 364).` +
-    flip +
     ` Block numbers are exact; old-calendar landings wear the ~.`;
   document.getElementById('next-card').classList.remove('hidden');
 }

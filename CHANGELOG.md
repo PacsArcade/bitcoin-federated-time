@@ -10,7 +10,7 @@ key and shipped on the 420 day itself. Happy 420. 🍒🗝️₿*
   now leads every surface; the ordinal degree notation stays as an honestly-labeled sidebar
   for the sat collectors.
 - **Marker after, everywhere:** `format_date()` defaults to the house style — `0018.04.20 a₿`,
-  pre-genesis day-first `0025.13.09 b₿`.
+  pre-genesis the same order, `0025.09.13 b₿`.
 - **`bft.holidays`** — the chain's feast days: the storied table (genesis → the fifth
   halving), the recurring calendar (New Year, the Hallows, Sol's Seat, Year's End, whisper
   days, Halving Day, the Conjunction, Cat years), `holidays_at` / `next_holidays` /

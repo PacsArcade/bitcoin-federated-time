@@ -94,7 +94,7 @@ def test_bitcoin_date_style():
     assert bft.format_date(0) == "0000.01.01 a₿"
     assert bft.format_date(858_000) == "0016.05.23 a₿"                   # matches AB 16 · M05 · D23
     assert bft.format_date(858_000, style="short") == "AB 16 · M05 · D23"
-    assert bft.before_bitcoin(2008, 10, 31) == "2008.31.10 b₿"           # day-first inverse
+    assert bft.before_bitcoin(2008, 10, 31) == "2008.10.31 b₿"           # same order, both epochs
     assert bft.format_date(bft.height_at(2008, 10, 31)).endswith(" b₿")
 
 
