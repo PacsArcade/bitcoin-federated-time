@@ -293,7 +293,7 @@ function render(prefix, h, ts, isMirror) {
   ];
   el('signs').innerHTML =
     `<div class="signgroup old${bb ? ' mine' : ''}">
-       <div class="sg-head">☀ the old world${bb ? ' — yours, before the light' : ''}</div>
+       <div class="sg-head">☀ the old world${bb ? ' — <span class="nb">yours, before the light</span>' : ''}</div>
        ${oldCells.map(cell).join('')}
      </div>
      <div class="signgroup new${bb ? '' : ' mine'}">
