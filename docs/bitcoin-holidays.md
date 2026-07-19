@@ -25,7 +25,7 @@ this doc recomputes every BFT label through the library. Try it live:
 | 840,000 | `0016.01.10 a₿` | exact | **The Fourth Halving** | 6.25 → 3.125 — mined on 4/20, because of course it was. |
 | 1,050,000 | `0020.01.12 a₿` | exact | **The Fifth Halving** (next) | 3.125 → 1.5625 — the block is fixed; only the wall-clock date drifts. |
 
-**Before the light (b₿):** **Whitepaper Day** — 31 Oct 2008, All Hallows' Eve —
+**Before the light (b₿):** **Whitepaper Day** — 31 Oct 2008, Halloween itself (All Hallows' Eve — same night, two names) —
 computes to `0000.03.09 b₿` (~height −9,217). **Satoshi's chosen birthday** — 5 Apr 1975,
 lore-grade — computes to `0033.12.08 b₿`. *(An earlier research draft composed these two
 labels differently; the values here come straight from `bft.format_date()` — compute, don't
@@ -40,7 +40,7 @@ year until the 12th halving (block 2,520,000, ~2056) finally rolls into month 2.
 | Day | Holiday | Why |
 |---|---|---|
 | `M01·D01` | **New Year** | Every year opens on the **calendar's** new moon — 52,416 blocks, no exceptions. The sky agreed once, at Day 0 (a real new moon, ~7 Jan 2027), then drifts ~9.6 days of phase a year; the calendar's moon keeps the feast. |
-| `M10·D28` | **The Hallows** | The last day of the tenth month: the new calendar's All Hallows' Eve, honoring the whitepaper's 31 Oct 2008. In year 0018 this is **Day 0** — block 983,664 opens it. |
+| `M10·D28` | **The Hallows** | The last day of the tenth month: the new calendar's own Halloween — its All Hallows' Eve — honoring the whitepaper's 31 Oct 2008. In year 0018 this is **Day 0** — block 983,664 opens it. |
 | `M13·D01` | **Sol's Seat opens** | The thirteenth month begins; every day of it is a whisper day. |
 | `M13·D13` | **The Thirteenth of the Thirteenth** | The loudest whisper of the year. |
 | `M13·D28` | **Year's End** | The 364th day; the year completes with the calendar's moon. |

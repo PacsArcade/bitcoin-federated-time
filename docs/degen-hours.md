@@ -52,7 +52,8 @@ estimate; the *blocks* are the appointment.)
 ## The Hallows resonance (Pac's spark, 0018.04.20)
 
 Day 0 — `0018.10.28 a₿` — is **the last day of the tenth month**: structurally, the new
-calendar's own **All Hallows' Eve**. And the chain already blessed that night once —
+calendar's own **Halloween — its All Hallows' Eve** (same night, two names; Oct 30 is
+Devil's Night, the eve of the eve). And the chain already blessed that night once —
 **Satoshi published the whitepaper on 31 October 2008** (`2008.31.10 b₿`), actual All
 Hallows' Eve on the old calendar. So the new calendar is born on its own Halloween, under a
 **dark moon**, echoing the night the whitepaper dropped — and the next midnight opens
