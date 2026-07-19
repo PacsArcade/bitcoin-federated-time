@@ -129,8 +129,11 @@ The calendar and ordinal theory are **the same skeleton** — both built from Bi
 clock intervals, and each interval's first sat is exactly an ordinal rarity (block→uncommon,
 difficulty period→rare, halving→epic, cycle→legendary, genesis→mythic). A BFT month = two difficulty
 adjustments, so the calendar page turns on the events that mint rare/epic sats. **Runes** ride the
-same clock: a rune ID is `block:tx`, and open-mint terms are block-height windows. Anchor: Casey
-Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
+same clock: a rune ID is `block:tx`, and open-mint terms are block-height windows. Anchor & credit
+(name them ALL, per Pac): **Casey Rodarmor** (ordinal theory's creator), **raphjaph** and the `ord`
+maintainers and contributors who carry it, and the community's Ordinal Theory Handbook —
+https://docs.ordinals.com/overview.html. Credit the theory honestly; BFT digs past it (the origin
+note above).
 
 ## Honesty & safety (load-bearing — never weaken)
 
@@ -190,8 +193,8 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   breadcrumbs toward the Degen Wonderland hunt. It must never contain a real seed phrase, private
   key, passphrase, or puzzle *solution*, and a test guards this. If you extend the lore, keep it
   atmosphere only. When teaching keys to anyone (especially kids), the rule is absolute: **never
-  share your seed words, never type them into a website; anyone who asks is a scammer** (in the kids'
-  guide, "a dragon in a fren's coat").
+  share your seed words, never type them into a website; anyone who asks is a scammer** (shipped in the package: guides/4-the-hidden-thirteenth.md "The one rule of treasure" —
+  "a dragon wearing a fren's coat" — and the birthday page's no-keys footer).
 
 ## Ophiuchus: sign vs seat (say it right — astrology matters to many frens)
 
