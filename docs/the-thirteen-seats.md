@@ -34,9 +34,28 @@ Three things worth noticing:
   year the whole table slides ~1.24 days against the sun, a full lap every ~294 years. The
   SEAT (M01 = Capricorn) never moves; the old calendar underneath it does.
 - **Why Capricorn sits first:** the genesis block (3 Jan 2009) fell under Capricorn on the
-  old sky. The clock's first month honors its birth sign, and Ophiuchus — the thirteenth
-  sign the old world hides — takes the twelfth seat, one before the year's end. Twelve you
-  were given; the thirteenth you must find.
+  old sky. The clock's first month honors its birth sign.
+
+## Why Ophiuchus sits twelfth — and is still the thirteenth
+
+Two things are true at once, and both are exact:
+
+- **By COUNT, Ophiuchus is the thirteenth sign** — the one the old 12-sign system hides.
+  The real sun genuinely crosses it (~Nov 29 – Dec 17 on the old sky); the tidy twelve
+  split the sun's road into twelve equal slices and paper over the thirteenth crossing
+  entirely. It is the Sol of the sky, the Ophiuchus of the pattern: twelve you were
+  given, the thirteenth you must find.
+- **By SEQUENCE, Ophiuchus stands between Scorpio and Sagittarius** — that is where it
+  actually lies on the sun's road, and it has never stood anywhere else. The seats walk
+  that road in its true order from Capricorn, the genesis sign — so Ophiuchus falls
+  twelfth, and Sagittarius closes the year at thirteen.
+
+We did not bolt the hidden sign onto the end like a mascot. **We restored it to its
+rightful place in the middle of the road** — the stronger honor, and the honest one.
+
+And the Cat shows the other rule: **signs follow the sky; animals follow the story.**
+The Great Race is a tale with no sky-road to obey, so the welcomed-home guest takes the
+final seat — thirteenth of thirteen. Both thirteenths honored, each in its own truth.
 
 *Recompute any row: `python -m bft <height>` for the date; the seats are `(month − 1)` into
 the SIGNS ring (see the birthday study). Signs are wonder, not finance — and these are the

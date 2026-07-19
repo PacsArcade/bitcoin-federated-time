@@ -193,6 +193,16 @@ Rodarmor's Ordinal Theory Handbook — https://docs.ordinals.com/overview.html.
   share your seed words, never type them into a website; anyone who asks is a scammer** (in the kids'
   guide, "a dragon in a fren's coat").
 
+## Ophiuchus: sign vs seat (say it right — astrology matters to many frens)
+
+Ophiuchus is **the thirteenth SIGN by count** (the one the 12-sign system erases) but
+**the twelfth SEAT by sequence**: the month-seats walk the sun's REAL road from Capricorn
+(the genesis sign), and on that road Ophiuchus stands between Scorpio and Sagittarius —
+where the actual sun actually crosses (~Nov 29–Dec 17). We RESTORED it to its true place,
+not appended it as a mascot; Sagittarius closes the year. The reconciling rule: **signs
+follow the sky; animals follow the story** — the Great Race is a tale, so the Cat takes
+the final (13th) seat on the year-wheel. Never present these as contradictory.
+
 ## The magic (the 12 → 13 motif)
 
 Everything here comes in twelves that become **thirteen**: 12 months + Sol, 12 zodiac signs +
