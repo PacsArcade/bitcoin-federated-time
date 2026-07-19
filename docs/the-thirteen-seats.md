@@ -43,7 +43,7 @@ Two things are true at once, and both are exact:
 - **By COUNT, Ophiuchus is the thirteenth sign** — the one the old 12-sign system hides.
   The real sun genuinely crosses it (~Nov 29 – Dec 17 on the old sky); the tidy twelve
   split the sun's road into twelve equal slices and paper over the thirteenth crossing
-  entirely. It is the Sol of the sky, the Ophiuchus of the pattern: twelve you were
+  entirely. It is the Sol of the sky, the Cat of the heavens: twelve you were
   given, the thirteenth you must find.
 - **By SEQUENCE, Ophiuchus stands between Scorpio and Sagittarius** — that is where it
   actually lies on the sun's road, and it has never stood anywhere else. The seats walk
