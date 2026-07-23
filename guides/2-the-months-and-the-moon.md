@@ -57,6 +57,8 @@ is the real one over your head — go outside any night and check it. The **cale
 moon** is this one — a drawing that keeps perfect calendar time and slowly drifts away
 from the sky, about a day and a half each month. They shook hands once, on Day 0: the
 whole calendar *begins* on a real new moon. After that, the drawing keeps its own beat.
+*(Grown-up version of this story, with the drift math and the Day-0 appointment:
+[the two moons](../docs/the-two-moons.md).)*
 
 Because every month *starts* on the calendar's new moon, **every new year starts on a
 new moon too — the calendar's** — just like the old Asian calendars, falling right out

@@ -180,7 +180,10 @@ bft.format_date(858_000)         # '0016.05.23 a₿'  — the ₿-marked bitcoin
 ```
 
 Signs and moons are for wonder, not finance — and the calendar's moon never pretends to
-be the sky's. Same house rule as the rest of BFT.
+be the sky's. Same house rule as the rest of BFT. If the clock's moon ever looks "wrong"
+for the day of the month — a fat gibbous on D26, say — read
+[the two moons](docs/the-two-moons.md): which surface wears which moon, why they drift,
+and the Day-0 handshake that starts every month on a new moon from then on.
 
 ## Little guides & studies
 
