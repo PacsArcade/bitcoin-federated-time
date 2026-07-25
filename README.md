@@ -1,7 +1,7 @@
 # Bitcoin Federated Time (BFT)
 
 > *Prefer your time with tea? There is a second telling of this clock — the Hatter's, down in
-> [Degen Wonderland](https://github.com/DegenWonderland). Same math, more madness. Follow the
+> [Degen Wonderland](https://github.com/DegenWonderland/bitcoin-federated-time). Same math, more madness. Follow the
 > white rabbit.* 🎩🐇
 
 **A block height is a timestamp no authority can edit.** This is a tiny, dependency-free Python
