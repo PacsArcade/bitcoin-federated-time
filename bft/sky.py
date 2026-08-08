@@ -23,9 +23,10 @@ Signs are wonder, never finance — the same house rule as the rest of BFT.
 
 from __future__ import annotations
 
+import math
 from typing import Any, Optional
 
-from . import from_height, DAYS_PER_MONTH
+from . import from_height, DAYS_PER_MONTH, GENESIS_UNIX
 
 # 8 phases, one lunation per month.
 MOON_PHASES = [
@@ -41,19 +42,30 @@ YEAR_ANIMALS = [
 ]
 
 
-def moon_phase(height: Optional[int]) -> dict[str, Any]:
-    """THE CALENDAR'S MOON — one symbolic, block-timed lunation per BFT month, a pure function
-    of the day-of-month. NOT the sky's phase: it drifts ~1.5 days/month from the real
-    ~29.53-day synodic moon. D01 = 🌑 new, ~D15 = 🌕 full, back to new by D28. Returns
+# THE SKY'S MOON (ruling 0018.05.18): the real ~29.53-day synodic lunation from a
+# known new-moon epoch — the 28-day month is our RHYTHM; the moon keeps her own.
+SYNODIC_DAYS = 29.530588853
+NEW_MOON_EPOCH_S = 947182440  # 2000-01-06 18:14 UTC
+
+
+def moon_phase(height: Optional[int], at_ts: Optional[float] = None) -> dict[str, Any]:
+    """THE SKY'S MOON — the real synodic phase (~29.53 days) anchored to the known
+    new moon of 2000-01-06 18:14 UTC. `at_ts` (unix seconds) is the wall instant this
+    height belongs to; callers with a LIVE tip should pass time.time() — the default
+    genesis-average estimate (height × 600s) is deterministic but runs months ahead of
+    the sky after years of fast blocks. D0 = 🌑 new, ~D15 = 🌕 full. Returns
     {known, index 0..7, emoji, name, illumination 0..1, day}."""
     d = from_height(height)
     if not d.get("known") or d.get("epoch") == "BB":
         return {"known": False}
-    frac = (d["day"] - 1) / DAYS_PER_MONTH                 # 0..1 through the lunation
+    ts = at_ts if at_ts is not None else GENESIS_UNIX + (height or 0) * 600
+    age_days = ((ts - NEW_MOON_EPOCH_S) / 86400.0) % SYNODIC_DAYS
+    frac = age_days / SYNODIC_DAYS                          # 0..1 through the lunation
     index = round(frac * 8) % 8
     emoji, name = MOON_PHASES[index]
     return {"known": True, "index": index, "emoji": emoji, "name": name,
-            "illumination": round(1 - abs(1 - 2 * frac), 3), "day": d["day"]}
+            "illumination": round((1 - math.cos(2 * math.pi * frac)) / 2, 3),
+            "day": int(age_days) + 1}
 
 
 def year_animal(height: Optional[int]) -> dict[str, Any]:
