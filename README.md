@@ -1,6 +1,6 @@
 # Bitcoin Federated Time (BFT)
 
-### 📖 **[Read it in your browser → pacsarcade.github.io/bitcoin-federated-time](https://pacsarcade.github.io/bitcoin-federated-time)**
+### 📖 **[See the clock in action → pacsarcade.github.io/bitcoin-federated-time](https://pacsarcade.github.io/bitcoin-federated-time)**
 
 > *Prefer your time with tea? There is a second telling of this clock — the Hatter's, down in
 > [Degen Wonderland](https://github.com/DegenWonderland/bitcoin-federated-time). Same math, more madness. Follow the
