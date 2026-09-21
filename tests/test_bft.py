@@ -99,8 +99,10 @@ def test_bitcoin_date_style():
 
 
 def test_sky_moon_and_animals():
-    assert bft.moon_phase(0)["name"] == "New"                            # D01 = new moon
-    assert bft.moon_phase(14 * bft.BLOCKS_PER_DAY)["name"] == "Full"     # ~mid-month = full
+    # the sky's real phase (default estimate clock, no at_ts) — not tied to day-of-month;
+    # the retired doctrine asserted "New" at D01 and "Full" at ~mid-month. It isn't either.
+    assert bft.moon_phase(0)["name"] == "First Quarter"                  # genesis, sky-anchored
+    assert bft.moon_phase(14 * bft.BLOCKS_PER_DAY)["name"] == "Last Quarter"
     assert bft.year_animal(0)["name"] == "Ox"                            # AB 0 (2009) = Ox
     assert bft.year_animal(11 * bft.BLOCKS_PER_YEAR)["is_the_thirteenth"] is True   # Cat
     assert bft.year_animal(12 * bft.BLOCKS_PER_YEAR)["name"] == "Rat"    # wraps after the Cat
@@ -123,7 +125,7 @@ def test_holidays():
     at = {x["name"] for x in holidays.holidays_at(840_000)}
     assert "The Fourth Halving" in at and "Halving Day" in at       # 4/20's block, both readings
     g = {x["name"] for x in holidays.holidays_at(0)}
-    assert "Genesis Block Day" in g and "New Year (the new-moon new year)" in g
+    assert "Genesis Block Day" in g and "New Year" in g
     assert "Halving Day" not in g                                    # genesis is a birth, not a halving
     assert holidays.holidays_at(-5) == []                            # no feast days before the light
     cal = holidays.year_calendar(18)
