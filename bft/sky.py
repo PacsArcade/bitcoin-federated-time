@@ -25,7 +25,7 @@ from typing import Any, Optional
 
 from . import from_height, DAYS_PER_MONTH, GENESIS_UNIX
 
-# 8 phases, one lunation per month.
+# 8 phases across one synodic lunation of the sky's moon — not tied to the BFT month.
 MOON_PHASES = [
     ("🌑", "New"), ("🌒", "Waxing Crescent"), ("🌓", "First Quarter"), ("🌔", "Waxing Gibbous"),
     ("🌕", "Full"), ("🌖", "Waning Gibbous"), ("🌗", "Last Quarter"), ("🌘", "Waning Crescent"),
@@ -50,7 +50,8 @@ def moon_phase(height: Optional[int], at_ts: Optional[float] = None) -> dict[str
     new moon of 2000-01-06 18:14 UTC. `at_ts` (unix seconds) is the wall instant this
     height belongs to; callers with a LIVE tip should pass time.time() — the default
     genesis-average estimate (height × 600s) is deterministic but runs months ahead of
-    the sky after years of fast blocks. D0 = 🌑 new, ~D15 = 🌕 full. Returns
+    the sky after years of fast blocks. Day 0 of the lunation = 🌑 new, ~day 15 of the
+    lunation = 🌕 full. Returns
     {known, index 0..7, emoji, name, illumination 0..1, day}."""
     d = from_height(height)
     if not d.get("known") or d.get("epoch") == "BB":
