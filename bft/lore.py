@@ -55,7 +55,7 @@ _WHISPERS = [
     "A book holds twelve sleepers. A game holds the word that wakes them.",
     "What was lost was never spent — check the light before you check the ledger.",
     "Nine sit above the mad; the thirteenth waits below the board.",
-    "The full moon lands mid-month; so does the thing worth finding.",
+    "The moon keeps her own count; so does the thing worth finding.",
 ]
 
 

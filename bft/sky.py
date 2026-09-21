@@ -1,18 +1,15 @@
 """
 bft.sky — the moon and the thirteen animals ride the block calendar for free.
 
-There are TWO moons, and this module serves exactly one. THE CALENDAR'S MOON (here): a
-block-timed, symbolic lunation — a pure function of the day-of-month, one whole cycle per
-28-day BFT month. It drifts from the ~29.53-day astronomical moon on purpose (~1.5 days a
-month, ~9.6 days of phase per BFT year), the same way the 364-day year drifts from the
-sun. The chain is still the clock. THE SKY'S MOON (not here): the real phase overhead —
-compute it astronomically and label it the sky's. The two agree at Day 0 (block 983,664,
-anchored to the real new moon of ~7 Jan 2027) and part ways after.
+There is **one moon**, and it's the sky's — the real ~29.53-day synodic lunation, computed from
+wall time (see `moon_phase()` below). The 28-day BFT month is a block count, a rhythm the
+network keeps on its own, and it never wears the moon's name: no day-of-month formula stands in
+for the sky. *(Ruling 0018.07.02, the Admiral: "we only have one moon. and we can see it
+outside." This module used to also serve a second, block-timed "calendar's moon" — a pure
+function of the day-of-month — asserted here as fact; that doctrine is retired. See
+`docs/the-two-moons.md` for the retired doctrine, kept as history.)*
 
-And because every month begins on **D01, a calendar new moon**, every BFT new year
-(M01·D01) is a new-moon, Asian-calendar-style new year — on the calendar's moon; the
-shape falls out of the block math with nothing bolted on. Each
-year carries one of **thirteen** animal signs: the traditional twelve, plus the **Cat** as the 13th
+Each year carries one of **thirteen** animal signs: the traditional twelve, plus the **Cat** as the 13th
 — the famous "left-out" sign of the Great Race (the rat tricked it out of the race) and a real sign
 in the Vietnamese zodiac. We seat it thirteenth to match the 13-month year and Ophiuchus, the 13th
 zodiac sign. Twelve you were given; the thirteenth was left out — a small door this library keeps
