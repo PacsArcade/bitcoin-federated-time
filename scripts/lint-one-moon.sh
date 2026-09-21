@@ -3,15 +3,16 @@
 #
 # Ruling (0018.07.02, the Admiral): "we only have one moon. and we can see it outside."
 # The 28-day BFT month is a block count and never wears the moon's name. This lint fails
-# any line that names "moon" on the same line as "month", "D01", or "new year"
-# (case-insensitive) — the shape of the retired "calendar's moon" doctrine — unless the
-# file, or that exact line, is allowlisted.
+# any line that names "moon" (or "lunation"/"lunar") on the same line as "month", "D01",
+# "new year", or one of the known retired-doctrine phrasings ("13 moons", "days a moon",
+# "moons a year", "two moons", "calendar's moon") — the shape of the retired "calendar's
+# moon" doctrine — unless the file, or that exact line, is allowlisted.
 #
 # Usage:
 #   scripts/lint-one-moon.sh <path>      # a file, or a directory tree to scan
 #
-# Scans .py / .md / .html files, skipping .git, __pycache__, build/, *.egg-info,
-# node_modules.
+# Scans .py / .md / .html / .ts / .tsx / .js files, skipping .git, __pycache__, build/,
+# *.egg-info, node_modules.
 #
 # Allowlist: <this script's directory>/one-moon-allowlist.txt — one entry per line:
 #   a bare relative path         whole file exempt
@@ -80,10 +81,16 @@ is_allowlisted() {
 if [ -d "$TARGET" ]; then
   mapfile -d '' -t files < <(find "$ROOT" \
     \( -path '*/.git' -o -name '__pycache__' -o -name 'build' -o -name '*.egg-info' -o -name 'node_modules' \) -prune \
-    -o -type f \( -name '*.py' -o -name '*.md' -o -name '*.html' \) -print0)
+    -o -type f \( -name '*.py' -o -name '*.md' -o -name '*.html' -o -name '*.ts' -o -name '*.tsx' -o -name '*.js' \) -print0)
 else
   files=("$(cd "$(dirname "$TARGET")" && pwd)/$(basename "$TARGET")")
 fi
+
+# Stage 1: any moon-ish word. Stage 2: a month/day-of-month/new-year co-occurrence, OR
+# one of the known retired-doctrine phrasings that names its own moon-count/plurality
+# without ever saying "month"/"D01"/"new year" on the line.
+MOONISH_RE='moon|lunation|lunar'
+DOCTRINE_RE='month|d01|new year|13 moons|days a moon|moons a year|two moons|calendar.s moon'
 
 hit=0
 for file in "${files[@]}"; do
@@ -96,7 +103,7 @@ for file in "${files[@]}"; do
       printf '%s:%s:%s\n' "$rel" "$lineno" "$content"
       hit=1
     fi
-  done < <(grep -nE -i 'moon' "$file" 2>/dev/null | grep -iE ':.*(month|d01|new year)')
+  done < <(grep -nE -i "$MOONISH_RE" "$file" 2>/dev/null | grep -iE ":.*($DOCTRINE_RE)")
 done
 
 exit "$hit"

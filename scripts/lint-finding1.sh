@@ -4,8 +4,10 @@
 # Finding 1 (REVIEW-L01 §1): the display year counts bitcoin's block-years — it is not
 # "how old bitcoin is," not "bitcoin's age," and the 364-vs-365.24 solar drift is not a
 # single flattened "~1.24 days" number (it has a separate, non-constant measured part on
-# top of the designed one). This lint fails a line naming the single-part drift figure or
-# either age-doctrine phrasing, UNLESS that same line also carries a correction tag (a
+# top of the designed one). This lint fails a line naming the single-part drift figure —
+# "~1.24 days", "1.24 d/yr", or the "1¼ days" fraction-notation disguise (with or without
+# a leading "~") — or either age-doctrine phrasing ("bitcoin's age", "how old bitcoin is"
+# / "how old is bitcoin"), UNLESS that same line also carries a correction tag (a
 # "was false" / "corrected" / "retired" / "Finding 1" / "RULED" / "historical" /
 # "superseded" frame) — a line that quotes the old claim while retracting it is legal by
 # construction — or the file/line is allowlisted (for generated or pending files that
@@ -14,8 +16,8 @@
 # Usage:
 #   scripts/lint-finding1.sh <path>      # a file, or a directory tree to scan
 #
-# Scans .py / .md / .html files, skipping .git, __pycache__, build/, *.egg-info,
-# node_modules.
+# Scans .py / .md / .html / .ts / .tsx / .js files, skipping .git, __pycache__, build/,
+# *.egg-info, node_modules.
 #
 # Allowlist: <this script's directory>/finding1-allowlist.txt — same format as
 # scripts/one-moon-allowlist.txt (bare path / path:LINENO / path/** prefix).
@@ -70,13 +72,13 @@ is_allowlisted() {
   return 1
 }
 
-FALSE_RE='1\.24 days|bitcoin.s age|how old bitcoin is'
+FALSE_RE='1\.24 days|1\.24 d/yr|~?1¼ days|bitcoin.s age|how old bitcoin is|how old is bitcoin'
 TAG_RE='corrected|was false|retired|finding 1|ruled|historical|superseded'
 
 if [ -d "$TARGET" ]; then
   mapfile -d '' -t files < <(find "$ROOT" \
     \( -path '*/.git' -o -name '__pycache__' -o -name 'build' -o -name '*.egg-info' -o -name 'node_modules' \) -prune \
-    -o -type f \( -name '*.py' -o -name '*.md' -o -name '*.html' \) -print0)
+    -o -type f \( -name '*.py' -o -name '*.md' -o -name '*.html' -o -name '*.ts' -o -name '*.tsx' -o -name '*.js' \) -print0)
 else
   files=("$(cd "$(dirname "$TARGET")" && pwd)/$(basename "$TARGET")")
 fi

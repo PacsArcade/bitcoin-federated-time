@@ -33,9 +33,7 @@ Enter any old-calendar birthday and read it back in bitcoin time: your ~birth bl
 see `docs/pupil-clock-grid.md`), your **month sign** (the 13 astronomical signs,
 Ophiuchus seated), your **year animal** (the 13 animals, the Astronomical Cat welcomed home) —
 plus **the returns** (what it was on the old calendar, and the next three times your bitcoin
-birthday comes around, each with its ≈ old-calendar landing — it walks ~1.24 days up the old
-year every year, the designed part of a two-part drift *(corrected 0018.07.02; see `README.md`'s
-dateline note for the full accounting)*, because it's the old calendar that drifts) — and
+birthday comes around, each with its ≈ old-calendar landing — it walks ~1.24 days up the old year every year, the designed part of a two-part drift *(corrected 0018.07.02; see `README.md`'s dateline note for the full accounting)*, because it's the old calendar that drifts) — and
 **the mirror**: the same
 distance on the other side of genesis, so every birthday gets both its `a₿` and `b₿` reading,
 in old time and bitcoin time.
