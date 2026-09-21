@@ -39,9 +39,9 @@ so it wears a `~`). When the block breaks: **snap** — the glass empties to 0 a
 up one block.
 
 Read it back UP the ladder and you've explained time itself: blocks fill by tenths → ten filled
-tenths make a block → six blocks make an hour → 144 make a day → 28 days make a moon → 13 moons
-make a year, and the year is just bitcoin's age. Every big thing is made of the small thing
-below it. That's all a clock has ever been.
+tenths make a block → six blocks make an hour → 144 make a day → 28 days make a month → 13
+months make a year, and the year counts bitcoin's block-years. Every big thing is made of the
+small thing below it. That's all a clock has ever been.
 
 No second digits on the cards — but the seconds are there if you want them: **Pac is the
 seconds hand.** He laps the ring once a "minute", so his position IS the seconds —
@@ -66,4 +66,4 @@ bft.format_date(958_346)          # '0018.04.20 a₿'
 print("\n".join(bft.format_clock(958_346)))
 ```
 
-**Next:** [the thirteen months and the moon →](2-the-months-and-the-moon.md)
+**Next:** [the thirteen months, and the moon outside your window →](2-the-months-and-the-moon.md)
