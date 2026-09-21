@@ -108,15 +108,21 @@ chain hasn't vouched for that page yet.
 
 - **Epoch:** the genesis block (height 0, 2009-01-03) starts the clock. Heights ≥ 0 are **After
   Bitcoin (a₿)**; negatives are **Before Bitcoin (b₿)**, the inverse.
-- **The date:** `yyyy.mm.dd a₿`, marker after, year zero-padded to four — **the display year is
-  bitcoin's age** (genesis opens `0000`). Before Bitcoin reads identically: `yyyy.mm.dd b₿` — one order, both epochs.
+- **The date:** `yyyy.mm.dd a₿`, marker after, year zero-padded to four — **the display year
+  counts bitcoin's block-years** (genesis opens `0000`) *(corrected 0018.07.02 — the old line
+  "the year is how old bitcoin is" was false; REVIEW-L01 §1)*. Before Bitcoin reads identically:
+  `yyyy.mm.dd b₿` — one order, both epochs.
 - **Units:** day = 144 blocks · week = 1,008 · **fortnight = 2,016 (one difficulty period)** ·
   **month = 4,032 (two difficulty periods) = 28 days** · **year = 52,416 (26 periods) = 364 days**.
-- **13 months of 28 days = 364 days.** No leap hacks, no intercalary day. It drifts ~1.24 days/year
-  against the sun — **on purpose**. It tracks the chain's heartbeat, not the earth's orbit.
+- **13 months of 28 days = 364 days, and the drift has two parts.** the *designed* part: 364 days
+  against the sun's 365.24 — ~1.24 days a year, on purpose. the *measured* part: blocks have
+  averaged faster than the 600s target, so the chain runs ahead of a ten-minute ideal by an
+  amount that is history, not a constant — it will change. It tracks the chain's heartbeat, not
+  the earth's orbit. *(corrected 0018.07.02; REVIEW-L01 §1, §3.)*
 - **Month names aren't baked in.** Pass `format_date(h, month_names=[...13...], style="short")` for
-  your own; otherwise the short style renders `M01..M13`. (The naming of the 13 moons is a
-  decision the arcade makes by vote, not a constant in a library.)
+  your own; otherwise the short style renders `M01..M13`. (The naming of the 13 months is a
+  decision the arcade makes by vote, not a constant in a library — and it's a name for a block
+  count, never for the moon.)
 
 ### 3. The countdowns (the inverse)
 
@@ -160,38 +166,34 @@ you're already telling Bitcoin time; this library reads it back to you.
 
 ## The sky comes free (`bft.sky`)
 
-There are two moons in this house, and both are honest because we label them. **The
-calendar's moon** lives here: a 28-day month is *almost* one trip of the real moon
-(~29.53 days), so BFT keeps a block-timed, symbolic lunation — D01 new, D15 full, D28
-home — that drifts from the sky ~1.5 days a month **on purpose**, the same way the
-364-day year drifts from the sun. **The sky's moon** is the one over your head; ask the
-sky, not this module. They agree at Day 0 — the calendar begins on a **real** new moon
-(block 983,664, ~7 Jan 2027) — and part ways after, ~9.6 days of phase per BFT year.
-
-So every BFT month begins on a *calendar* new moon, and every BFT new year is a
-new-moon new year **on the calendar's moon** — true by construction, checkable by
-anyone. Each year also carries one of **thirteen** animal signs: the traditional
-twelve, plus the **Astronomical Cat** as the thirteenth (the sign left out of the
-Great Race).
+There is **one moon**, and it's the sky's — the one over your head, computed from wall time
+against the real ~29.53-day synodic lunation (`bft.moon_phase`). *(Ruling 0018.07.02, the
+Admiral: "we only have one moon. and we can see it outside.")* The 28-day BFT month is a
+block count, a rhythm the network keeps on its own — it never wears the moon's name. D01 is
+not a new moon by construction; a BFT new year is not a new-moon new year. If the clock's
+moon ever looks "wrong" for the day of the month, that's expected: the month doesn't track
+the sky, and never claimed to. Each year also carries one of **thirteen** animal signs: the
+traditional twelve, plus the **Astronomical Cat** as the thirteenth (the sign left out of
+the Great Race).
 
 ```python
 import bft
-bft.moon_phase(920_000)          # {'emoji': '🌒', 'name': 'Waxing Crescent', ...}
+bft.moon_phase(920_000)          # {'emoji': '🌒', 'name': 'Waxing Crescent', ...}  — the sky's real phase
 bft.year_animal(920_000)         # {'emoji': '🐍', 'name': 'Snake', ...}
 bft.format_date(858_000)         # '0016.05.23 a₿'  — the ₿-marked bitcoin date
 ```
 
-Signs and moons are for wonder, not finance — and the calendar's moon never pretends to
-be the sky's. Same house rule as the rest of BFT. If the clock's moon ever looks "wrong"
-for the day of the month — a fat gibbous on D26, say — read
-[the two moons](docs/the-two-moons.md): which surface wears which moon, why they drift,
-and the Day-0 handshake that starts every month on a new moon from then on.
+Signs and the moon are for wonder, not finance — same house rule as the rest of BFT. This
+package used to also draw a second, block-timed "calendar's moon" tied to day-of-month —
+that doctrine is retired; read [the two moons](docs/the-two-moons.md) for the history and
+why it was dropped.
 
 ## Little guides & studies
 
 The [`guides/`](guides/) folder has short, illustrated, ELI5 walkthroughs — written so a sharp
-five-year-old can follow and a grown-up still learns something: the block clock, the thirteen months
-and the moon, the two calendars side by side, and a kid-safe lesson on never sharing your keys.
+five-year-old can follow and a grown-up still learns something: the block clock, the thirteen
+months and the moon outside your window, the two calendars side by side, and a kid-safe lesson
+on never sharing your keys.
 
 The [`studies/`](studies/) folder holds the living clock studies — the flagship **pupil clock**
 (two clocks, one time, PAC-MAN eats the mempool) and the **bitcoin birthday** converter — plus
@@ -230,8 +232,8 @@ wrong — just not deep enough. The notation names the positions; it doesn't tak
 the *meaning*.
 
 So we went deeper — we're degenz; that's the job. Ordinal theory didn't break the clock down
-to this level. We kept digging until the `hh:mm` face, the 13-month calendar, the block-timed
-moon, the countdowns, and the lore all fell out of the **same block math** — until we hit
+to this level. We kept digging until the `hh:mm` face, the 13-month calendar, the sky's moon,
+the countdowns, and the lore all fell out of the **same block math** — until we hit
 **the heart of bitcoin**. And we display it the way the arcade remembers everything worth
 keeping: **8-bit, nostalgic, alive.**
 
