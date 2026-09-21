@@ -29,7 +29,7 @@ line.
 - `bft/lore.py` (one whisper line rewritten — no logic change)
 - `tests/test_bft.py` (`test_sky_moon_and_animals` lines 102–103 rewritten to the sky's
   actual computed phase; `test_holidays` line 126's string literal follows `holidays.py`)
-- `README.md` (the "sky comes free" section, the display-standard "bitcoin's age" line, the
+- `README.md` (the "sky comes free" section, the display-standard "bitcoin's age" line — corrected — the
   drift line, the guide cross-references, the spark section)
 - `CHANGELOG.md` (NEW dated entry only — additive, history untouched)
 - `docs/the-two-moons.md` (REWRITTEN AS HISTORY — past-tense framing banner, body kept)
