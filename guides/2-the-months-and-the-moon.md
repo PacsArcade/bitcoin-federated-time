@@ -1,4 +1,4 @@
-# 2. The thirteen months and the moon
+# 2. The thirteen months, and the moon outside your window
 
 ## Every month is the same shape
 
@@ -38,31 +38,25 @@ after June —
 
 — so its year had a thirteenth month tucked in the middle. That's where our extra month comes from.
 
-## The moon comes free
+## There's only one moon, and it's outside
 
-Here's the loveliest part. A **28-day month is almost exactly one trip of the moon** —
-the real moon takes about a day and a half longer. So this calendar keeps **its own
-moon**: the same picture, every month, and nobody has to wind it:
+Here's a myth worth busting: the 28-day month above is **not** one trip of the moon. The
+real moon takes about 29.5 days — a day and a half longer — and it doesn't care what day
+of the month it happens to be. There is **one moon**, and it's the one over your head: go
+outside any night and check it. `bft.moon_phase()`, further down this page, reads that
+real phase back to you from actual time — never from which day of the month it is.
 
-```
-   D01   🌑  new moon      · the month begins
-   D08   🌓  first quarter
-   D15   🌕  FULL moon     · the middle of the month
-   D22   🌗  last quarter
-   D28   🌑  new again     · the month ends
-```
+*(This library used to also draw a second, pretend moon that pretended to be tied to the
+day of the month — read [the two moons](../docs/the-two-moons.md) for that retired story,
+and the Admiral's ruling that ended it: "we only have one moon, and we can see it
+outside.")*
 
-That means there are **two moons**, and both are telling the truth. The **sky's moon**
-is the real one over your head — go outside any night and check it. The **calendar's
-moon** is this one — a drawing that keeps perfect calendar time and slowly drifts away
-from the sky, about a day and a half each month. They shook hands once, on Day 0: the
-whole calendar *begins* on a real new moon. After that, the drawing keeps its own beat.
-*(Grown-up version of this story, with the drift math and the Day-0 appointment:
-[the two moons](../docs/the-two-moons.md).)*
+## Every new year is just... a new year
 
-Because every month *starts* on the calendar's new moon, **every new year starts on a
-new moon too — the calendar's** — just like the old Asian calendars, falling right out
-of the block math with nothing bolted on.
+Thirteen months of 28 days is 364 days, and then the year turns over — 52,416 blocks,
+like clockwork, because it *is* clockwork. It doesn't open on a new moon, or a full
+moon, or any moon at all: it opens because the count says so. That's the whole magic.
+No moon required.
 
 ## And every year has an animal — even the one who was left out
 
