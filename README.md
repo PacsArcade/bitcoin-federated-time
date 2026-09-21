@@ -114,11 +114,7 @@ chain hasn't vouched for that page yet.
   `yyyy.mm.dd b₿` — one order, both epochs.
 - **Units:** day = 144 blocks · week = 1,008 · **fortnight = 2,016 (one difficulty period)** ·
   **month = 4,032 (two difficulty periods) = 28 days** · **year = 52,416 (26 periods) = 364 days**.
-- **13 months of 28 days = 364 days, and the drift has two parts.** the *designed* part: 364 days
-  against the sun's 365.24 — ~1.24 days a year, on purpose. the *measured* part: blocks have
-  averaged faster than the 600s target, so the chain runs ahead of a ten-minute ideal by an
-  amount that is history, not a constant — it will change. It tracks the chain's heartbeat, not
-  the earth's orbit. *(corrected 0018.07.02; REVIEW-L01 §1, §3.)*
+- **13 months of 28 days = 364 days, and the drift has two parts** *(corrected 0018.07.02; REVIEW-L01 §1, §3)*: the *designed* part — 364 days against the sun's 365.24, ~1.24 days a year, on purpose — and the *measured* part — blocks have averaged faster than the 600s target, so the chain runs ahead of a ten-minute ideal by an amount that is history, not a constant, and will change. It tracks the chain's heartbeat, not the earth's orbit.
 - **Month names aren't baked in.** Pass `format_date(h, month_names=[...13...], style="short")` for
   your own; otherwise the short style renders `M01..M13`. (The naming of the 13 months is a
   decision the arcade makes by vote, not a constant in a library — and it's a name for a block
