@@ -25,8 +25,8 @@ direction; it has to make sense both ways.
    │       │     │       │         each block worth ten minutes
    │       │     │       └─────── HOUR (00–23) — six blocks each
    │       │     └─────────────── DAY (01–28) — 144 blocks, 24 hours
-   │       └───────────────────── MONTH (01–13) — 28 days, one whole moon
-   └───────────────────────────── YEAR — 13 moons · the year IS bitcoin's age (genesis = 0000)
+   │       └───────────────────── MONTH (01–13) — 28 days, a block count
+   └───────────────────────────── YEAR — 13 months · the year counts bitcoin's block-years (genesis = 0000)
 ```
 
 **Bottom → up (small to big): watch time grow.**
@@ -37,8 +37,8 @@ direction; it has to make sense both ways.
    up one: one more block done this hour.
 3. **Six blocks** → the hour turns. `04:50` becomes `05:00`.
 4. **144 blocks** → the day turns: `0018.04.20` becomes `0018.04.21`.
-5. **28 days** → the moon comes back to new → the month turns.
-6. **13 moons** → the year turns, and bitcoin has a birthday. 🎂
+5. **28 days** → the month turns, purely by count.
+6. **13 months** → the year turns, and bitcoin has a birthday. 🎂
 
 So `04:27` says, exactly: *hour 4 · block 2 of that hour · and the current block is ~7/10
 full.* Nothing on the face means anything else.
@@ -68,7 +68,7 @@ All integer math. Two nodes at the same height always agree on every row.
 | `2_` — the minute TENS card | Which block of this hour (0–5), worth ten minutes each | `beat mod 6` → shows `(beat mod 6)` as the tens digit | `26 mod 6 = 2` → `:2_` | chain-exact |
 | `_0→9` — the minute ONES card (**the struggling digit**) | **How FULL the current block is**, in tenths: `0` = just broke, `7` = ~70% full, `9` = nearly done (each step ≈ a minute) | `floor(min(age/600, 0.999) × 10)` where `age` = seconds since the last block | `0` at block-break → `9` late | **~ estimate** (wears the `~`) |
 | `~N% of the way to the next block` | The same live progress, in percent | `round(age / 600 × 100)` | 0–99% | **~ estimate** |
-| `0018.04.20 a₿` — the dateline | The BFT date, marker after; the year IS bitcoin's age | spine table above, rendered `yyyy.mm.dd a₿` | `0018.04.20 a₿` | chain-exact |
+| `0018.04.20 a₿` — the dateline | The BFT date, marker after; the year counts bitcoin's block-years | spine table above, rendered `yyyy.mm.dd a₿` | `0018.04.20 a₿` | chain-exact |
 | `OLD CAL · 16 JUL 2026` — under the dateline | The same moment on the Gregorian calendar, side by side — watch the two drift | the tip block is *now*, so its old-calendar reading is the wall date | `16 JUL 2026` | wall-clock fact |
 | `958,346` — HEIGHT | The chain tip (the time itself) | mempool.space `blocks/tip/height`; offline → `anchor.h + (now − anchor.t)/600s` | `958,346` | LIVE, or **~** when estimated |
 | `N payments waiting` | The mempool count | mempool.space `/api/mempool` count | live only | LIVE |
@@ -96,7 +96,7 @@ All integer math. Two nodes at the same height always agree on every row.
 | The minute hand (struggles) | The ten-minute beats plus live progress in this block | `((beat mod 6) + sub) / 6 × 360°`, `sub = age/600` | `(2+sub)/6 × 360 = 120°→180°` | **~** (the `sub` part) |
 | The lit hour tick | Which of the 12 marks is "now" | `(beat // 6) mod 12` | `4` | chain-exact |
 | The 8-bit moon face + name | **THE SKY'S MOON** — the real phase, computed locally; waxing lights the RIGHT limb, waning the LEFT (northern-hemisphere view). Check it against your window | `age = (now − 2000-01-06 18:14 UTC) mod 29.5306 d` → phase + lit-side geometry | 🌒 waxing crescent, right limb (tonight) | sky fact (~±0.6 d) |
-| The calendar's moon (for the record) | The block-timed SYMBOLIC moon — one lunation per 28-day BFT month, D01 new · ~D15 full — rides the BIRTHDAY page + the package, labeled as the calendar's | `round((day−1)/28 × 8) mod 8` | day 20 → 🌖 Waning Gibbous | calendar lore |
+| The retired "calendar's moon" (pending — still rendered by the birthday page) | A block-timed SYMBOLIC formula this package no longer endorses (see `docs/the-two-moons.md`); `studies/bitcoin-birthday.html` is out of this lane's scope (in-flight edits) and still draws it | `round((day−1)/28 × 8) mod 8` | day 20 → 🌖 Waning Gibbous | retired doctrine |
 | `LEVEL 475` | The arcade level = difficulty epoch | `height // 2016` | `475` | chain-exact |
 | `re-tunes in N blocks` | Blocks left in this difficulty period | `2016 − (height mod 2016)` (or the API's remaining, when live) | `1,270` | chain-exact / LIVE |
 | `▲ / ▼` beside LEVEL | Estimated difficulty change direction at the next re-tune | mempool.space `difficultyChange` sign | live only | LIVE **~** |
@@ -125,9 +125,9 @@ Block **958,346**, every surface, one truth:
 
 ```
 Clock (hh:mm):    04:20                     hour 4 · block 2 of the hour · live digit climbing
-Date (BFT):       0018.04.20 a₿             year 18 = bitcoin's age · month 4 · day 20
+Date (BFT):       0018.04.20 a₿             year 18 = bitcoin's block-years · month 4 · day 20
 Level:            475 · re-tunes in 1,270    958,346 // 2016 · 2016 − 746
-Moon:             🌖 Waning Gibbous          day 20 of the 28-day lunation
+Moon:             🌖 Waning Gibbous          the sky's real phase (bft.moon_phase), day 18 of the ~29.53-day lunation
 Halving epoch:    4 · subsidy 3.125 BTC     958,346 // 210,000 · 50 / 2⁴
 Day-0 distance:   25,318 blocks             983,664 − 958,346   (≈ 175.8 days at 10 min)
 Ordinal sidebar:  0°118346′746″0‴           cycle 0 · block 118,346 of the epoch · block 746 of the period
