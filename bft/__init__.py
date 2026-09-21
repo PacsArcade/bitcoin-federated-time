@@ -136,8 +136,10 @@ def format_date(height: Optional[int], month_names: Optional[list[str]] = None,
         return "BFT —"
     if style == "date":
         # the ₿-marked bitcoin date — unmistakably a *bitcoin* date, year zero-padded to 4,
-        # marker AFTER the date (house standard). The display year IS bitcoin's age:
-        # genesis opens 0000. ONE order for both epochs — yyyy.mm.dd (Pac's law, no inversion).
+        # marker AFTER the date (house standard). The display year counts bitcoin's
+        # block-years: genesis opens 0000. ONE order for both epochs — yyyy.mm.dd (Pac's
+        # law, no inversion). *(corrected 0018.07.02 — the old comment said the year "IS
+        # bitcoin's age," which was false; REVIEW-L01 §1.)*
         if d["epoch"] == "BB":
             return f"{d['year']:04d}.{d['month']:02d}.{d['day']:02d} b₿"
         return f"{d['year']:04d}.{d['month']:02d}.{d['day']:02d} a₿"
