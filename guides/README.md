@@ -6,7 +6,7 @@ learns something too. No homework. Bring your curiosity.
 Read them in order, or jump to the one you want:
 
 1. **[A clock made of blocks](1-a-clock-made-of-blocks.md)** — what is this thing?
-2. **[The thirteen months and the moon](2-the-months-and-the-moon.md)** — the tidy calendar.
+2. **[The thirteen months, and the moon outside your window](2-the-months-and-the-moon.md)** — the tidy calendar (and the real sky).
 3. **[The two calendars](3-the-two-calendars.md)** — the old one vs. this one. (spot the differences!)
 4. **[The hidden thirteenth](4-the-hidden-thirteenth.md)** — a secret, and a story. 🐈
 

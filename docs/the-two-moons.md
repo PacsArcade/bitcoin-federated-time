@@ -1,8 +1,17 @@
-# The Two Moons — why the clock's moon doesn't match the calendar's day
+# The Two Moons — history: why the clock's moon didn't match the calendar's day
+
+> **Retired, block 967,918 (0018.07.02 a₿).** The Admiral ruled it plainly: "we only have
+> one moon. and we can see it outside." The 28-day BFT month is a block count and never
+> wears the moon's name — there is no "calendar's moon," no D01-new/D15-full by
+> construction, and no Day-0 handshake that marries the two. This page is kept as history:
+> the doctrine the house believed before the ruling, and the honest confusion that led to
+> it. Nothing below is live. For the current, one-moon truth, see `bft/sky.py` and the
+> README's "the sky comes free" section.
 
 *Explainer · written after a real question from the Admiral (0018.04.26 a₿): "it's day 26
 of the bitcoin month, but the clock shows a nearly-full moon — shouldn't we be two days
-from new?" The confusion is honest, the clock is honest, and the answer is worth a page.*
+from new?" The confusion is honest, the clock is honest, and — at the time — the answer
+below was worth a page.*
 
 ## The moment that raised the question
 

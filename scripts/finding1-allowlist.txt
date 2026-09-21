@@ -1,0 +1,26 @@
+# scripts/finding1-allowlist.txt — paths/lines exempt from lint-finding1.sh
+#
+# Most legal quotes of the retired claims pass automatically via an inline correction
+# tag on the same line (see lint-finding1.sh's TAG_RE). This file is only for generated
+# or pending files that can't carry that tag yet, or that are out of this lane's scope.
+#
+# Format: same as scripts/one-moon-allowlist.txt.
+
+# --- generated: regenerate at next build; never hand-edited (no Python toolchain in this
+# lane's sandbox). Neither directory exists in this worktree today, and this lint's own
+# `find` already prunes `build` and `*.egg-info` before scanning — so these two entries
+# can never actually fire; they're kept only as documentation for whoever regenerates the
+# build later and might read this allowlist by eye.
+build/lib/**
+bitcoin_federated_time.egg-info/**
+
+# --- pending, in-flight: out of this lane's scope (T-359 RULED); see
+# scripts/one-moon-allowlist.txt for the same reasoning. bitcoin-birthday.html has a
+# confirmed live Finding-1 hit under the hardened patterns (the uncorrected "~1¼ days"
+# drift figure, line 384); clock-study-pupil.html has none today but is listed alongside
+# it for the same out-of-scope reasoning, in case a future edit there adds one.
+studies/bitcoin-birthday.html
+studies/clock-study-pupil.html
+
+# --- pending: Lane B's to correct (T-360 mirrors from the canonical skill).
+.claude/skills/bitcoin-time-clock/SKILL.md

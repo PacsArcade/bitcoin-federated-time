@@ -12,7 +12,7 @@ The flagship study: **two clocks, side by side, reading the same Bitcoin Federat
   hinge as the block ages (it's the one honest guess on the face, and it wears a `~`);
   everything else is chain-exact and calm.
 - **The circle clock** — an analog face that *is* a full-size 8-bit pixel moon at the current
-  SKY's real phase — computed in your browser, correct lit limb, check it against your window — with the BFT hands on top and the live height + arcade LEVEL below. (The calendar's symbolic block-moon rides the birthday page, labeled as the calendar's.)
+  SKY's real phase — computed in your browser, correct lit limb, check it against your window — with the BFT hands on top and the live height + arcade LEVEL below. (The birthday page still renders a retired, symbolic day-of-month formula — pending its own correction pass; the circle clock above is the current, one-moon truth.)
 - **The thesis, in PAC-MAN** — every block, bitcoin eats the world's fiat: mempool dots ring each
   clock and **Pac laps the ring ten times per block — his lap counter IS the struggling digit.**
   Each lap's prize waits at 12 o'clock: the classic **fruit ladder** (🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ —
@@ -29,11 +29,12 @@ window are specified (pending sign-off) in [`docs/degen-hours.md`](../docs/degen
 ## [`bitcoin-birthday.html`](bitcoin-birthday.html) — THE BITCOIN BIRTHDAY
 
 Enter any old-calendar birthday and read it back in bitcoin time: your ~birth block, your
-`hh:mm` birth beat, your block-timed moon, your **month sign** (the 13 astronomical signs,
+`hh:mm` birth beat, your retired symbolic moon reading (pending its own correction pass —
+see `docs/pupil-clock-grid.md`), your **month sign** (the 13 astronomical signs,
 Ophiuchus seated), your **year animal** (the 13 animals, the Astronomical Cat welcomed home) —
 plus **the returns** (what it was on the old calendar, and the next three times your bitcoin
-birthday comes around, each with its ≈ old-calendar landing — it walks ~1¼ days up the old
-year every year, because it's the old calendar that drifts) — and **the mirror**: the same
+birthday comes around, each with its ≈ old-calendar landing — it walks ~1.24 days up the old year every year, the designed part of a two-part drift *(corrected 0018.07.02; see `README.md`'s dateline note for the full accounting)*, because it's the old calendar that drifts) — and
+**the mirror**: the same
 distance on the other side of genesis, so every birthday gets both its `a₿` and `b₿` reading,
 in old time and bitcoin time.
 

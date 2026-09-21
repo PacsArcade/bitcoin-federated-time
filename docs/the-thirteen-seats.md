@@ -4,8 +4,7 @@
 with the sign that holds its seat (M01 = Capricorn, the genesis sign — block 0 fell under
 Capricorn on the old sky — through Ophiuchus in the twelfth seat and Sagittarius in the
 thirteenth). Old-calendar spans are **~estimates** anchored to a real recent block at ten
-minutes a block; they drift ~1.24 days earlier each year because the 364-day year runs
-faster than the sun. The blocks are exact; the old calendar is the one that moves.*
+minutes a block; they drift earlier each year — the *designed* part is ~1.24 days a year *(corrected 0018.07.02; REVIEW-L01 §1, §3)*, 364 days against the sun's 365.24, on purpose, and the chain's own faster-than-600s block average adds a separate, non-constant amount on top. The blocks are exact; the old calendar is the one that moves.*
 
 ## Year 0018 a₿ (the current year)
 
@@ -28,10 +27,10 @@ faster than the sun. The blocks are exact; the old calendar is the one that move
 Three things worth noticing:
 
 - **The tenth month holds the door.** `0018.10` spans ~12 Dec – 09 Jan — it contains both
-  bitcoin's 18th birthday (3 Jan) and Day 0's new moon (~7 Jan). The Hallows (`0018.10.28`)
-  is its last day, and Day 0 opens it.
-- **The seats travel.** These sign-to-old-month overlaps hold for year 0018 only — each BFT
-  year the whole table slides ~1.24 days against the sun, a full lap every ~294 years. The
+  bitcoin's 18th birthday (3 Jan) and the appointed Day-0 marker (~7 Jan) named in
+  `docs/degen-hours.md` — a proposal now superseded by the one-moon ruling (0018.07.02),
+  not a live new-moon event. The Hallows (`0018.10.28`) is its last day.
+- **The seats travel.** These sign-to-old-month overlaps hold for year 0018 only — each BFT year the whole table slides ~1.24 days a year against the sun (the designed part only — corrected 0018.07.02, see the header note above for the two-part version), a full lap every ~294 years. The
   SEAT (M01 = Capricorn) never moves; the old calendar underneath it does.
 - **Why Capricorn sits first:** the genesis block (3 Jan 2009) fell under Capricorn on the
   old sky. The clock's first month honors its birth sign.

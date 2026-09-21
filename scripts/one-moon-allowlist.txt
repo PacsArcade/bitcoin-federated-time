@@ -1,0 +1,116 @@
+# scripts/one-moon-allowlist.txt — paths/lines exempt from lint-one-moon.sh
+#
+# Format, one entry per line:
+#   a bare relative path         whole file exempt
+#   a relative path:LINENO       one line exempt
+#   a relative path ending /**   whole subtree exempt (glob prefix)
+#   blank lines and lines starting with # are ignored
+#
+# This lint is a plain same-line grep with no negation-awareness, so a line that
+# correctly STATES the one-moon ruling ("the month never wears the moon's name") trips
+# the same pattern as a line that wrongly asserts the retired doctrine. Every entry below
+# was hand-judged at task-359 (Lane A) — never a live doctrine hit. Re-grep before trusting
+# an old judgment after a file changes.
+
+# --- history: the doctrine's own retired explainer + the superseded Day-0 proposal.
+# Both are framed past-tense/superseded at the top; their bodies necessarily describe the
+# retired doctrine in detail and would otherwise be nothing but hits.
+docs/the-two-moons.md
+docs/degen-hours.md
+
+# --- generated: regenerate at next build; never hand-edited (no Python toolchain in this
+# lane's sandbox). Neither directory exists in this worktree today, and both lints' own
+# `find` already prunes `build` and `*.egg-info` before scanning — so these two entries
+# can never actually fire; they're kept only as documentation for whoever regenerates the
+# build later and might read this allowlist by eye.
+build/lib/**
+bitcoin_federated_time.egg-info/**
+
+# --- pending, in-flight: the live clone carries someone's uncommitted edits to these two
+# studies; a worktree cut from 80da35f does not contain those edits, and this lane never
+# touches the live clone (T-359 RULED). Confirmed live doctrine hits under the hardened
+# patterns (REVIEW-K90 §4): both files still assert "THE CALENDAR'S moon"/"Two moons"/the
+# block-timed lunation formula, and bitcoin-birthday.html still carries the unconverted
+# "~1¼ days" Finding-1 drift figure.
+studies/bitcoin-birthday.html
+studies/clock-study-pupil.html
+
+# --- pending: this repo's bundled skill copy is Lane B's to edit (T-360 mirrors it from
+# the canonical skill); read-only here so the two lanes don't both write it. Both hits are
+# pre-existing "two moons" doctrine prose, Lane B's to correct.
+.claude/skills/bitcoin-time-clock/SKILL.md
+
+# --- sky-true: bft/sky.py's rewritten module docstring and the pre-existing
+# ruling-0018.05.18 comment both state the one-moon truth using "moon" next to
+# "month"/"day-of-month" by necessity (that's what the ruling is about).
+bft/sky.py:5
+bft/sky.py:6
+bft/sky.py:43
+
+# --- sky-true / history: same module docstring, one line further down — names the
+# retired "calendar's moon" doctrine in past tense ("used to also serve a second...")
+# to explain what changed; a negation, not an assertion. (REVIEW-K90 §4 hardening hit —
+# the "calendar's moon" phrase trigger, not present under the pre-hardening patterns.)
+bft/sky.py:8
+
+# --- sky-true: the MOON_PHASES comment (REVIEW-K90 §1 fix) states the one-moon truth by
+# necessity — it names both "lunation" and "the BFT month" in the same breath to say the
+# phase table is NOT tied to the month. (REVIEW-K90 §4 hardening hit — the "lunation"
+# trigger; this line didn't match the pre-hardening "moon"-literal patterns.)
+bft/sky.py:28
+
+# --- sky-true: bft/holidays.py's year_calendar() New Year row states the negation
+# ("a block count, not a moon") with M01·D01 on the same call line.
+bft/holidays.py:153
+
+# --- sky-true / ruled-out-path reference: docs/pupil-clock-grid.md's translation table
+# names the retired "calendar's moon" formula explicitly to say it's retired and to point
+# at studies/bitcoin-birthday.html (out of this lane's scope, in-flight edits) as the one
+# place it still renders. (REVIEW-K90 §4 hardening hit — the "calendar's moon" trigger.)
+docs/pupil-clock-grid.md:99
+
+# --- sky-true: docs/bitcoin-holidays.md's New Year row states the negation with M01·D01
+# in the same table row; it also carries its own Finding-1-style correction tag.
+docs/bitcoin-holidays.md:42
+
+# --- sky-true / filename-cause: guides/2-the-months-and-the-moon.md's own filename slug
+# contains both "months" and "moon" as substrings, so every link to it (and its own H1)
+# trips the pattern regardless of wording. The guide's body was rewritten to the one-moon
+# truth (task-359); these are link/title occurrences, not doctrine.
+guides/2-the-months-and-the-moon.md:1
+guides/2-the-months-and-the-moon.md:43
+guides/2-the-months-and-the-moon.md:45
+guides/2-the-months-and-the-moon.md:50
+guides/1-a-clock-made-of-blocks.md:69
+guides/README.md:9
+guides/4-the-hidden-thirteenth.md:28
+
+# --- sky-true: README.md's "the sky comes free" section states the one-moon ruling and
+# its negations ("D01 is not a new moon", "never wears the moon's name") by necessity, plus
+# two filename-cause mentions of guide 2's slug and one "the sky's moon" spark-section line.
+README.md:167
+README.md:168
+README.md:169
+README.md:170
+README.md:183
+README.md:191
+README.md:231
+
+# --- sky-true: README.md:184 is the same "sky comes free" section, one line further down —
+# names the history doc by its link text ("the two moons") to send the reader to
+# docs/the-two-moons.md for the retired doctrine; a pointer, not an assertion.
+# (REVIEW-K90 §4 hardening hit — the "two moons" trigger.)
+README.md:184
+
+# --- sky-true: studies/README.md flags the birthday page's still-retired formula as
+# pending, naming both "moon" and "day-of-month" to explain what's wrong with it.
+studies/README.md:15
+
+# --- history by nature: a changelog documents what changed, so it necessarily quotes the
+# retired phrasing it's correcting. Covers both the untouched 0.2.0/0.3.0 entries and the
+# new Unreleased entry's description of the fix.
+CHANGELOG.md
+
+# --- reference doc: this lane's own work-claim describes the retired doctrine by name to
+# explain what it corrected; not itself a doctrine assertion.
+work-claims/task-359.md

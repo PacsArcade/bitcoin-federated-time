@@ -6,8 +6,8 @@ Two kinds of holiday, both block-honest:
   * THE STORIED DAYS — one-time history, anchored to real heights (the genesis block, the
     halvings, SegWit, Taproot, the pizza). Block-native anchors are EXACT; days reached by
     bridging an old-calendar date are marked approximate (the ~ rule).
-  * THE RECURRING DAYS — days the calendar itself throws, forever: the new-moon New Year,
-    Halving Day every 210,000 blocks, the Conjunction every 1,260,000, the Hallows (the last
+  * THE RECURRING DAYS — days the calendar itself throws, forever: New Year (a block count,
+    never a moon), Halving Day every 210,000 blocks, the Conjunction every 1,260,000, the Hallows (the last
     day of the tenth month — the new calendar's All Hallows' Eve, honoring the whitepaper's
     31 Oct 2008), the whisper days (the thirteens), Year's End, and the Cat years.
 
@@ -66,15 +66,17 @@ def _recurring_for_day(d: dict[str, Any]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     month, day, year = d["month"], d["day"], d["year"]
     if month == 1 and day == 1:
-        out.append({"name": "New Year (the new-moon new year)", "kind": "recurring",
-                    "story": "M01·D01 — a new year opens on a new moon, every 52,416 blocks."})
+        out.append({"name": "New Year", "kind": "recurring",
+                    "story": "M01·D01 — the year turns over, every 52,416 blocks. A block "
+                             "count, not a moon."})
     if month == 10 and day == DAYS_PER_MONTH:
         out.append({"name": "The Hallows", "kind": "recurring",
                     "story": "The last day of the tenth month — the new calendar's All "
                              "Hallows' Eve, honoring the whitepaper's 31 Oct 2008."})
     if month == MONTHS_PER_YEAR and day == DAYS_PER_MONTH:
         out.append({"name": "Year's End", "kind": "recurring",
-                    "story": "M13·D28, the 364th day — the year completes with the moon."})
+                    "story": "M13·D28, the 364th day — the year completes, 52,416 blocks "
+                             "closed."})
     if day == 13 or month == MONTHS_PER_YEAR:
         out.append({"name": "A Whisper Day", "kind": "recurring",
                     "story": "A thirteen is lit — the clock may be in a mood to speak "
@@ -148,7 +150,7 @@ def year_calendar(year: int) -> list[dict[str, Any]]:
         h = base + day_offset_blocks
         rows.append({"name": name, "height": h, "date": format_date(h), "story": story})
 
-    _add(0, "New Year (the new-moon new year)", "M01·D01 — the year opens on a new moon.")
+    _add(0, "New Year", "M01·D01 — the year opens; a block count, not a moon.")
     _add(9 * BLOCKS_PER_MONTH + 27 * BLOCKS_PER_DAY, "The Hallows",
          "M10·D28 — the new calendar's All Hallows' Eve (the whitepaper's night).")
     _add(12 * BLOCKS_PER_MONTH, "Sol's Seat opens",
@@ -156,7 +158,7 @@ def year_calendar(year: int) -> list[dict[str, Any]]:
     _add(12 * BLOCKS_PER_MONTH + 12 * BLOCKS_PER_DAY, "The Thirteenth of the Thirteenth",
          "M13·D13 — the loudest whisper of the year.")
     _add(13 * BLOCKS_PER_MONTH - BLOCKS_PER_DAY, "Year's End",
-         "M13·D28 — the 364th day; the year completes with the moon.")
+         "M13·D28 — the 364th day; the year completes, 52,416 blocks closed.")
     for s in STORIED:
         if base <= s["height"] < base + BLOCKS_PER_YEAR:
             rows.append({"name": s["name"], "height": s["height"],

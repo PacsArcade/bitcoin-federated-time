@@ -1,4 +1,11 @@
-# Day 0 & the Degen Hours — the appointed window
+# Day 0 & the Degen Hours — the appointed window (history — proposal superseded)
+
+> **Superseded, block 967,918 (0018.07.02 a₿).** This proposal's core idea — appointing
+> Day 0 to a real new moon so the calendar "shakes the sky's hand" — was never signed off
+> (see the original banner below) and is now retired by the Admiral's one-moon ruling: "we
+> only have one moon. and we can see it outside." The BFT month never wears the moon's
+> name, so there is no month/new-year handshake with a moon to appoint. Kept as design
+> history; nothing below is canon.
 
 *Decision paper · double-checked numbers · **PROPOSAL — awaiting Pac's key-signed
 sign-off.** Nothing below is canon until he blesses it.*
