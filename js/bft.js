@@ -1,0 +1,1 @@
+const bft=h=>{if(!Number.isSafeInteger(h)||h<0)throw RangeError("height");const p=(n,w)=>String(n).padStart(w,"0"),d=Math.floor(h/144),b=h%144,o=d%364;return p(Math.floor(d/364),4)+"."+p(Math.floor(o/28)+1,2)+"."+p(o%28+1,2)+" "+p(Math.floor(b/6),2)+":"+p(b%6*10,2)+" a₿"};

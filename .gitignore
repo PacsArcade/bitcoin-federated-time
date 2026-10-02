@@ -11,3 +11,6 @@ venv/
 /DW-PRESS-REVIEW.md
 /DW-PRESS-VERBIAGE-REVIEW.md
 /bitcoin_federated_time_readme.md
+
+# the TypeScript build output is committed on purpose (bin/bft.mjs and the teaching page run from it)
+!/ts/dist/

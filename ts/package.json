@@ -1,0 +1,20 @@
+{
+  "name": "@pacsarcade/bft",
+  "version": "0.4.0",
+  "description": "Bitcoin Federated Time: a block height as a date, a time, and a step ladder to every unit. Zero dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "exports": {
+    ".": { "types": "./src/index.ts", "default": "./dist/index.js" },
+    "./src/*": "./src/*"
+  },
+  "bin": { "bft": "bin/bft.mjs" },
+  "files": ["src", "dist", "bin"],
+  "scripts": {
+    "build": "node --no-warnings build.mjs",
+    "test": "node --test tests/"
+  },
+  "engines": { "node": ">=22.13" }
+}

@@ -19,3 +19,16 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
         run: python tests/test_bft.py
+      - name: one-package tests (core, ladder, stamp, CLI, vectors)
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python tests/test_one_package.py
+      - uses: actions/setup-node@v4
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+        with:
+          node-version: 24
+      - name: TypeScript and inscription conformance
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+        run: |
+          (cd ts && node --test tests/)
+          node --test js/
