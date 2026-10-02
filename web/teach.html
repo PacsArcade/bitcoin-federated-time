@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BFT Building Blocks</title>
+<style>
+  :root {
+    --bg: #0b0d12; --panel: #131722; --line: #2a3142; --text: #e8ecf4; --muted: #a9b3c7;
+    --accent: #f7931a; --mined: #1f6f5c; --future: #0f121a;
+    --c0: #ffb347; --c1: #7dd3fc; --c2: #86efac; --c3: #c4b5fd; --c4: #f9a8d4; --c5: #fde68a; --c6: #fca5a5; --c7: #93c5fd; --c8: #d8b4fe;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 14px 16px 6px; max-width: 1280px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0; }
+  main { max-width: 1280px; margin: 0 auto; padding: 8px 16px 40px; display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
+  @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .stage { padding: 0; overflow: hidden; position: relative; }
+  canvas { display: block; width: 100%; height: min(68vh, 640px); min-height: 360px; background: var(--bg); touch-action: none; }
+  .cap { position: absolute; left: 10px; right: 10px; bottom: 8px; background: rgba(11,13,18,.88); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 14px; pointer-events: none; }
+  .stamp { font: 600 22px/1.2 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .02em; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+  button, select, input { font: inherit; color: var(--text); background: #1a2030; border: 1px solid var(--line); border-radius: 8px; padding: 7px 11px; min-height: 36px; }
+  button { cursor: pointer; }
+  button:hover { border-color: #46506a; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  button.on { background: #2a2110; border-color: var(--accent); }
+  input[type=number], input[type=text] { width: 9.5em; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips button { padding: 5px 9px; min-height: 32px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; padding: 3px 4px; }
+  td { padding: 4px; border-top: 1px solid var(--line); }
+  tr.lad { cursor: pointer; }
+  tr.lad:hover td { background: #181e2c; }
+  tr.lad.on td { background: #2a2110; }
+  .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .k { display: inline-block; width: 22px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
+  .k.mined { background: var(--mined); } .k.future { background: var(--future); border: 1px solid #5b6784; } .k.here { background: var(--accent); }
+  h2 { font-size: 15px; margin: 0 0 6px; }
+  .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  .out { font: 13px/1.4 ui-monospace, Menlo, monospace; color: var(--text); white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BFT Building Blocks</h1>
+  <p class="sub">Every block is one small square. Watch how many of them it takes to make an hour, a day, a year, an era.</p>
+</header>
+<main>
+  <section class="card stage" aria-label="Nested blocks">
+    <canvas id="cv" role="img" aria-label="Nested blocks drawn to scale, with the chosen block highlighted"></canvas>
+    <div class="cap" id="cap"></div>
+  </section>
+
+  <aside style="display:grid; gap:14px; align-content:start;">
+    <section class="card">
+      <div class="stamp" id="stamp">----.--.-- --:-- a&#x20BF;</div>
+      <div class="note" id="where"></div>
+      <div class="row">
+        <label for="h">Block height</label>
+        <input id="h" type="number" min="0" step="1" inputmode="numeric">
+        <button id="go">Show</button>
+      </div>
+      <div class="row">
+        <button data-d="-144" title="back one day">-1 day</button>
+        <button data-d="-6" title="back one hour">-1 hour</button>
+        <button data-d="-1">-1 block</button>
+        <button data-d="1">+1 block</button>
+        <button data-d="6">+1 hour</button>
+        <button data-d="144">+1 day</button>
+      </div>
+      <div class="row"><button id="tip">Use the latest block</button><span class="note" id="tipnote"></span></div>
+    </section>
+
+    <section class="card">
+      <h2>Zoom</h2>
+      <div class="chips" id="chips" role="tablist"></div>
+      <div class="row">
+        <button id="in">Zoom in</button><button id="out">Zoom out</button><button id="play">Play: zoom out step by step</button>
+      </div>
+      <div class="legend">
+        <span><span class="k mined"></span>filled: already mined</span>
+        <span><span class="k future"></span>outline: not yet mined</span>
+        <span><span class="k here"></span>pulsing: this block</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>The step ladder for this block</h2>
+      <table id="lad"><thead><tr><th>unit</th><th class="n">this block is</th><th class="n">left</th></tr></thead><tbody></tbody></table>
+      <p class="note">Click a row to zoom to it. Week, retune, month and year fit inside each other exactly. The halving era does not line up with the years.</p>
+    </section>
+
+    <section class="card">
+      <h2>From a unit back to blocks</h2>
+      <div class="row">
+        <select id="u" aria-label="unit"></select>
+        <input id="i" type="number" min="0" step="1" value="0" aria-label="unit number" title="unit number, counted from 0">
+        <button id="rng">Find its blocks</button>
+      </div>
+      <div class="row">
+        <input id="d" type="text" value="0018.07.13" aria-label="date" title="YYYY.MM.DD, or YYYY.MM, or YYYY">
+        <button id="drng">Date to blocks</button>
+      </div>
+      <div class="out" id="rngout"></div>
+      <div class="row"><button id="rgo" hidden>Go to its first block</button></div>
+    </section>
+  </aside>
+</main>
+
+<script src="bft.bundle.js"></script>
+<script>
+"use strict";
+(function () {
+  var B = window.BFT;
+  var EXAMPLE = 969505;
+  var NAMES = ["Block", "Hour", "Day", "Week", "Retune", "Month", "Year", "Halving era", "Cycle"];
+  var KEYS = ["block", "hour", "day", "week", "retune", "month", "year", "halving", "cycle"];
+  var LC = ["#ffb347", "#7dd3fc", "#86efac", "#c4b5fd", "#f9a8d4", "#fde68a", "#fca5a5", "#93c5fd", "#d8b4fe"];
+  var SAYS = [
+    "One block: the smallest square. About 10 minutes.",
+    "6 blocks make an hour.",
+    "24 hours make a day: 144 blocks.",
+    "7 days make a week: 1,008 blocks.",
+    "2 weeks make a retune (one difficulty adjustment): 2,016 blocks.",
+    "2 retunes make a month: 4,032 blocks. 28 days.",
+    "13 months make a year: 52,416 blocks. 364 days.",
+    "A halving era is 210,000 blocks, about 4 years. It cuts across the years.",
+    "6 halving eras make a cycle: 1,260,000 blocks."
+  ];
+
+  // World layout, in block cells. Each unit is a rectangle; children sit inside in time order.
+  // block 1x1 | hour 6x1 (a rod of 6 blocks) | day 12x12 (24 rods, 2 across: a flat) | week 48x24 (7 flats, 4 across)
+  // retune 48x48 (2 weeks stacked) | month 96x48 (2 retunes side by side) | year 384x192 (13 months, 4 across)
+  // Each step up is a real zoom out: nothing is shrunk to fit, the area is just the number of blocks.
+  var DIM = [[1, 1], [6, 1], [12, 12], [48, 24], [48, 48], [96, 48], [384, 192]];
+  var SIZE = [1, 6, 144, 1008, 2016, 4032, 52416];
+  var RATIO = [1, 6, 24, 7, 2, 2, 13];
+  var YEAR_GAP = 24, YEAR_STEP = 384 + YEAR_GAP;
+
+  function childOff(L, i) { // i-th child (a level L-1 unit) inside a level L unit
+    switch (L) {
+      case 1: return [i, 0];
+      case 2: return [(i % 2) * 6, Math.floor(i / 2)];
+      case 3: return [(i % 4) * 12, Math.floor(i / 4) * 12];
+      case 4: return [0, i * 24];
+      case 5: return [i * 48, 0];
+      default: return [(i % 4) * 96, Math.floor(i / 4) * 48];
+    }
+  }
+
+  // The rectangle of every unit that holds height h, level 0..6, found with the ladder's own parent numbers.
+  function locate(h) {
+    var lad = B.ladder(h), k = lad[6].index;
+    var rects = []; rects[6] = { x: k * YEAR_STEP, y: 0, w: 384, h: 192 };
+    for (var L = 6; L >= 1; L--) {
+      var n = lad[L - 1].parent.n - 1, off = childOff(L, n), p = rects[L];
+      rects[L - 1] = { x: p.x + off[0], y: p.y + off[1], w: DIM[L - 1][0], h: DIM[L - 1][1] };
+    }
+    return rects;
+  }
+
+  var cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  var cap = document.getElementById("cap");
+  var state = { h: EXAMPLE, level: 6, tipH: null };
+  var cam = { cx: 0, cy: 0, s: 1 }, target = { cx: 0, cy: 0, s: 1 };
+  var W = 0, H = 0, dpr = 1, play = null, rects = null, lad = null, bornAt = 0;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    aim(false);
+  }
+
+  function fitRect(r, pad) {
+    var s = Math.min((W - 24) / (r.w * pad), (H - 96) / (r.h * pad));
+    return { cx: r.x + r.w / 2, cy: r.y + r.h / 2, s: s };
+  }
+
+  function levelRect() {
+    var L = state.level;
+    if (L <= 6) {
+      var r = rects[L];
+      if (L === 0) return { x: r.x - 4, y: r.y - 2.4, w: r.w + 8, h: r.h + 4.8 }; // the block, with neighbours peeking in
+      return r;
+    }
+    var u = lad[L], a = locate(u.start), b = locate(u.end), ya = lad[6].index;
+    var k0 = Math.floor(u.start / 52416), k1 = Math.floor(u.end / 52416);
+    return { x: k0 * YEAR_STEP, y: 0, w: (k1 - k0) * YEAR_STEP + 384, h: 192, a: a, b: b, k0: k0, k1: k1 };
+  }
+
+  function aim(animate) {
+    if (!lad) return;
+    var t = fitRect(levelRect(), state.level === 0 ? 1 : 1.12);
+    target = t;
+    if (!animate) { cam.cx = t.cx; cam.cy = t.cy; cam.s = t.s; }
+  }
+
+  function sx(x) { return (x - cam.cx) * cam.s + W / 2; }
+  function sy(y) { return (y - cam.cy) * cam.s + (H - 44) / 2 + 14; }
+
+  var fmt = function (n) { return n.toLocaleString("en-US"); };
+
+  function setHeight(h, keepLevel) {
+    if (!(Number.isSafeInteger(h) && h >= 0)) return;
+    state.h = h; lad = B.ladder(h); rects = locate(h); bornAt = performance.now();
+    document.getElementById("h").value = h;
+    document.getElementById("stamp").textContent = B.stamp(h);
+    document.getElementById("where").textContent = "Block " + fmt(h) + (h === EXAMPLE && state.tipH === null ? " (an example block, not the live tip)" : "");
+    renderLadder(); renderChips(); aim(true); caption();
+  }
+
+  function renderLadder() {
+    var tb = document.querySelector("#lad tbody"); tb.innerHTML = "";
+    lad.forEach(function (r, i) {
+      var tr = document.createElement("tr"); tr.className = "lad" + (i === state.level ? " on" : ""); tr.tabIndex = 0;
+      tr.innerHTML = '<td><span class="sw" style="background:' + LC[i] + '"></span>' + NAMES[i] + '</td><td class="n">' + fmt(r.position) + " of " + fmt(r.of) + '</td><td class="n">' + fmt(r.remaining) + "</td>";
+      tr.title = r.name + ": blocks " + fmt(r.start) + " to " + fmt(r.end);
+      tr.onclick = function () { zoomTo(i); };
+      tr.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); zoomTo(i); } };
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderChips() {
+    var c = document.getElementById("chips"); c.innerHTML = "";
+    NAMES.forEach(function (n, i) {
+      var b = document.createElement("button"); b.textContent = i + " " + n; b.className = i === state.level ? "on" : "";
+      b.setAttribute("role", "tab"); b.setAttribute("aria-selected", i === state.level ? "true" : "false");
+      b.onclick = function () { stopPlay(); zoomTo(i); }; c.appendChild(b);
+    });
+  }
+
+  function caption() {
+    var r = lad[state.level], L = state.level;
+    var inside = L === 0 ? "" : "  This block is " + fmt(r.position) + " of " + fmt(r.of) + " in the " + KEYS[L].replace("halving", "halving era") + ".";
+    cap.textContent = NAMES[L] + ": " + SAYS[L] + inside;
+  }
+
+  function zoomTo(i) { state.level = Math.max(0, Math.min(8, i)); renderLadder(); renderChips(); aim(true); caption(); }
+  function stopPlay() { if (play) { clearInterval(play); play = null; document.getElementById("play").classList.remove("on"); } }
+
+  // ---- drawing -------------------------------------------------------------------------------
+  var BG = "#0b0d12";
+
+  function unitStatus(start, size) { // relative to the chosen block
+    var h = state.h;
+    if (start + size - 1 < h) return 1;  // all mined
+    if (start > h) return -1;            // not yet mined
+    return 0;                            // holds the chosen block
+  }
+
+  function drawUnit(L, x, y, start) {
+    var w = DIM[L][0], hh = DIM[L][1];
+    var X = sx(x), Y = sy(y), pw = w * cam.s, ph = hh * cam.s;
+    if (X > W || Y > H - 40 || X + pw < 0 || Y + ph < 0 || pw < 0.6) return;
+    var st = unitStatus(start, SIZE[L]);
+    if (L === 0) {
+      if (st === 1) { ctx.fillStyle = "#1f6f5c"; ctx.fillRect(X, Y, pw, ph); }
+      if (pw > 5) { ctx.strokeStyle = st === 1 ? "#2c8a74" : "#2a3142"; ctx.lineWidth = 1; ctx.strokeRect(X + .5, Y + .5, pw - 1, ph - 1); }
+      if (pw > 56) { ctx.fillStyle = st === 1 ? "#e8ecf4" : "#a9b3c7"; ctx.font = "12px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.fillText(fmt(start), X + pw / 2, Y + ph / 2 + 4); }
+      return;
+    }
+    var small = pw < 7 && ph < 7;
+    if (small || (st !== 0 && pw * ph < 90)) { // too small to open: one flat swatch
+      if (st === 1) { ctx.fillStyle = "#1f6f5c"; ctx.fillRect(X, Y, pw, ph); }
+      else if (st === -1) { ctx.fillStyle = "#0f121a"; ctx.fillRect(X, Y, pw, ph); }
+      else { ctx.fillStyle = "#183a37"; ctx.fillRect(X, Y, pw, ph); }
+      if (pw > 2) { ctx.strokeStyle = LC[L] + "55"; ctx.lineWidth = 1; ctx.strokeRect(X + .5, Y + .5, pw - 1, ph - 1); }
+      return;
+    }
+    var cs = SIZE[L - 1];
+    for (var i = 0; i < RATIO[L]; i++) {
+      if (L === 6 && i >= 13) break;
+      var o = childOff(L, i);
+      drawUnit(L - 1, x + o[0], y + o[1], start + i * cs);
+    }
+    // frame of this unit, stronger the larger it is on screen
+    ctx.strokeStyle = st === 0 ? LC[L] : LC[L] + (st === 1 ? "aa" : "55");
+    ctx.lineWidth = st === 0 ? (L >= 4 ? 2.5 : 2) : (pw > 40 ? 1.5 : 1);
+    ctx.strokeRect(X + .5, Y + .5, pw - 1, ph - 1);
+    // useful small labels where there is room
+    if (L === 1 && ph > 15 && pw > 70) { ctx.fillStyle = "#e8ecf4"; ctx.font = "12px ui-monospace, monospace"; ctx.textAlign = "left"; ctx.fillText(("0" + Math.floor((start % 144) / 6)).slice(-2) + ":00", X + 4, Y + Math.min(ph - 4, 13)); }
+    if (L === 2 && cam.s <= 15 && pw > 40) { ctx.fillStyle = "#e8ecf4"; ctx.font = "600 12px system-ui, sans-serif"; ctx.textAlign = "left"; ctx.fillText("day " + (Math.floor(start / 144) % 28 + 1), X + 4, Y + 14); }
+  }
+
+  function draw(now) {
+    var k = 1 - Math.pow(0.0009, 1 / 60);
+    cam.cx += (target.cx - cam.cx) * k; cam.cy += (target.cy - cam.cy) * k;
+    cam.s *= Math.pow(target.s / cam.s, k);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+    if (!lad) { requestAnimationFrame(draw); return; }
+    var k0 = Math.max(0, Math.floor((cam.cx - W / 2 / cam.s) / YEAR_STEP) - 1), k1 = Math.floor((cam.cx + W / 2 / cam.s) / YEAR_STEP) + 1;
+    k1 = Math.min(k1, 26);
+    for (var k2 = k0; k2 <= k1; k2++) drawUnit(6, k2 * YEAR_STEP, 0, k2 * 52416);
+    // era and cycle brackets
+    if (state.level >= 7) {
+      var u = lad[state.level], lr = levelRect();
+      ctx.strokeStyle = LC[state.level]; ctx.lineWidth = 2; ctx.setLineDash([8, 5]);
+      ctx.strokeRect(sx(lr.x) - 3, sy(lr.y) - 3, lr.w * cam.s + 6, lr.h * cam.s + 6); ctx.setLineDash([]);
+      [[lr.a, "starts"], [lr.b, "ends"]].forEach(function (pr) {
+        var r0 = pr[0][0], px = sx(r0.x + .5), py0 = sy(r0.y), py1 = sy(r0.y + 1);
+        ctx.strokeStyle = LC[state.level]; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px, py0 - 14); ctx.lineTo(px, py0); ctx.stroke();
+        ctx.fillStyle = LC[state.level]; ctx.font = "12px system-ui, sans-serif"; ctx.textAlign = "center";
+        ctx.fillText(NAMES[state.level] + " " + pr[1], px, py0 - 18);
+      });
+    }
+    // the chosen block, pulsing, always findable
+    var br = rects[0], px = sx(br.x), py = sy(br.y), pw = Math.max(br.w * cam.s, 6), ph = Math.max(br.h * cam.s, 6);
+    var pulse = 0.55 + 0.45 * Math.sin((now - bornAt) / 260);
+    ctx.fillStyle = "rgba(247,147,26," + (0.55 + 0.45 * pulse) + ")";
+    ctx.fillRect(px - (pw - br.w * cam.s) / 2, py - (ph - br.h * cam.s) / 2, pw, ph);
+    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5; ctx.strokeRect(px - 3 - (pw - br.w * cam.s) / 2, py - 3 - (ph - br.h * cam.s) / 2, pw + 6, ph + 6);
+    if (pw > 56) { ctx.fillStyle = "#14100a"; ctx.font = "600 13px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.fillText(fmt(state.h), px + br.w * cam.s / 2, py + br.h * cam.s / 2 + 4); }
+    if (pw < 40) { // when the block is tiny, say where it is
+      ctx.fillStyle = "#ffb347"; ctx.font = "13px system-ui, sans-serif"; ctx.textAlign = "left";
+      var tx = Math.min(px + pw + 10, W - 130), ty = Math.max(py - 12, 16);
+      ctx.fillText("this block: " + fmt(state.h), tx, ty);
+      ctx.strokeStyle = "#ffb347"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(tx - 4, ty - 4); ctx.lineTo(px + pw + 2, py + ph / 2); ctx.stroke();
+    }
+    // title of the zoom level, above the frame
+    var L = state.level, lr2 = levelRect(), nm = lad[L].name, tt = (nm.toLowerCase().indexOf(NAMES[L].toLowerCase()) === 0 ? nm.charAt(0).toUpperCase() + nm.slice(1) : NAMES[L] + "  " + nm) + "  (blocks " + fmt(lad[L].start) + " to " + fmt(lad[L].end) + ")";
+    ctx.font = "600 14px system-ui, sans-serif"; ctx.textAlign = "left";
+    ctx.fillStyle = "rgba(11,13,18,.9)"; ctx.fillRect(6, 6, ctx.measureText(tt).width + 12, 24);
+    ctx.fillStyle = LC[L]; ctx.fillText(tt, 12, 23);
+    requestAnimationFrame(draw);
+  }
+
+  // ---- controls ------------------------------------------------------------------------------
+  function el(id) { return document.getElementById(id); }
+  el("go").onclick = function () { setHeight(Number(el("h").value)); };
+  el("h").onkeydown = function (e) { if (e.key === "Enter") setHeight(Number(el("h").value)); };
+  document.querySelectorAll("[data-d]").forEach(function (b) { b.onclick = function () { setHeight(Math.max(0, state.h + Number(b.dataset.d))); }; });
+  el("in").onclick = function () { stopPlay(); zoomTo(state.level - 1); };
+  el("out").onclick = function () { stopPlay(); zoomTo(state.level + 1); };
+  el("play").onclick = function () {
+    if (play) { stopPlay(); return; }
+    el("play").classList.add("on"); zoomTo(0);
+    play = setInterval(function () { if (state.level >= 8) { stopPlay(); return; } zoomTo(state.level + 1); }, 2400);
+  };
+  el("tip").onclick = function () {
+    el("tipnote").textContent = "reading the tip...";
+    B.tip().then(function (t) {
+      if (t.height === null) { el("tipnote").textContent = "no source reachable: staying on the example block"; return; }
+      state.tipH = t.height; el("tipnote").textContent = "from the " + t.source + (t.gap > 1 ? " (gap of " + t.gap + " blocks)" : "");
+      setHeight(t.height);
+    });
+  };
+  window.addEventListener("keydown", function (e) {
+    if (/INPUT|SELECT|TEXTAREA/.test((e.target || {}).tagName || "")) return;
+    if (e.key === "+" || e.key === "=") { stopPlay(); zoomTo(state.level - 1); }
+    else if (e.key === "-") { stopPlay(); zoomTo(state.level + 1); }
+    else if (e.key === "ArrowRight") setHeight(state.h + 1);
+    else if (e.key === "ArrowLeft") setHeight(Math.max(0, state.h - 1));
+  });
+
+  var us = el("u"); KEYS.forEach(function (k, i) { var o = document.createElement("option"); o.value = k; o.textContent = NAMES[i]; if (k === "day") o.selected = true; us.appendChild(o); });
+  var pending = null;
+  function showRange(r) {
+    pending = r.start;
+    el("rngout").textContent = r.unit + ": blocks " + fmt(r.start) + " to " + fmt(r.end) + "\n" + fmt(r.size) + " blocks\n" + r.first + "\nto " + r.last;
+    el("rgo").hidden = false;
+  }
+  el("rng").onclick = function () { try { showRange(B.unitRange(us.value, Number(el("i").value))); } catch (e) { el("rngout").textContent = String(e.message); el("rgo").hidden = true; } };
+  el("drng").onclick = function () {
+    try {
+      var p = el("d").value.trim().split("."); var a = p.map(Number);
+      showRange(B.dateRange(a[0], a[1] === undefined ? null : a[1], a[2] === undefined ? null : a[2], null));
+    } catch (e) { el("rngout").textContent = String(e.message); el("rgo").hidden = true; }
+  };
+  el("rgo").onclick = function () { if (pending !== null) setHeight(pending); };
+
+  window.addEventListener("resize", resize);
+  resize(); setHeight(EXAMPLE);
+  var q = new URLSearchParams(location.search);
+  if (q.get("h") && /^\d+$/.test(q.get("h"))) setHeight(Number(q.get("h")));
+  if (q.get("zoom") && /^\d$/.test(q.get("zoom"))) { zoomTo(Number(q.get("zoom"))); cam.cx = target.cx; cam.cy = target.cy; cam.s = target.s; }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
