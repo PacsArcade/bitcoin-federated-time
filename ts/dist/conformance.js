@@ -2,6 +2,7 @@
 import * as core from "./core.js";
 import * as steps from "./steps.js";
 import * as stamping from "./stamp.js";
+import { liveFace } from "./live.js";
 
 function throws(fn               )          {
   try { fn(); } catch { return true; }
@@ -66,6 +67,10 @@ export function run(v     )           {
   for (const row of v.stamps ?? []) {
     const got = stamping.stamp(row.height, { include: row.include ?? [], template: row.template ?? null, dateOnly: row.dateOnly ?? false, at: row.at ?? null });
     if (got !== row.expected) fails.push("stamp " + JSON.stringify(row) + ": " + got);
+  }
+  for (const row of v.live ?? []) {
+    const got = liveFace(row.height, row.arrivedAt, row.now, row.estimated);
+    if (!same(got, row.expected)) fails.push("live " + row.name + ": " + JSON.stringify(got));
   }
   return fails;
 }

@@ -94,8 +94,35 @@ The library never reads a clock to make a date. The tip is read by a separate, o
 
 ## 12. Conformance
 
-An implementation conforms if it passes every section of `vectors/vectors.json`: 42 forward vectors, 8 inverse, 9 invalid inputs, 12 ladder, 10 unit ranges, 6 date ranges, 11 stamps. Builds today: Python (`bft/`), TypeScript (`ts/`), and the inscription file (`js/bft.js`, strict, no network, no clock).
+An implementation conforms if it passes every section of `vectors/vectors.json`: 42 forward vectors, 8 inverse, 9 invalid inputs, 12 ladder, 10 unit ranges, 6 date ranges, 11 stamps, 15 live faces. Builds today: Python (`bft/`), TypeScript (`ts/`), and the inscription file (`js/bft.js`, strict, no network, no clock; `js/bft-live.js` for the live face).
 
 ## 13. Versioning
 
 Core changes only with a spec version. Extensions version separately. Any consumer SHOULD print the spec version it implements next to its vector self-test.
+
+## 14. Live face (a display convention, NOT the standard)
+
+The canonical stamp (section 5) is height-only and its minutes move in steps of 10. Some surfaces want a ticking face. This section defines one, and only one, way to do it so that every surface that ticks agrees. It does not change sections 2 to 13.
+
+`liveFace(height, arrivedAt, now)` returns `{known, text, hour, minute, second, elapsed, holding, lateBy, skewed, estimated}`.
+
+1. The date, the hour and the 10-minute step come from the height alone, as in section 4. Nothing in the date is ever derived from `now`. The law "never read a wall clock to make a date" holds in full. The wall clock is used for one thing: measuring the seconds since this block ARRIVED.
+2. `arrivedAt` is unix seconds: when our node first saw this block (section 15). `elapsed = max(0, floor(now - arrivedAt))`.
+3. For `elapsed` 0 to 599: `minute = step + floor(elapsed / 60)`, `second = elapsed mod 60`. Text: `YYYY.MM.DD HH:MM:SS a₿` (`0018.07.13 16:14:32 a₿`). The hour cannot change, because step is at most 50 and the added minutes are at most 9.
+4. For `elapsed >= 600` the face HOLDS at `step + 9 : 59` ("straining"): `holding = true`, `lateBy = elapsed - 600`. It never rolls into the next step. Only a real new block (a new height) moves it, and it then snaps to the new step at `:00`. A surface SHOULD show that it is holding (a flag, a colour AND a word, not colour alone).
+5. A clock that reads before the arrival (`now < arrivedAt`, skew) counts as 0 elapsed and sets `skewed = true`.
+6. With no arrival time, or a non-finite clock, no seconds are invented. The unknown digits are dashes: `0018.07.13 16:1-:-- a₿` (the step digit is real, the rest is not). The choice over printing the bare 10-minute stamp: on a face that has a seconds slot, `16:10` reads as an exact `16:10:00`, a claim nobody can back. Dashes say what is known and nothing more.
+7. `estimated` is passed through. A surface whose arrival time is a stand-in (section 15b) sets it and SHOULD say so.
+8. A non-height gives `----.--.-- --:--:-- a₿`.
+
+Vectors: `live` in `vectors/vectors.json` (normal, just landed, exactly 9:59, the hold at 10:00, a long hold, step 50 at 9:59, skew, fractional seconds, missing arrival, missing clock, estimated, block 0, invalid heights).
+
+## 15. Where the arrival time comes from (display convention)
+
+In this order, and never anything else:
+
+a. **The house watcher's first-seen time**: the unix second our node first saw this hash (`first_seen` on each block event of the Lumen block caller, served at `/api/block-calls`). Same node, same arrival, for everyone who reads it. Reorgs get a new hash and a new first-seen.
+b. **A viewer's own first-seen**, where nothing else can be fetched (an ordinals inscription: ord's content security policy blocks outbound requests). The inscription polls `/r/blockheight` and records the moment IT saw the height change. On a cold load, before any change has been seen, it reads the header time from `/r/blockinfo/<height>`, clamps the age into 0 to 599 seconds, and sets `estimated`. After the first change it is a real viewer first-seen.
+c. **Never the block header time otherwise.** Header times are set by miners, may be off by hours, and are not arrival.
+
+Resolution is the polling interval (the watcher polls every 10 s; the inscription every 5 s).

@@ -366,3 +366,4 @@ from .steps import (  # noqa: E402,F401
 )
 from .stamping import stamp, face, record as stamp_record, TOKENS as STAMP_TOKENS  # noqa: E402,F401
 from .beacon import tip  # noqa: E402,F401
+from .live import live_face  # noqa: E402,F401  (display convention: seconds since arrival; see bft/live.py)

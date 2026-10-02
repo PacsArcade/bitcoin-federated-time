@@ -53,6 +53,8 @@ bft ladder [HEIGHT]     bft range day 6732     bft range 0018.07.13T16     bft t
 
 No HEIGHT reads the tip: house beacon first, mempool.space to verify, else dashes. Same commands in Node: `node ts/bin/bft.mjs ...`.
 
+Live face (display convention, seconds since the block arrived, holds at 9:59): `bft.live_face(height, arrived_at, now)`, `bft live 969505 --arrived UNIX`.
+
 Teaching page: open [`web/teach.html`](web/teach.html) (no server needed). Nested blocks drawn to scale, the chosen block pulsing, zooming out one unit at a time. The ladder sketch is [`docs/bft-ladder.excalidraw`](docs/bft-ladder.excalidraw) (dark-first). Standards paperwork and drafts: [`spec/`](spec/).
 
 Tests: `python3 tests/test_one_package.py` and `cd ts && npm test` and `node --test js/`. Rebuild the TS output with `cd ts && npm run build`.

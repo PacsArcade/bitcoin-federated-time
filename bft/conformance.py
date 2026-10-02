@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any, List
 
-from . import core, steps, stamping
+from . import core, steps, stamping, live
 
 
 def _raises(fn, *a, **k) -> bool:
@@ -80,4 +80,8 @@ def run(path: str) -> List[str]:
                              date_only=row.get("dateOnly", False), at=row.get("at"))
         if got != row["expected"]:
             fails.append("stamp %r: %r != %r" % (row, got, row["expected"]))
+    for row in v.get("live", []):
+        got = live.live_face(row["height"], row["arrivedAt"], row["now"], row["estimated"])
+        if got != row["expected"]:
+            fails.append("live %s: %r != %r" % (row["name"], got, row["expected"]))
     return fails

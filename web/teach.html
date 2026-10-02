@@ -42,6 +42,10 @@
   .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px; margin-top: 8px; }
   .k { display: inline-block; width: 22px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
   .k.mined { background: var(--mined); } .k.future { background: var(--future); border: 1px solid #5b6784; } .k.here { background: var(--accent); }
+  .bar { height: 8px; background: #1a2030; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin: 6px 0; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+  .bar.hold i { background: repeating-linear-gradient(45deg, #ff5a4f 0 6px, #7a1f1a 6px 12px); }
+  #live.hold { color: #ff8a80; }
   h2 { font-size: 15px; margin: 0 0 6px; }
   .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
   .out { font: 13px/1.4 ui-monospace, Menlo, monospace; color: var(--text); white-space: pre-wrap; }
@@ -76,6 +80,20 @@
         <button data-d="144">+1 day</button>
       </div>
       <div class="row"><button id="tip">Use the latest block</button><span class="note" id="tipnote"></span></div>
+    </section>
+
+    <section class="card" aria-live="off">
+      <h2>Live face: ticks from the last block</h2>
+      <div class="stamp" id="live">----.--.-- --:--:-- a&#x20BF;</div>
+      <div id="livestate" class="note"></div>
+      <div class="bar"><i id="livebar"></i></div>
+      <div class="row">
+        <button id="land">A block lands</button>
+        <button id="j50">Jump to 9:50 in</button>
+        <button id="spd">Speed x1</button>
+        <button id="noarr">Lose the arrival time</button>
+      </div>
+      <p class="note">The height gives the date, the hour and the 10-minute step. Real seconds since the block arrived fill the rest. At 9:59 the face holds (straining) and waits for a real block. This is a display convention, not the standard.</p>
     </section>
 
     <section class="card">
@@ -208,8 +226,24 @@
 
   var fmt = function (n) { return n.toLocaleString("en-US"); };
 
+  // live face demo: elapsed seconds since the block "arrived", sped up on request
+  var lv = { base: 0, t0: performance.now(), speed: 1, noArrival: false };
+  function liveElapsed() { return lv.base + (performance.now() - lv.t0) / 1000 * lv.speed; }
+  function liveReset() { lv.base = 0; lv.t0 = performance.now(); lv.noArrival = false; el("noarr").textContent = "Lose the arrival time"; }
+  function liveDraw() {
+    if (!lad) return;
+    var e = liveElapsed(), f = B.liveFace(state.h, lv.noArrival ? null : 0, lv.noArrival ? 0 : e);
+    el("live").textContent = f.text; el("live").className = "stamp" + (f.holding ? " hold" : "");
+    el("livebar").style.width = (f.elapsed === null ? 0 : Math.min(100, 100 * f.elapsed / 600)) + "%";
+    el("livebar").parentNode.className = "bar" + (f.holding ? " hold" : "");
+    el("livestate").textContent = f.elapsed === null ? "No arrival time: the seconds stay dashes, nothing is invented."
+      : f.holding ? "HOLDING at 9:59, straining: " + f.lateBy + " s late. Waiting for a real block."
+      : "Live: " + f.elapsed + " s since this block arrived (a block usually takes 600 s, but the wait varies).";
+  }
+
   function setHeight(h, keepLevel) {
     if (!(Number.isSafeInteger(h) && h >= 0)) return;
+    if (h !== state.h) liveReset();
     state.h = h; lad = B.ladder(h); rects = locate(h); bornAt = performance.now();
     document.getElementById("h").value = h;
     document.getElementById("stamp").textContent = B.stamp(h);
@@ -378,6 +412,11 @@
   };
   el("rgo").onclick = function () { if (pending !== null) setHeight(pending); };
 
+  el("land").onclick = function () { setHeight(state.h + 1); liveReset(); };
+  el("j50").onclick = function () { lv.base = 590; lv.t0 = performance.now(); lv.noArrival = false; };
+  el("spd").onclick = function () { lv.base = liveElapsed(); lv.t0 = performance.now(); lv.speed = lv.speed === 1 ? 30 : 1; el("spd").textContent = "Speed x" + lv.speed; };
+  el("noarr").onclick = function () { lv.noArrival = !lv.noArrival; el("noarr").textContent = lv.noArrival ? "Restore the arrival time" : "Lose the arrival time"; };
+  setInterval(liveDraw, 250);
   window.addEventListener("resize", resize);
   resize(); setHeight(EXAMPLE);
   var q = new URLSearchParams(location.search);

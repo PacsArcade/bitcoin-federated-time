@@ -2,6 +2,7 @@
 bft -- the command line.
 
     bft stamp [HEIGHT] [--with a,b,c] [--fmt TEMPLATE] [--date-only] [--json] [--at UNIX] [--source] [--strict]
+    bft live [HEIGHT] --arrived UNIX [--now UNIX] [--json]     the live face (seconds since the block arrived)
     bft ladder [HEIGHT] [--json]
     bft range UNIT INDEX          first and last block of the n-th hour/day/week/retune/month/year/halving/cycle
     bft range DATE                a calendar slot: 0018 | 0018.07 | 0018.07.13 | 0018.07.13T16
@@ -32,7 +33,7 @@ def _parse_height(s: str) -> Optional[int]:
 
 def _split_opts(argv: List[str]):
     pos, o = [], {"with": [], "fmt": None, "date_only": False, "json": False, "at": None,
-                  "source": False, "strict": False}
+                  "source": False, "strict": False, "arrived": None, "now": None}
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -45,6 +46,12 @@ def _split_opts(argv: List[str]):
         elif a == "--at":
             i += 1
             o["at"] = float(argv[i])
+        elif a == "--arrived":
+            i += 1
+            o["arrived"] = float(argv[i])
+        elif a == "--now":
+            i += 1
+            o["now"] = float(argv[i])
         elif a == "--date-only":
             o["date_only"] = True
         elif a == "--json":
@@ -86,6 +93,18 @@ def cmd_stamp(argv):
     if o["strict"] and h is None:
         return 2
     return 0
+
+
+def cmd_live(argv):
+    """bft live [HEIGHT] --arrived UNIX [--now UNIX] [--json]: the live face (display convention, seconds since arrival)."""
+    from . import live
+    pos, o = _split_opts(argv)
+    h, info = _height_arg(pos, o)
+    now = o["now"] if o["now"] is not None else _time.time()
+    face = live.live_face(h, o["arrived"], now)
+    print(json.dumps(face, ensure_ascii=False, separators=(",", ":")) if o["json"] else
+          face["text"] + ("  (holding: %ds late)" % face["lateBy"] if face["holding"] else ""))
+    return 2 if o["strict"] and not face["known"] else 0
 
 
 def cmd_ladder(argv):
@@ -155,7 +174,7 @@ def cmd_verify(argv):
     return 1 if fails else 0
 
 
-COMMANDS = {"stamp": cmd_stamp, "ladder": cmd_ladder, "range": cmd_range, "tip": cmd_tip,
+COMMANDS = {"stamp": cmd_stamp, "live": cmd_live, "ladder": cmd_ladder, "range": cmd_range, "tip": cmd_tip,
             "items": cmd_items, "verify": cmd_verify}
 
 

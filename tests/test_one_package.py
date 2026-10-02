@@ -121,6 +121,21 @@ def test_tip_beacon_then_mempool_then_dashes():
     assert none["height"] is None and bft.face(none["height"]) == "----.--.-- --:-- a₿"
 
 
+def test_live_face_rules():
+    from bft import live
+    f = live.live_face(969505, 1000, 1000 + 599)
+    assert f["text"] == "0018.07.13 16:19:59 a₿" and not f["holding"]
+    f = live.live_face(969505, 1000, 1000 + 600)
+    assert f["text"] == "0018.07.13 16:19:59 a₿" and f["holding"] and f["lateBy"] == 0
+    assert live.live_face(969505, 1000, 900)["skewed"] and live.live_face(969505, 1000, 900)["text"].endswith("16:10:00 a₿")
+    assert live.live_face(969505, None, 5)["text"] == "0018.07.13 16:1-:-- a₿"
+    # the standard never moves: the canonical stamp is height-only, whatever the clock says
+    assert bft.stamp(969505) == "0018.07.13 16:10 a₿"
+    # the hour can never roll from a late clock: step 50 + 9:59 = 16:59:59
+    assert live.live_face(969509, 0, 10 ** 9)["text"] == "0018.07.13 16:59:59 a₿"
+    assert bft.live_face is live.live_face
+
+
 def run_cli(*args):
     p = subprocess.run([sys.executable, "-m", "bft.cli"] + list(args), cwd=ROOT,
                        capture_output=True, text=True, encoding="utf-8")
@@ -152,7 +167,9 @@ def test_python_and_typescript_clis_agree():
              ["stamp", "969505", "--fmt", "{year}/{month}/{day} w{weekofyear} {heightc}"],
              ["stamp", "969505", "--json"], ["stamp", "969505", "--with", "ladder"],
              ["stamp", "garbage"], ["ladder", "969505"], ["ladder", "0", "--json"],
-             ["range", "day", "6732"], ["range", "0018.07"], ["range", "0018.07.13T16"], ["range", "cycle", "3"]]
+             ["live", "969505", "--arrived", "1790900000", "--now", "1790900272"],
+             ["live", "969505", "--arrived", "1790900000", "--now", "1790901500", "--json"],
+             ["live", "969505", "--now", "5"], ["range", "day", "6732"], ["range", "0018.07"], ["range", "0018.07.13T16"], ["range", "cycle", "3"]]
     for c in cases:
         py = run_cli(*c)
         p = subprocess.run([node, os.path.join(ROOT, "ts", "bin", "bft.mjs")] + c, capture_output=True,

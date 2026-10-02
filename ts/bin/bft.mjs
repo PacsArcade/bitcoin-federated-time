@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // bft: the command line (TypeScript build). Same commands, same output as `python -m bft.cli`.
 //   bft stamp [HEIGHT] [--with a,b,c] [--fmt TEMPLATE] [--date-only] [--json] [--at UNIX] [--source] [--strict]
+//   bft live [HEIGHT] --arrived UNIX [--now UNIX] [--json]
 //   bft ladder [HEIGHT] [--json]
 //   bft range UNIT INDEX | DATE      (DATE = 0018 | 0018.07 | 0018.07.13 | 0018.07.13T16)
 //   bft tip | bft verify [VECTORS.json] | bft items
@@ -14,12 +15,14 @@ import { run } from "../dist/conformance.js";
 const USAGE = readFileSync(fileURLToPath(import.meta.url), "utf8").split("\n").slice(1, 8).map((l) => l.replace(/^\/\/ ?/, "")).join("\n");
 
 function parse(argv) {
-  const pos = [], o = { with: [], fmt: null, dateOnly: false, json: false, at: null, source: false, strict: false };
+  const pos = [], o = { with: [], fmt: null, dateOnly: false, json: false, at: null, source: false, strict: false, arrived: null, now: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--with") o.with.push(...argv[++i].split(",").filter(Boolean));
     else if (a === "--fmt") o.fmt = argv[++i];
     else if (a === "--at") o.at = Number(argv[++i]);
+    else if (a === "--arrived") o.arrived = Number(argv[++i]);
+    else if (a === "--now") o.now = Number(argv[++i]);
     else if (a === "--date-only") o.dateOnly = true;
     else if (a === "--json") o.json = true;
     else if (a === "--source") o.source = true;
@@ -52,6 +55,12 @@ async function main(argv) {
     console.log(bft.face(h, { include: o.with, template: o.fmt, dateOnly: o.dateOnly, at, json: o.json }));
     if (o.source && info) console.error("source: " + (info.source ?? "none") + " | " + info.note);
     return o.strict && h === null ? 2 : 0;
+  }
+  if (cmd === "live") {
+    const [h] = await heightArg(pos);
+    const face = bft.liveFace(h, o.arrived, o.now ?? Date.now() / 1000);
+    console.log(o.json ? JSON.stringify(face) : face.text + (face.holding ? "  (holding: " + face.lateBy + "s late)" : ""));
+    return o.strict && !face.known ? 2 : 0;
   }
   if (cmd === "ladder") {
     const [h] = await heightArg(pos);

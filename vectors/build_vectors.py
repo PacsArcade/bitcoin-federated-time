@@ -51,6 +51,29 @@ stamp_cases = [
 v["stamps"] = [{**c, "expected": bft.stamp(c["height"], include=c.get("include", []), template=c.get("template"),
                                            date_only=c.get("dateOnly", False), at=c.get("at"))}
                for c in stamp_cases]
+A = 1790900000
+live_cases = [
+    ("normal, 4:32 into the step", 969505, A, A + 272, False),
+    ("just landed", 969505, A, A, False),
+    ("exactly 9:59 still live", 969505, A, A + 599, False),
+    ("10:00 holds at 9:59", 969505, A, A + 600, False),
+    ("late hold, 15 minutes over", 969505, A, A + 1500, False),
+    ("step 50 at 9:59 stays in the hour", 969509, A, A + 599, False),
+    ("step 50 held", 969509, A, A + 5000, False),
+    ("clock skew: now before arrival reads 0", 969505, A, A - 30, False),
+    ("fractional seconds floor", 969505, A, A + 61.9, False),
+    ("missing arrival: no seconds", 969505, None, A, False),
+    ("missing clock: no seconds", 969505, A, None, False),
+    ("estimated arrival passes through", 969505, A, A + 100, True),
+    ("block 0", 0, A, A + 5, False),
+    ("not a height", None, A, A + 5, False),
+    ("not a height (negative)", -1, A, A + 5, False),
+]
+v["live"] = [{"name": n, "height": h, "arrivedAt": a, "now": nw, "estimated": est,
+              "expected": bft.live_face(h, a, nw, est)} for n, h, a, nw, est in live_cases]
+v["liveRules"] = {"hold": "elapsed >= 600 holds at step+9:59; lateBy = elapsed-600", "skew": "now < arrivedAt reads 0, skewed=true",
+                  "missing": "no arrival or no clock: HH:M-:-- (dashes for the unknown digits)",
+                  "scope": "display convention, not the standard; the canonical stamp stays height-only"}
 json.dump(v, open(PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 open(PATH, "a").write("\n")
 print("vectors v2:", len(v["forward"]), "forward,", len(v["inverse"]), "inverse,", len(v["invalid"]), "invalid,",

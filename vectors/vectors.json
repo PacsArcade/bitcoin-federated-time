@@ -3044,5 +3044,298 @@
    "template": "{datestamp} retune-left {retuneleft} halving {halving} cycle {cycle}",
    "expected": "0018.10.28 a₿ retune-left 143 halving 4 cycle 0"
   }
- ]
+ ],
+ "live": [
+  {
+   "name": "normal, 4:32 into the step",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900272,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:14:32 a₿",
+    "hour": 16,
+    "minute": 14,
+    "second": 32,
+    "elapsed": 272,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "just landed",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900000,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:10:00 a₿",
+    "hour": 16,
+    "minute": 10,
+    "second": 0,
+    "elapsed": 0,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "exactly 9:59 still live",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900599,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:19:59 a₿",
+    "hour": 16,
+    "minute": 19,
+    "second": 59,
+    "elapsed": 599,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "10:00 holds at 9:59",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900600,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:19:59 a₿",
+    "hour": 16,
+    "minute": 19,
+    "second": 59,
+    "elapsed": 600,
+    "holding": true,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "late hold, 15 minutes over",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790901500,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:19:59 a₿",
+    "hour": 16,
+    "minute": 19,
+    "second": 59,
+    "elapsed": 1500,
+    "holding": true,
+    "lateBy": 900,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "step 50 at 9:59 stays in the hour",
+   "height": 969509,
+   "arrivedAt": 1790900000,
+   "now": 1790900599,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:59:59 a₿",
+    "hour": 16,
+    "minute": 59,
+    "second": 59,
+    "elapsed": 599,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "step 50 held",
+   "height": 969509,
+   "arrivedAt": 1790900000,
+   "now": 1790905000,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:59:59 a₿",
+    "hour": 16,
+    "minute": 59,
+    "second": 59,
+    "elapsed": 5000,
+    "holding": true,
+    "lateBy": 4400,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "clock skew: now before arrival reads 0",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790899970,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:10:00 a₿",
+    "hour": 16,
+    "minute": 10,
+    "second": 0,
+    "elapsed": 0,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": true,
+    "estimated": false
+   }
+  },
+  {
+   "name": "fractional seconds floor",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900061.9,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:11:01 a₿",
+    "hour": 16,
+    "minute": 11,
+    "second": 1,
+    "elapsed": 61,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "missing arrival: no seconds",
+   "height": 969505,
+   "arrivedAt": null,
+   "now": 1790900000,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:1-:-- a₿",
+    "hour": 16,
+    "minute": null,
+    "second": null,
+    "elapsed": null,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "missing clock: no seconds",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": null,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:1-:-- a₿",
+    "hour": 16,
+    "minute": null,
+    "second": null,
+    "elapsed": null,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "estimated arrival passes through",
+   "height": 969505,
+   "arrivedAt": 1790900000,
+   "now": 1790900100,
+   "estimated": true,
+   "expected": {
+    "known": true,
+    "text": "0018.07.13 16:11:40 a₿",
+    "hour": 16,
+    "minute": 11,
+    "second": 40,
+    "elapsed": 100,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": true
+   }
+  },
+  {
+   "name": "block 0",
+   "height": 0,
+   "arrivedAt": 1790900000,
+   "now": 1790900005,
+   "estimated": false,
+   "expected": {
+    "known": true,
+    "text": "0000.01.01 00:00:05 a₿",
+    "hour": 0,
+    "minute": 0,
+    "second": 5,
+    "elapsed": 5,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "not a height",
+   "height": null,
+   "arrivedAt": 1790900000,
+   "now": 1790900005,
+   "estimated": false,
+   "expected": {
+    "known": false,
+    "text": "----.--.-- --:--:-- a₿",
+    "hour": null,
+    "minute": null,
+    "second": null,
+    "elapsed": null,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  },
+  {
+   "name": "not a height (negative)",
+   "height": -1,
+   "arrivedAt": 1790900000,
+   "now": 1790900005,
+   "estimated": false,
+   "expected": {
+    "known": false,
+    "text": "----.--.-- --:--:-- a₿",
+    "hour": null,
+    "minute": null,
+    "second": null,
+    "elapsed": null,
+    "holding": false,
+    "lateBy": 0,
+    "skewed": false,
+    "estimated": false
+   }
+  }
+ ],
+ "liveRules": {
+  "hold": "elapsed >= 600 holds at step+9:59; lateBy = elapsed-600",
+  "skew": "now < arrivedAt reads 0, skewed=true",
+  "missing": "no arrival or no clock: HH:M-:-- (dashes for the unknown digits)",
+  "scope": "display convention, not the standard; the canonical stamp stays height-only"
+ }
 }

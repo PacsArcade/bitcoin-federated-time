@@ -2,6 +2,7 @@
 
 ## 0.4.0: one package (block 969,505 audit, approved)
 
+- Live face (round 2): `live_face / liveFace(height, arrivedAt, now)` ticks minutes and seconds from the last block, holds at 9:59, display convention only (BFT-SPEC sections 14 and 15). Python, TypeScript, `js/bft-live.js`; `bft live`; 15 live vectors; teaching page demo; `spec/HATTER.md` draft.
 - New frozen core (`bft/core.py`, `ts/src/core.ts`, `js/bft.js`): strict heights, 4-digit year minimum never truncated, marker after the date always, block 0 valid, dash faces. Pre-genesis stays an extension.
 - Step ladder (`bft.ladder`, `ladder_line`, `unit_range`, `date_range`): any height to every unit and back.
 - `bft stamp` CLI and `stamp()/face()` with items, templates and JSON; `bft tip` reads the beacon then mempool then dashes.
