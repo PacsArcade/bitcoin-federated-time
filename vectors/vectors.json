@@ -1,0 +1,3048 @@
+{
+ "name": "bft-vectors",
+ "version": 2,
+ "generatedAt": "v1 from the block 969,505 audit (bft.from_height + block_beat, cross-checked against onecocreation bft.ts); v2 adds ladder/ranges/dateRanges/stamps from bft.steps and bft.stamping, re-derived independently in tests/test_ladder.py",
+ "constants": {
+  "BLOCKS_PER_BEAT": 1,
+  "BLOCKS_PER_HOUR": 6,
+  "BLOCKS_PER_DAY": 144,
+  "BLOCKS_PER_WEEK": 1008,
+  "BLOCKS_PER_MONTH": 4032,
+  "BLOCKS_PER_YEAR": 52416,
+  "DAYS_PER_MONTH": 28,
+  "MONTHS_PER_YEAR": 13,
+  "DAYS_PER_YEAR": 364,
+  "DIFFICULTY_EPOCH_BLOCKS": 2016,
+  "HALVING_EPOCH_BLOCKS": 210000,
+  "GENESIS_UNIX": 1231006505,
+  "SECONDS_PER_BLOCK": 600
+ },
+ "rules": {
+  "marker": "a₿ AFTER the date, one space",
+  "yearPad": "min 4 digits, never truncated (5241600 -> 0100)",
+  "dashFace": {
+   "date": "----.--.--",
+   "time": "--:--",
+   "stamp": "----.--.-- --:-- a₿"
+  },
+  "invalidInput": "anything that is not a non-negative safe integer yields the dash face (display) or throws (strict API); never a computed guess"
+ },
+ "forward": [
+  {
+   "height": 0,
+   "year": 0,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 0,
+   "date": "0000.01.01",
+   "time": "00:00",
+   "stamp": "0000.01.01 a₿",
+   "stampTime": "0000.01.01 00:00 a₿"
+  },
+  {
+   "height": 1,
+   "year": 0,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 1,
+   "hour": 0,
+   "minute": 10,
+   "diffEpoch": 0,
+   "date": "0000.01.01",
+   "time": "00:10",
+   "stamp": "0000.01.01 a₿",
+   "stampTime": "0000.01.01 00:10 a₿"
+  },
+  {
+   "height": 5,
+   "year": 0,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 5,
+   "hour": 0,
+   "minute": 50,
+   "diffEpoch": 0,
+   "date": "0000.01.01",
+   "time": "00:50",
+   "stamp": "0000.01.01 a₿",
+   "stampTime": "0000.01.01 00:50 a₿"
+  },
+  {
+   "height": 143,
+   "year": 0,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 0,
+   "date": "0000.01.01",
+   "time": "23:50",
+   "stamp": "0000.01.01 a₿",
+   "stampTime": "0000.01.01 23:50 a₿"
+  },
+  {
+   "height": 144,
+   "year": 0,
+   "month": 1,
+   "day": 2,
+   "dayOfYear": 2,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 0,
+   "date": "0000.01.02",
+   "time": "00:00",
+   "stamp": "0000.01.02 a₿",
+   "stampTime": "0000.01.02 00:00 a₿"
+  },
+  {
+   "height": 145,
+   "year": 0,
+   "month": 1,
+   "day": 2,
+   "dayOfYear": 2,
+   "weekOfMonth": 1,
+   "beat": 1,
+   "hour": 0,
+   "minute": 10,
+   "diffEpoch": 0,
+   "date": "0000.01.02",
+   "time": "00:10",
+   "stamp": "0000.01.02 a₿",
+   "stampTime": "0000.01.02 00:10 a₿"
+  },
+  {
+   "height": 1007,
+   "year": 0,
+   "month": 1,
+   "day": 7,
+   "dayOfYear": 7,
+   "weekOfMonth": 1,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 0,
+   "date": "0000.01.07",
+   "time": "23:50",
+   "stamp": "0000.01.07 a₿",
+   "stampTime": "0000.01.07 23:50 a₿"
+  },
+  {
+   "height": 1008,
+   "year": 0,
+   "month": 1,
+   "day": 8,
+   "dayOfYear": 8,
+   "weekOfMonth": 2,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 0,
+   "date": "0000.01.08",
+   "time": "00:00",
+   "stamp": "0000.01.08 a₿",
+   "stampTime": "0000.01.08 00:00 a₿"
+  },
+  {
+   "height": 2015,
+   "year": 0,
+   "month": 1,
+   "day": 14,
+   "dayOfYear": 14,
+   "weekOfMonth": 2,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 0,
+   "date": "0000.01.14",
+   "time": "23:50",
+   "stamp": "0000.01.14 a₿",
+   "stampTime": "0000.01.14 23:50 a₿"
+  },
+  {
+   "height": 2016,
+   "year": 0,
+   "month": 1,
+   "day": 15,
+   "dayOfYear": 15,
+   "weekOfMonth": 3,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 1,
+   "date": "0000.01.15",
+   "time": "00:00",
+   "stamp": "0000.01.15 a₿",
+   "stampTime": "0000.01.15 00:00 a₿"
+  },
+  {
+   "height": 4031,
+   "year": 0,
+   "month": 1,
+   "day": 28,
+   "dayOfYear": 28,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 1,
+   "date": "0000.01.28",
+   "time": "23:50",
+   "stamp": "0000.01.28 a₿",
+   "stampTime": "0000.01.28 23:50 a₿"
+  },
+  {
+   "height": 4032,
+   "year": 0,
+   "month": 2,
+   "day": 1,
+   "dayOfYear": 29,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 2,
+   "date": "0000.02.01",
+   "time": "00:00",
+   "stamp": "0000.02.01 a₿",
+   "stampTime": "0000.02.01 00:00 a₿"
+  },
+  {
+   "height": 4033,
+   "year": 0,
+   "month": 2,
+   "day": 1,
+   "dayOfYear": 29,
+   "weekOfMonth": 1,
+   "beat": 1,
+   "hour": 0,
+   "minute": 10,
+   "diffEpoch": 2,
+   "date": "0000.02.01",
+   "time": "00:10",
+   "stamp": "0000.02.01 a₿",
+   "stampTime": "0000.02.01 00:10 a₿"
+  },
+  {
+   "height": 8063,
+   "year": 0,
+   "month": 2,
+   "day": 28,
+   "dayOfYear": 56,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 3,
+   "date": "0000.02.28",
+   "time": "23:50",
+   "stamp": "0000.02.28 a₿",
+   "stampTime": "0000.02.28 23:50 a₿"
+  },
+  {
+   "height": 8064,
+   "year": 0,
+   "month": 3,
+   "day": 1,
+   "dayOfYear": 57,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 4,
+   "date": "0000.03.01",
+   "time": "00:00",
+   "stamp": "0000.03.01 a₿",
+   "stampTime": "0000.03.01 00:00 a₿"
+  },
+  {
+   "height": 52415,
+   "year": 0,
+   "month": 13,
+   "day": 28,
+   "dayOfYear": 364,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 25,
+   "date": "0000.13.28",
+   "time": "23:50",
+   "stamp": "0000.13.28 a₿",
+   "stampTime": "0000.13.28 23:50 a₿"
+  },
+  {
+   "height": 52416,
+   "year": 1,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 26,
+   "date": "0001.01.01",
+   "time": "00:00",
+   "stamp": "0001.01.01 a₿",
+   "stampTime": "0001.01.01 00:00 a₿"
+  },
+  {
+   "height": 52417,
+   "year": 1,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 1,
+   "hour": 0,
+   "minute": 10,
+   "diffEpoch": 26,
+   "date": "0001.01.01",
+   "time": "00:10",
+   "stamp": "0001.01.01 a₿",
+   "stampTime": "0001.01.01 00:10 a₿"
+  },
+  {
+   "height": 52559,
+   "year": 1,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 26,
+   "date": "0001.01.01",
+   "time": "23:50",
+   "stamp": "0001.01.01 a₿",
+   "stampTime": "0001.01.01 23:50 a₿"
+  },
+  {
+   "height": 52560,
+   "year": 1,
+   "month": 1,
+   "day": 2,
+   "dayOfYear": 2,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 26,
+   "date": "0001.01.02",
+   "time": "00:00",
+   "stamp": "0001.01.02 a₿",
+   "stampTime": "0001.01.02 00:00 a₿"
+  },
+  {
+   "height": 104831,
+   "year": 1,
+   "month": 13,
+   "day": 28,
+   "dayOfYear": 364,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 51,
+   "date": "0001.13.28",
+   "time": "23:50",
+   "stamp": "0001.13.28 a₿",
+   "stampTime": "0001.13.28 23:50 a₿"
+  },
+  {
+   "height": 104832,
+   "year": 2,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 52,
+   "date": "0002.01.01",
+   "time": "00:00",
+   "stamp": "0002.01.01 a₿",
+   "stampTime": "0002.01.01 00:00 a₿"
+  },
+  {
+   "height": 210000,
+   "year": 4,
+   "month": 1,
+   "day": 3,
+   "dayOfYear": 3,
+   "weekOfMonth": 1,
+   "beat": 48,
+   "hour": 8,
+   "minute": 0,
+   "diffEpoch": 104,
+   "date": "0004.01.03",
+   "time": "08:00",
+   "stamp": "0004.01.03 a₿",
+   "stampTime": "0004.01.03 08:00 a₿"
+  },
+  {
+   "height": 420000,
+   "year": 8,
+   "month": 1,
+   "day": 5,
+   "dayOfYear": 5,
+   "weekOfMonth": 1,
+   "beat": 96,
+   "hour": 16,
+   "minute": 0,
+   "diffEpoch": 208,
+   "date": "0008.01.05",
+   "time": "16:00",
+   "stamp": "0008.01.05 a₿",
+   "stampTime": "0008.01.05 16:00 a₿"
+  },
+  {
+   "height": 630000,
+   "year": 12,
+   "month": 1,
+   "day": 8,
+   "dayOfYear": 8,
+   "weekOfMonth": 2,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 312,
+   "date": "0012.01.08",
+   "time": "00:00",
+   "stamp": "0012.01.08 a₿",
+   "stampTime": "0012.01.08 00:00 a₿"
+  },
+  {
+   "height": 840000,
+   "year": 16,
+   "month": 1,
+   "day": 10,
+   "dayOfYear": 10,
+   "weekOfMonth": 2,
+   "beat": 48,
+   "hour": 8,
+   "minute": 0,
+   "diffEpoch": 416,
+   "date": "0016.01.10",
+   "time": "08:00",
+   "stamp": "0016.01.10 a₿",
+   "stampTime": "0016.01.10 08:00 a₿"
+  },
+  {
+   "height": 957877,
+   "year": 18,
+   "month": 4,
+   "day": 16,
+   "dayOfYear": 100,
+   "weekOfMonth": 3,
+   "beat": 133,
+   "hour": 22,
+   "minute": 10,
+   "diffEpoch": 475,
+   "date": "0018.04.16",
+   "time": "22:10",
+   "stamp": "0018.04.16 a₿",
+   "stampTime": "0018.04.16 22:10 a₿"
+  },
+  {
+   "height": 958346,
+   "year": 18,
+   "month": 4,
+   "day": 20,
+   "dayOfYear": 104,
+   "weekOfMonth": 3,
+   "beat": 26,
+   "hour": 4,
+   "minute": 20,
+   "diffEpoch": 475,
+   "date": "0018.04.20",
+   "time": "04:20",
+   "stamp": "0018.04.20 a₿",
+   "stampTime": "0018.04.20 04:20 a₿"
+  },
+  {
+   "height": 963660,
+   "year": 18,
+   "month": 6,
+   "day": 1,
+   "dayOfYear": 141,
+   "weekOfMonth": 1,
+   "beat": 12,
+   "hour": 2,
+   "minute": 0,
+   "diffEpoch": 478,
+   "date": "0018.06.01",
+   "time": "02:00",
+   "stamp": "0018.06.01 a₿",
+   "stampTime": "0018.06.01 02:00 a₿"
+  },
+  {
+   "height": 964896,
+   "year": 18,
+   "month": 6,
+   "day": 9,
+   "dayOfYear": 149,
+   "weekOfMonth": 2,
+   "beat": 96,
+   "hour": 16,
+   "minute": 0,
+   "diffEpoch": 478,
+   "date": "0018.06.09",
+   "time": "16:00",
+   "stamp": "0018.06.09 a₿",
+   "stampTime": "0018.06.09 16:00 a₿"
+  },
+  {
+   "height": 969408,
+   "year": 18,
+   "month": 7,
+   "day": 13,
+   "dayOfYear": 181,
+   "weekOfMonth": 2,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 480,
+   "date": "0018.07.13",
+   "time": "00:00",
+   "stamp": "0018.07.13 a₿",
+   "stampTime": "0018.07.13 00:00 a₿"
+  },
+  {
+   "height": 969407,
+   "year": 18,
+   "month": 7,
+   "day": 12,
+   "dayOfYear": 180,
+   "weekOfMonth": 2,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 480,
+   "date": "0018.07.12",
+   "time": "23:50",
+   "stamp": "0018.07.12 a₿",
+   "stampTime": "0018.07.12 23:50 a₿"
+  },
+  {
+   "height": 969409,
+   "year": 18,
+   "month": 7,
+   "day": 13,
+   "dayOfYear": 181,
+   "weekOfMonth": 2,
+   "beat": 1,
+   "hour": 0,
+   "minute": 10,
+   "diffEpoch": 480,
+   "date": "0018.07.13",
+   "time": "00:10",
+   "stamp": "0018.07.13 a₿",
+   "stampTime": "0018.07.13 00:10 a₿"
+  },
+  {
+   "height": 969505,
+   "year": 18,
+   "month": 7,
+   "day": 13,
+   "dayOfYear": 181,
+   "weekOfMonth": 2,
+   "beat": 97,
+   "hour": 16,
+   "minute": 10,
+   "diffEpoch": 480,
+   "date": "0018.07.13",
+   "time": "16:10",
+   "stamp": "0018.07.13 a₿",
+   "stampTime": "0018.07.13 16:10 a₿"
+  },
+  {
+   "height": 969506,
+   "year": 18,
+   "month": 7,
+   "day": 13,
+   "dayOfYear": 181,
+   "weekOfMonth": 2,
+   "beat": 98,
+   "hour": 16,
+   "minute": 20,
+   "diffEpoch": 480,
+   "date": "0018.07.13",
+   "time": "16:20",
+   "stamp": "0018.07.13 a₿",
+   "stampTime": "0018.07.13 16:20 a₿"
+  },
+  {
+   "height": 983663,
+   "year": 18,
+   "month": 10,
+   "day": 27,
+   "dayOfYear": 279,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 487,
+   "date": "0018.10.27",
+   "time": "23:50",
+   "stamp": "0018.10.27 a₿",
+   "stampTime": "0018.10.27 23:50 a₿"
+  },
+  {
+   "height": 983664,
+   "year": 18,
+   "month": 10,
+   "day": 28,
+   "dayOfYear": 280,
+   "weekOfMonth": 4,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 487,
+   "date": "0018.10.28",
+   "time": "00:00",
+   "stamp": "0018.10.28 a₿",
+   "stampTime": "0018.10.28 00:00 a₿"
+  },
+  {
+   "height": 1000000,
+   "year": 19,
+   "month": 2,
+   "day": 1,
+   "dayOfYear": 29,
+   "weekOfMonth": 1,
+   "beat": 64,
+   "hour": 10,
+   "minute": 40,
+   "diffEpoch": 496,
+   "date": "0019.02.01",
+   "time": "10:40",
+   "stamp": "0019.02.01 a₿",
+   "stampTime": "0019.02.01 10:40 a₿"
+  },
+  {
+   "height": 1260000,
+   "year": 24,
+   "month": 1,
+   "day": 15,
+   "dayOfYear": 15,
+   "weekOfMonth": 3,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 625,
+   "date": "0024.01.15",
+   "time": "00:00",
+   "stamp": "0024.01.15 a₿",
+   "stampTime": "0024.01.15 00:00 a₿"
+  },
+  {
+   "height": 5241599,
+   "year": 99,
+   "month": 13,
+   "day": 28,
+   "dayOfYear": 364,
+   "weekOfMonth": 4,
+   "beat": 143,
+   "hour": 23,
+   "minute": 50,
+   "diffEpoch": 2599,
+   "date": "0099.13.28",
+   "time": "23:50",
+   "stamp": "0099.13.28 a₿",
+   "stampTime": "0099.13.28 23:50 a₿"
+  },
+  {
+   "height": 5241600,
+   "year": 100,
+   "month": 1,
+   "day": 1,
+   "dayOfYear": 1,
+   "weekOfMonth": 1,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 2600,
+   "date": "0100.01.01",
+   "time": "00:00",
+   "stamp": "0100.01.01 a₿",
+   "stampTime": "0100.01.01 00:00 a₿"
+  },
+  {
+   "height": 6930000,
+   "year": 132,
+   "month": 3,
+   "day": 22,
+   "dayOfYear": 78,
+   "weekOfMonth": 4,
+   "beat": 0,
+   "hour": 0,
+   "minute": 0,
+   "diffEpoch": 3437,
+   "date": "0132.03.22",
+   "time": "00:00",
+   "stamp": "0132.03.22 a₿",
+   "stampTime": "0132.03.22 00:00 a₿"
+  }
+ ],
+ "inverse": [
+  {
+   "year": 0,
+   "month": 1,
+   "day": 1,
+   "firstHeight": 0
+  },
+  {
+   "year": 0,
+   "month": 1,
+   "day": 2,
+   "firstHeight": 144
+  },
+  {
+   "year": 0,
+   "month": 2,
+   "day": 1,
+   "firstHeight": 4032
+  },
+  {
+   "year": 0,
+   "month": 13,
+   "day": 28,
+   "firstHeight": 52272
+  },
+  {
+   "year": 1,
+   "month": 1,
+   "day": 1,
+   "firstHeight": 52416
+  },
+  {
+   "year": 18,
+   "month": 7,
+   "day": 13,
+   "firstHeight": 969408
+  },
+  {
+   "year": 18,
+   "month": 10,
+   "day": 28,
+   "firstHeight": 983664
+  },
+  {
+   "year": 100,
+   "month": 1,
+   "day": 1,
+   "firstHeight": 5241600
+  }
+ ],
+ "invalid": [
+  {
+   "input": null,
+   "display": "----.--.--",
+   "strict": "throw"
+  },
+  {
+   "input": "NaN",
+   "display": "----.--.--",
+   "strict": "throw"
+  },
+  {
+   "input": -1,
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "pre-genesis is NOT core; BB is an optional extension"
+  },
+  {
+   "input": 1.5,
+   "display": "----.--.--",
+   "strict": "throw"
+  },
+  {
+   "input": "969505",
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "strings are not heights; parse upstream"
+  },
+  {
+   "input": 9007199254740992,
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "> MAX_SAFE_INTEGER"
+  },
+  {
+   "input": true,
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "bool is not a height"
+  },
+  {
+   "input": "Infinity",
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "not finite"
+  },
+  {
+   "input": "-Infinity",
+   "display": "----.--.--",
+   "strict": "throw",
+   "note": "not finite"
+  }
+ ],
+ "neverExists": [
+  "day 29 of any month",
+  "month 14",
+  "a stamp without a real height"
+ ],
+ "ladder": [
+  {
+   "height": 0,
+   "line": "1 of 6 in hour | 1 of 144 in day | 1 of 1,008 in week | 1 of 2,016 in retune | 1 of 4,032 in month | 1 of 52,416 in year | 1 of 210,000 in halving | 1 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 0,
+     "name": "block 0",
+     "start": 0,
+     "end": 0,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 0,
+     "name": "00:00 on 0000.01.01",
+     "start": 0,
+     "end": 5,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 0,
+     "name": "0000.01.01",
+     "start": 0,
+     "end": 143,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 0,
+     "name": "week 1 of month 01, year 0000",
+     "start": 0,
+     "end": 1007,
+     "position": 1,
+     "of": 1008,
+     "remaining": 1007,
+     "untilNext": 1008,
+     "pct": 0.1,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 0,
+     "name": "retune 0",
+     "start": 0,
+     "end": 2015,
+     "position": 1,
+     "of": 2016,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 0.05,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 1,
+     "of": 4032,
+     "remaining": 4031,
+     "untilNext": 4032,
+     "pct": 0.02,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 1,
+     "of": 52416,
+     "remaining": 52415,
+     "untilNext": 52416,
+     "pct": 0,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 1,
+     "of": 210000,
+     "remaining": 209999,
+     "untilNext": 210000,
+     "pct": 0,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 1,
+     "of": 1260000,
+     "remaining": 1259999,
+     "untilNext": 1260000,
+     "pct": 0,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 5,
+   "line": "6 of 6 in hour | 6 of 144 in day | 6 of 1,008 in week | 6 of 2,016 in retune | 6 of 4,032 in month | 6 of 52,416 in year | 6 of 210,000 in halving | 6 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 5,
+     "name": "block 5",
+     "start": 5,
+     "end": 5,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 6,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 0,
+     "name": "00:00 on 0000.01.01",
+     "start": 0,
+     "end": 5,
+     "position": 6,
+     "of": 6,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 0,
+     "name": "0000.01.01",
+     "start": 0,
+     "end": 143,
+     "position": 6,
+     "of": 144,
+     "remaining": 138,
+     "untilNext": 139,
+     "pct": 4.17,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 0,
+     "name": "week 1 of month 01, year 0000",
+     "start": 0,
+     "end": 1007,
+     "position": 6,
+     "of": 1008,
+     "remaining": 1002,
+     "untilNext": 1003,
+     "pct": 0.6,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 0,
+     "name": "retune 0",
+     "start": 0,
+     "end": 2015,
+     "position": 6,
+     "of": 2016,
+     "remaining": 2010,
+     "untilNext": 2011,
+     "pct": 0.3,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 6,
+     "of": 4032,
+     "remaining": 4026,
+     "untilNext": 4027,
+     "pct": 0.15,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 6,
+     "of": 52416,
+     "remaining": 52410,
+     "untilNext": 52411,
+     "pct": 0.01,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 6,
+     "of": 210000,
+     "remaining": 209994,
+     "untilNext": 209995,
+     "pct": 0,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 6,
+     "of": 1260000,
+     "remaining": 1259994,
+     "untilNext": 1259995,
+     "pct": 0,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 143,
+   "line": "6 of 6 in hour | 144 of 144 in day | 144 of 1,008 in week | 144 of 2,016 in retune | 144 of 4,032 in month | 144 of 52,416 in year | 144 of 210,000 in halving | 144 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 143,
+     "name": "block 143",
+     "start": 143,
+     "end": 143,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 6,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 23,
+     "name": "23:00 on 0000.01.01",
+     "start": 138,
+     "end": 143,
+     "position": 6,
+     "of": 6,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "day",
+      "n": 24,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 0,
+     "name": "0000.01.01",
+     "start": 0,
+     "end": 143,
+     "position": 144,
+     "of": 144,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 0,
+     "name": "week 1 of month 01, year 0000",
+     "start": 0,
+     "end": 1007,
+     "position": 144,
+     "of": 1008,
+     "remaining": 864,
+     "untilNext": 865,
+     "pct": 14.29,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 0,
+     "name": "retune 0",
+     "start": 0,
+     "end": 2015,
+     "position": 144,
+     "of": 2016,
+     "remaining": 1872,
+     "untilNext": 1873,
+     "pct": 7.14,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 144,
+     "of": 4032,
+     "remaining": 3888,
+     "untilNext": 3889,
+     "pct": 3.57,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 144,
+     "of": 52416,
+     "remaining": 52272,
+     "untilNext": 52273,
+     "pct": 0.27,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 144,
+     "of": 210000,
+     "remaining": 209856,
+     "untilNext": 209857,
+     "pct": 0.07,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 144,
+     "of": 1260000,
+     "remaining": 1259856,
+     "untilNext": 1259857,
+     "pct": 0.01,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 144,
+   "line": "1 of 6 in hour | 1 of 144 in day | 145 of 1,008 in week | 145 of 2,016 in retune | 145 of 4,032 in month | 145 of 52,416 in year | 145 of 210,000 in halving | 145 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 144,
+     "name": "block 144",
+     "start": 144,
+     "end": 144,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 24,
+     "name": "00:00 on 0000.01.02",
+     "start": 144,
+     "end": 149,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 1,
+     "name": "0000.01.02",
+     "start": 144,
+     "end": 287,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 2,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 0,
+     "name": "week 1 of month 01, year 0000",
+     "start": 0,
+     "end": 1007,
+     "position": 145,
+     "of": 1008,
+     "remaining": 863,
+     "untilNext": 864,
+     "pct": 14.38,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 0,
+     "name": "retune 0",
+     "start": 0,
+     "end": 2015,
+     "position": 145,
+     "of": 2016,
+     "remaining": 1871,
+     "untilNext": 1872,
+     "pct": 7.19,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 145,
+     "of": 4032,
+     "remaining": 3887,
+     "untilNext": 3888,
+     "pct": 3.6,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 145,
+     "of": 52416,
+     "remaining": 52271,
+     "untilNext": 52272,
+     "pct": 0.28,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 145,
+     "of": 210000,
+     "remaining": 209855,
+     "untilNext": 209856,
+     "pct": 0.07,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 145,
+     "of": 1260000,
+     "remaining": 1259855,
+     "untilNext": 1259856,
+     "pct": 0.01,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 1007,
+   "line": "6 of 6 in hour | 144 of 144 in day | 1,008 of 1,008 in week | 1,008 of 2,016 in retune | 1,008 of 4,032 in month | 1,008 of 52,416 in year | 1,008 of 210,000 in halving | 1,008 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 1007,
+     "name": "block 1007",
+     "start": 1007,
+     "end": 1007,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 6,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 167,
+     "name": "23:00 on 0000.01.07",
+     "start": 1002,
+     "end": 1007,
+     "position": 6,
+     "of": 6,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "day",
+      "n": 24,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 6,
+     "name": "0000.01.07",
+     "start": 864,
+     "end": 1007,
+     "position": 144,
+     "of": 144,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "week",
+      "n": 7,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 0,
+     "name": "week 1 of month 01, year 0000",
+     "start": 0,
+     "end": 1007,
+     "position": 1008,
+     "of": 1008,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 0,
+     "name": "retune 0",
+     "start": 0,
+     "end": 2015,
+     "position": 1008,
+     "of": 2016,
+     "remaining": 1008,
+     "untilNext": 1009,
+     "pct": 50,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 1008,
+     "of": 4032,
+     "remaining": 3024,
+     "untilNext": 3025,
+     "pct": 25,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 1008,
+     "of": 52416,
+     "remaining": 51408,
+     "untilNext": 51409,
+     "pct": 1.92,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 1008,
+     "of": 210000,
+     "remaining": 208992,
+     "untilNext": 208993,
+     "pct": 0.48,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 1008,
+     "of": 1260000,
+     "remaining": 1258992,
+     "untilNext": 1258993,
+     "pct": 0.08,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 2016,
+   "line": "1 of 6 in hour | 1 of 144 in day | 1 of 1,008 in week | 1 of 2,016 in retune | 2,017 of 4,032 in month | 2,017 of 52,416 in year | 2,017 of 210,000 in halving | 2,017 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 2016,
+     "name": "block 2016",
+     "start": 2016,
+     "end": 2016,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 336,
+     "name": "00:00 on 0000.01.15",
+     "start": 2016,
+     "end": 2021,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 14,
+     "name": "0000.01.15",
+     "start": 2016,
+     "end": 2159,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 2,
+     "name": "week 3 of month 01, year 0000",
+     "start": 2016,
+     "end": 3023,
+     "position": 1,
+     "of": 1008,
+     "remaining": 1007,
+     "untilNext": 1008,
+     "pct": 0.1,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 1,
+     "name": "retune 1",
+     "start": 2016,
+     "end": 4031,
+     "position": 1,
+     "of": 2016,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 0.05,
+     "parent": {
+      "unit": "month",
+      "n": 2,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 0,
+     "name": "0000.01",
+     "start": 0,
+     "end": 4031,
+     "position": 2017,
+     "of": 4032,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 50.02,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 2017,
+     "of": 52416,
+     "remaining": 50399,
+     "untilNext": 50400,
+     "pct": 3.85,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 2017,
+     "of": 210000,
+     "remaining": 207983,
+     "untilNext": 207984,
+     "pct": 0.96,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 2017,
+     "of": 1260000,
+     "remaining": 1257983,
+     "untilNext": 1257984,
+     "pct": 0.16,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 52415,
+   "line": "6 of 6 in hour | 144 of 144 in day | 1,008 of 1,008 in week | 2,016 of 2,016 in retune | 4,032 of 4,032 in month | 52,416 of 52,416 in year | 52,416 of 210,000 in halving | 52,416 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 52415,
+     "name": "block 52415",
+     "start": 52415,
+     "end": 52415,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 6,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 8735,
+     "name": "23:00 on 0000.13.28",
+     "start": 52410,
+     "end": 52415,
+     "position": 6,
+     "of": 6,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "day",
+      "n": 24,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 363,
+     "name": "0000.13.28",
+     "start": 52272,
+     "end": 52415,
+     "position": 144,
+     "of": 144,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "week",
+      "n": 7,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 51,
+     "name": "week 4 of month 13, year 0000",
+     "start": 51408,
+     "end": 52415,
+     "position": 1008,
+     "of": 1008,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "retune",
+      "n": 2,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 25,
+     "name": "retune 25",
+     "start": 50400,
+     "end": 52415,
+     "position": 2016,
+     "of": 2016,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "month",
+      "n": 2,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 12,
+     "name": "0000.13",
+     "start": 48384,
+     "end": 52415,
+     "position": 4032,
+     "of": 4032,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "year",
+      "n": 13,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 0,
+     "name": "0000",
+     "start": 0,
+     "end": 52415,
+     "position": 52416,
+     "of": 52416,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 52416,
+     "of": 210000,
+     "remaining": 157584,
+     "untilNext": 157585,
+     "pct": 24.96,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 52416,
+     "of": 1260000,
+     "remaining": 1207584,
+     "untilNext": 1207585,
+     "pct": 4.16,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 52416,
+   "line": "1 of 6 in hour | 1 of 144 in day | 1 of 1,008 in week | 1 of 2,016 in retune | 1 of 4,032 in month | 1 of 52,416 in year | 52,417 of 210,000 in halving | 52,417 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 52416,
+     "name": "block 52416",
+     "start": 52416,
+     "end": 52416,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 8736,
+     "name": "00:00 on 0001.01.01",
+     "start": 52416,
+     "end": 52421,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 364,
+     "name": "0001.01.01",
+     "start": 52416,
+     "end": 52559,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 52,
+     "name": "week 1 of month 01, year 0001",
+     "start": 52416,
+     "end": 53423,
+     "position": 1,
+     "of": 1008,
+     "remaining": 1007,
+     "untilNext": 1008,
+     "pct": 0.1,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 26,
+     "name": "retune 26",
+     "start": 52416,
+     "end": 54431,
+     "position": 1,
+     "of": 2016,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 0.05,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 13,
+     "name": "0001.01",
+     "start": 52416,
+     "end": 56447,
+     "position": 1,
+     "of": 4032,
+     "remaining": 4031,
+     "untilNext": 4032,
+     "pct": 0.02,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 1,
+     "name": "0001",
+     "start": 52416,
+     "end": 104831,
+     "position": 1,
+     "of": 52416,
+     "remaining": 52415,
+     "untilNext": 52416,
+     "pct": 0,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 0,
+     "name": "halving era 0",
+     "start": 0,
+     "end": 209999,
+     "position": 52417,
+     "of": 210000,
+     "remaining": 157583,
+     "untilNext": 157584,
+     "pct": 24.96,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 52417,
+     "of": 1260000,
+     "remaining": 1207583,
+     "untilNext": 1207584,
+     "pct": 4.16,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 210000,
+   "line": "1 of 6 in hour | 49 of 144 in day | 337 of 1,008 in week | 337 of 2,016 in retune | 337 of 4,032 in month | 337 of 52,416 in year | 1 of 210,000 in halving | 210,001 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 210000,
+     "name": "block 210000",
+     "start": 210000,
+     "end": 210000,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 35000,
+     "name": "08:00 on 0004.01.03",
+     "start": 210000,
+     "end": 210005,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 9,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 1458,
+     "name": "0004.01.03",
+     "start": 209952,
+     "end": 210095,
+     "position": 49,
+     "of": 144,
+     "remaining": 95,
+     "untilNext": 96,
+     "pct": 34.03,
+     "parent": {
+      "unit": "week",
+      "n": 3,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 208,
+     "name": "week 1 of month 01, year 0004",
+     "start": 209664,
+     "end": 210671,
+     "position": 337,
+     "of": 1008,
+     "remaining": 671,
+     "untilNext": 672,
+     "pct": 33.43,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 104,
+     "name": "retune 104",
+     "start": 209664,
+     "end": 211679,
+     "position": 337,
+     "of": 2016,
+     "remaining": 1679,
+     "untilNext": 1680,
+     "pct": 16.72,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 52,
+     "name": "0004.01",
+     "start": 209664,
+     "end": 213695,
+     "position": 337,
+     "of": 4032,
+     "remaining": 3695,
+     "untilNext": 3696,
+     "pct": 8.36,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 4,
+     "name": "0004",
+     "start": 209664,
+     "end": 262079,
+     "position": 337,
+     "of": 52416,
+     "remaining": 52079,
+     "untilNext": 52080,
+     "pct": 0.64,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 1,
+     "name": "halving era 1",
+     "start": 210000,
+     "end": 419999,
+     "position": 1,
+     "of": 210000,
+     "remaining": 209999,
+     "untilNext": 210000,
+     "pct": 0,
+     "parent": {
+      "unit": "cycle",
+      "n": 2,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 210001,
+     "of": 1260000,
+     "remaining": 1049999,
+     "untilNext": 1050000,
+     "pct": 16.67,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 969505,
+   "line": "2 of 6 in hour | 98 of 144 in day | 818 of 1,008 in week | 1,826 of 2,016 in retune | 1,826 of 4,032 in month | 26,018 of 52,416 in year | 129,506 of 210,000 in halving | 969,506 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 969505,
+     "name": "block 969505",
+     "start": 969505,
+     "end": 969505,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 2,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 161584,
+     "name": "16:00 on 0018.07.13",
+     "start": 969504,
+     "end": 969509,
+     "position": 2,
+     "of": 6,
+     "remaining": 4,
+     "untilNext": 5,
+     "pct": 33.33,
+     "parent": {
+      "unit": "day",
+      "n": 17,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 6732,
+     "name": "0018.07.13",
+     "start": 969408,
+     "end": 969551,
+     "position": 98,
+     "of": 144,
+     "remaining": 46,
+     "untilNext": 47,
+     "pct": 68.06,
+     "parent": {
+      "unit": "week",
+      "n": 6,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 961,
+     "name": "week 2 of month 07, year 0018",
+     "start": 968688,
+     "end": 969695,
+     "position": 818,
+     "of": 1008,
+     "remaining": 190,
+     "untilNext": 191,
+     "pct": 81.15,
+     "parent": {
+      "unit": "retune",
+      "n": 2,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 480,
+     "name": "retune 480",
+     "start": 967680,
+     "end": 969695,
+     "position": 1826,
+     "of": 2016,
+     "remaining": 190,
+     "untilNext": 191,
+     "pct": 90.58,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 240,
+     "name": "0018.07",
+     "start": 967680,
+     "end": 971711,
+     "position": 1826,
+     "of": 4032,
+     "remaining": 2206,
+     "untilNext": 2207,
+     "pct": 45.29,
+     "parent": {
+      "unit": "year",
+      "n": 7,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 18,
+     "name": "0018",
+     "start": 943488,
+     "end": 995903,
+     "position": 26018,
+     "of": 52416,
+     "remaining": 26398,
+     "untilNext": 26399,
+     "pct": 49.64,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 4,
+     "name": "halving era 4",
+     "start": 840000,
+     "end": 1049999,
+     "position": 129506,
+     "of": 210000,
+     "remaining": 80494,
+     "untilNext": 80495,
+     "pct": 61.67,
+     "parent": {
+      "unit": "cycle",
+      "n": 5,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 0,
+     "name": "cycle 0",
+     "start": 0,
+     "end": 1259999,
+     "position": 969506,
+     "of": 1260000,
+     "remaining": 290494,
+     "untilNext": 290495,
+     "pct": 76.94,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 1260000,
+   "line": "1 of 6 in hour | 1 of 144 in day | 1 of 1,008 in week | 1 of 2,016 in retune | 2,017 of 4,032 in month | 2,017 of 52,416 in year | 1 of 210,000 in halving | 1 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 1260000,
+     "name": "block 1260000",
+     "start": 1260000,
+     "end": 1260000,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 210000,
+     "name": "00:00 on 0024.01.15",
+     "start": 1260000,
+     "end": 1260005,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 8750,
+     "name": "0024.01.15",
+     "start": 1260000,
+     "end": 1260143,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 1250,
+     "name": "week 3 of month 01, year 0024",
+     "start": 1260000,
+     "end": 1261007,
+     "position": 1,
+     "of": 1008,
+     "remaining": 1007,
+     "untilNext": 1008,
+     "pct": 0.1,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 625,
+     "name": "retune 625",
+     "start": 1260000,
+     "end": 1262015,
+     "position": 1,
+     "of": 2016,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 0.05,
+     "parent": {
+      "unit": "month",
+      "n": 2,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 312,
+     "name": "0024.01",
+     "start": 1257984,
+     "end": 1262015,
+     "position": 2017,
+     "of": 4032,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 50.02,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 24,
+     "name": "0024",
+     "start": 1257984,
+     "end": 1310399,
+     "position": 2017,
+     "of": 52416,
+     "remaining": 50399,
+     "untilNext": 50400,
+     "pct": 3.85,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 6,
+     "name": "halving era 6",
+     "start": 1260000,
+     "end": 1469999,
+     "position": 1,
+     "of": 210000,
+     "remaining": 209999,
+     "untilNext": 210000,
+     "pct": 0,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 1,
+     "name": "cycle 1",
+     "start": 1260000,
+     "end": 2519999,
+     "position": 1,
+     "of": 1260000,
+     "remaining": 1259999,
+     "untilNext": 1260000,
+     "pct": 0,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "height": 5241600,
+   "line": "1 of 6 in hour | 1 of 144 in day | 1 of 1,008 in week | 1 of 2,016 in retune | 1 of 4,032 in month | 1 of 52,416 in year | 201,601 of 210,000 in halving | 201,601 of 1,260,000 in cycle",
+   "rungs": [
+    {
+     "unit": "block",
+     "label": "Block",
+     "size": 1,
+     "index": 5241600,
+     "name": "block 5241600",
+     "start": 5241600,
+     "end": 5241600,
+     "position": 1,
+     "of": 1,
+     "remaining": 0,
+     "untilNext": 1,
+     "pct": 100,
+     "parent": {
+      "unit": "hour",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "hour",
+     "label": "Hour",
+     "size": 6,
+     "index": 873600,
+     "name": "00:00 on 0100.01.01",
+     "start": 5241600,
+     "end": 5241605,
+     "position": 1,
+     "of": 6,
+     "remaining": 5,
+     "untilNext": 6,
+     "pct": 16.67,
+     "parent": {
+      "unit": "day",
+      "n": 1,
+      "of": 24
+     }
+    },
+    {
+     "unit": "day",
+     "label": "Day",
+     "size": 144,
+     "index": 36400,
+     "name": "0100.01.01",
+     "start": 5241600,
+     "end": 5241743,
+     "position": 1,
+     "of": 144,
+     "remaining": 143,
+     "untilNext": 144,
+     "pct": 0.69,
+     "parent": {
+      "unit": "week",
+      "n": 1,
+      "of": 7
+     }
+    },
+    {
+     "unit": "week",
+     "label": "Week",
+     "size": 1008,
+     "index": 5200,
+     "name": "week 1 of month 01, year 0100",
+     "start": 5241600,
+     "end": 5242607,
+     "position": 1,
+     "of": 1008,
+     "remaining": 1007,
+     "untilNext": 1008,
+     "pct": 0.1,
+     "parent": {
+      "unit": "retune",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "retune",
+     "label": "Retune",
+     "size": 2016,
+     "index": 2600,
+     "name": "retune 2600",
+     "start": 5241600,
+     "end": 5243615,
+     "position": 1,
+     "of": 2016,
+     "remaining": 2015,
+     "untilNext": 2016,
+     "pct": 0.05,
+     "parent": {
+      "unit": "month",
+      "n": 1,
+      "of": 2
+     }
+    },
+    {
+     "unit": "month",
+     "label": "Month",
+     "size": 4032,
+     "index": 1300,
+     "name": "0100.01",
+     "start": 5241600,
+     "end": 5245631,
+     "position": 1,
+     "of": 4032,
+     "remaining": 4031,
+     "untilNext": 4032,
+     "pct": 0.02,
+     "parent": {
+      "unit": "year",
+      "n": 1,
+      "of": 13
+     }
+    },
+    {
+     "unit": "year",
+     "label": "Year",
+     "size": 52416,
+     "index": 100,
+     "name": "0100",
+     "start": 5241600,
+     "end": 5294015,
+     "position": 1,
+     "of": 52416,
+     "remaining": 52415,
+     "untilNext": 52416,
+     "pct": 0,
+     "parent": null
+    },
+    {
+     "unit": "halving",
+     "label": "Halving era",
+     "size": 210000,
+     "index": 24,
+     "name": "halving era 24",
+     "start": 5040000,
+     "end": 5249999,
+     "position": 201601,
+     "of": 210000,
+     "remaining": 8399,
+     "untilNext": 8400,
+     "pct": 96,
+     "parent": {
+      "unit": "cycle",
+      "n": 1,
+      "of": 6
+     }
+    },
+    {
+     "unit": "cycle",
+     "label": "Cycle",
+     "size": 1260000,
+     "index": 4,
+     "name": "cycle 4",
+     "start": 5040000,
+     "end": 6299999,
+     "position": 201601,
+     "of": 1260000,
+     "remaining": 1058399,
+     "untilNext": 1058400,
+     "pct": 16,
+     "parent": null
+    }
+   ]
+  }
+ ],
+ "ranges": [
+  {
+   "unit": "block",
+   "index": 7,
+   "start": 7,
+   "end": 7,
+   "size": 1
+  },
+  {
+   "unit": "hour",
+   "index": 0,
+   "start": 0,
+   "end": 5,
+   "size": 6
+  },
+  {
+   "unit": "hour",
+   "index": 161584,
+   "start": 969504,
+   "end": 969509,
+   "size": 6
+  },
+  {
+   "unit": "day",
+   "index": 6732,
+   "start": 969408,
+   "end": 969551,
+   "size": 144
+  },
+  {
+   "unit": "week",
+   "index": 961,
+   "start": 968688,
+   "end": 969695,
+   "size": 1008
+  },
+  {
+   "unit": "retune",
+   "index": 480,
+   "start": 967680,
+   "end": 969695,
+   "size": 2016
+  },
+  {
+   "unit": "month",
+   "index": 240,
+   "start": 967680,
+   "end": 971711,
+   "size": 4032
+  },
+  {
+   "unit": "year",
+   "index": 18,
+   "start": 943488,
+   "end": 995903,
+   "size": 52416
+  },
+  {
+   "unit": "halving",
+   "index": 4,
+   "start": 840000,
+   "end": 1049999,
+   "size": 210000
+  },
+  {
+   "unit": "cycle",
+   "index": 0,
+   "start": 0,
+   "end": 1259999,
+   "size": 1260000
+  }
+ ],
+ "dateRanges": [
+  {
+   "args": [
+    18
+   ],
+   "unit": "year",
+   "start": 943488,
+   "end": 995903,
+   "size": 52416
+  },
+  {
+   "args": [
+    18,
+    7
+   ],
+   "unit": "month",
+   "start": 967680,
+   "end": 971711,
+   "size": 4032
+  },
+  {
+   "args": [
+    18,
+    7,
+    13
+   ],
+   "unit": "day",
+   "start": 969408,
+   "end": 969551,
+   "size": 144
+  },
+  {
+   "args": [
+    18,
+    7,
+    13,
+    16
+   ],
+   "unit": "hour",
+   "start": 969504,
+   "end": 969509,
+   "size": 6
+  },
+  {
+   "args": [
+    0,
+    1,
+    1,
+    0
+   ],
+   "unit": "hour",
+   "start": 0,
+   "end": 5,
+   "size": 6
+  },
+  {
+   "args": [
+    100,
+    1,
+    1
+   ],
+   "unit": "day",
+   "start": 5241600,
+   "end": 5241743,
+   "size": 144
+  }
+ ],
+ "stamps": [
+  {
+   "height": 969505,
+   "expected": "0018.07.13 16:10 a₿"
+  },
+  {
+   "height": 969505,
+   "dateOnly": true,
+   "expected": "0018.07.13 a₿"
+  },
+  {
+   "height": 0,
+   "expected": "0000.01.01 00:00 a₿"
+  },
+  {
+   "height": 5241600,
+   "expected": "0100.01.01 00:00 a₿"
+  },
+  {
+   "height": 969505,
+   "include": [
+    "epoch",
+    "retune",
+    "halvingpos",
+    "subsidy",
+    "animal"
+   ],
+   "expected": "0018.07.13 16:10 a₿ | epoch 480 | retune 1826/2016 | halvingpos 129506/210000 | subsidy 3.125 | animal 🐎 Horse"
+  },
+  {
+   "height": 969505,
+   "include": [
+    "moon"
+   ],
+   "at": 1790856000,
+   "expected": "0018.07.13 16:10 a₿ | moon 🌖 Waning Gibbous"
+  },
+  {
+   "height": 969505,
+   "include": [
+    "moon"
+   ],
+   "expected": "0018.07.13 16:10 a₿ | moon --"
+  },
+  {
+   "height": 969505,
+   "include": [
+    "ladder"
+   ],
+   "expected": "0018.07.13 16:10 a₿ | 2 of 6 in hour | 98 of 144 in day | 818 of 1,008 in week | 1,826 of 2,016 in retune | 1,826 of 4,032 in month | 26,018 of 52,416 in year | 129,506 of 210,000 in halving | 969,506 of 1,260,000 in cycle"
+  },
+  {
+   "height": 969505,
+   "template": "{date} {time} {marker} #{heightc}",
+   "expected": "0018.07.13 16:10 a₿ #969,505"
+  },
+  {
+   "height": 969505,
+   "template": "{year}/{month}/{day} w{weekofyear} d{dayofyear} {stamp}",
+   "expected": "0018/07/13 w26 d181 0018.07.13 16:10 a₿"
+  },
+  {
+   "height": 983664,
+   "template": "{datestamp} retune-left {retuneleft} halving {halving} cycle {cycle}",
+   "expected": "0018.10.28 a₿ retune-left 143 halving 4 cycle 0"
+  }
+ ]
+}

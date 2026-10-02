@@ -29,7 +29,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 # --- Bitcoin's own intervals (exact, protocol-defined) -----------------------
 DIFFICULTY_EPOCH_BLOCKS = 2_016          # one difficulty adjustment (~2 weeks)
@@ -350,3 +350,19 @@ def format_clock(height: Optional[int], month_names: Optional[list[str]] = None)
 from .sky import moon_phase, year_animal, MOON_PHASES, YEAR_ANIMALS  # noqa: E402,F401
 from . import lore  # noqa: E402,F401
 from . import holidays  # noqa: E402,F401
+
+
+# --- ONE PACKAGE (block 969,505 audit, approved): frozen core, ladder, stamp, beacon -----------
+# bft.core is the spec core (pure, strict). The names below are the everyday API; the older
+# from_height/format_date above keep working. The spec: spec/BFT-SPEC.md. Vectors: vectors/.
+from . import core  # noqa: E402,F401
+from .core import (  # noqa: E402,F401
+    MARKER, is_height, fields, inverse, stamp_core, face_core,
+    date as date_of, time as time_of,
+)
+from .steps import (  # noqa: E402,F401
+    UNITS, UNIT_KEYS, ladder_line, unit_at, unit_range, date_range, rung,
+    ladder,
+)
+from .stamping import stamp, face, record as stamp_record, TOKENS as STAMP_TOKENS  # noqa: E402,F401
+from .beacon import tip  # noqa: E402,F401

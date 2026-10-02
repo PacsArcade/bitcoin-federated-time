@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+"""Regenerate the v2 additions to vectors.json (ladder, ranges, dateRanges, stamps, extra invalid).
+
+The v1 sections (forward, inverse, invalid, constants) come from the block 969,505 audit and are
+kept byte-for-byte; this script only adds sections computed by the Python reference, and
+tests/test_ladder.py re-derives them independently (brute-force tiling), so they are not
+circular. Run:  python3 vectors/build_vectors.py
+"""
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(HERE))
+import bft  # noqa: E402
+
+PATH = os.path.join(HERE, "vectors.json")
+v = json.load(open(PATH, encoding="utf-8"))
+v["version"] = 2
+v["generatedAt"] = ("v1 from the block 969,505 audit (bft.from_height + block_beat, cross-checked against "
+                    "onecocreation bft.ts); v2 adds ladder/ranges/dateRanges/stamps from bft.steps and bft.stamping, "
+                    "re-derived independently in tests/test_ladder.py")
+
+have = [json.dumps(r["input"]) for r in v["invalid"]]
+for extra, note in ((True, "bool is not a height"), ("Infinity", "not finite"),
+                    ("-Infinity", "not finite")):
+    if json.dumps(extra) not in have:
+        v["invalid"].append({"input": extra, "display": "----.--.--", "strict": "throw", "note": note})
+
+v["ladder"] = [{"height": h, "line": bft.ladder_line(h), "rungs": bft.ladder(h)}
+               for h in (0, 5, 143, 144, 1007, 2016, 52415, 52416, 210000, 969505, 1260000, 5241600)]
+v["ranges"] = [{"unit": u, "index": i, **{k: bft.unit_range(u, i)[k] for k in ("start", "end", "size")}}
+               for u, i in (("block", 7), ("hour", 0), ("hour", 161584), ("day", 6732), ("week", 961),
+                            ("retune", 480), ("month", 240), ("year", 18), ("halving", 4), ("cycle", 0))]
+v["dateRanges"] = [{"args": a, **{k: bft.date_range(*a)[k] for k in ("unit", "start", "end", "size")}}
+                   for a in ([18], [18, 7], [18, 7, 13], [18, 7, 13, 16], [0, 1, 1, 0], [100, 1, 1])]
+AT = 1790856000  # 2026-10-01T12:00:00Z, the sky's moon is waning gibbous
+stamp_cases = [
+    {"height": 969505},
+    {"height": 969505, "dateOnly": True},
+    {"height": 0},
+    {"height": 5241600},
+    {"height": 969505, "include": ["epoch", "retune", "halvingpos", "subsidy", "animal"]},
+    {"height": 969505, "include": ["moon"], "at": AT},
+    {"height": 969505, "include": ["moon"]},
+    {"height": 969505, "include": ["ladder"]},
+    {"height": 969505, "template": "{date} {time} {marker} #{heightc}"},
+    {"height": 969505, "template": "{year}/{month}/{day} w{weekofyear} d{dayofyear} {stamp}"},
+    {"height": 983664, "template": "{datestamp} retune-left {retuneleft} halving {halving} cycle {cycle}"},
+]
+v["stamps"] = [{**c, "expected": bft.stamp(c["height"], include=c.get("include", []), template=c.get("template"),
+                                           date_only=c.get("dateOnly", False), at=c.get("at"))}
+               for c in stamp_cases]
+json.dump(v, open(PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+open(PATH, "a").write("\n")
+print("vectors v2:", len(v["forward"]), "forward,", len(v["inverse"]), "inverse,", len(v["invalid"]), "invalid,",
+      len(v["ladder"]), "ladder,", len(v["ranges"]), "ranges,", len(v["dateRanges"]), "dateRanges,",
+      len(v["stamps"]), "stamps")

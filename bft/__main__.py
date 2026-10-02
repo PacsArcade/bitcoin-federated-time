@@ -4,6 +4,10 @@
     python -m bft 958346               # the clock at a height (chain-exact)
     python -m bft 1983-06-13           # a birthday (UTC; ~estimated height; b₿ before genesis)
     python -m bft 2027-01-07 20:24     # any old-calendar moment
+
+The one-package commands (also installed as `bft`):
+    python -m bft stamp [HEIGHT] [--with epoch,moon,ladder] [--fmt "{date} {time} {marker}"] [--json]
+    python -m bft ladder [HEIGHT]      python -m bft range day 6732      python -m bft verify
 """
 
 from __future__ import annotations
@@ -19,6 +23,9 @@ from bft import holidays
 
 
 def main(argv: list[str]) -> int:
+    from bft import cli
+    if len(argv) > 1 and argv[1] in cli.COMMANDS:
+        return cli.main(argv[1:])
     arg = " ".join(argv[1:]).strip() or None
     if arg in ("-h", "--help"):
         print(__doc__.strip())
