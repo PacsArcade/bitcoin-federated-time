@@ -28,6 +28,35 @@ in Bitcoin time** — with dates before the 2009 genesis block winding the clock
 > height, so it agrees on the time. No almanac, no leap-second committee, no pope deleting ten days.
 > The longest chain is the clock.
 
+## One package (v0.4.0): the ladder, the stamp, the teaching page
+
+Spec: [`spec/BFT-SPEC.md`](spec/BFT-SPEC.md). Referee: [`vectors/vectors.json`](vectors/vectors.json). Python (`bft/`), TypeScript (`ts/`, zero dependencies) and the 276-byte inscription file (`js/bft.js`) all pass the same vectors.
+
+```python
+import bft
+bft.stamp(969505)                      # '0018.07.13 16:10 a₿'   (strict: throws on a non-height)
+bft.face(None)                         # '----.--.-- --:-- a₿'   (display: dashes, never a guess)
+bft.ladder(969505)                     # every unit: index, position, remaining, start/end heights
+bft.ladder_line(969505)                # '2 of 6 in hour | 98 of 144 in day | 818 of 1,008 in week | ...'
+bft.unit_range('day', 6732)            # the way back: first and last block of day 6,732
+bft.date_range(18, 7, 13)              # blocks of the calendar day 0018.07.13
+bft.stamp(969505, include=['epoch', 'retune', 'moon'], at=1790856000)
+bft.stamp(969505, template='{date} {time} {marker} #{heightc}')
+```
+
+The step ladder: block 1, hour 6, day 144, week 1,008, retune 2,016, month 4,032, year 52,416, halving era 210,000, cycle 1,260,000. Week, retune, month and year nest exactly; the halving era does not divide a year.
+
+```
+bft stamp [HEIGHT] [--with epoch,moon,ladder] [--fmt TEMPLATE] [--date-only] [--json] [--at UNIX] [--strict]
+bft ladder [HEIGHT]     bft range day 6732     bft range 0018.07.13T16     bft tip     bft verify     bft items
+```
+
+No HEIGHT reads the tip: house beacon first, mempool.space to verify, else dashes. Same commands in Node: `node ts/bin/bft.mjs ...`.
+
+Teaching page: open [`web/teach.html`](web/teach.html) (no server needed). Nested blocks drawn to scale, the chosen block pulsing, zooming out one unit at a time. The ladder sketch is [`docs/bft-ladder.excalidraw`](docs/bft-ladder.excalidraw) (dark-first). Standards paperwork and drafts: [`spec/`](spec/).
+
+Tests: `python3 tests/test_one_package.py` and `cd ts && npm test` and `node --test js/`. Rebuild the TS output with `cd ts && npm run build`.
+
 ## The hidden reading of "BTC" → **Bitcoin Time Clock**
 
 The ticker is, and only is, Bitcoin. But every block is a tick, and the chain keeps a steadier

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0: one package (block 969,505 audit, approved)
+
+- New frozen core (`bft/core.py`, `ts/src/core.ts`, `js/bft.js`): strict heights, 4-digit year minimum never truncated, marker after the date always, block 0 valid, dash faces. Pre-genesis stays an extension.
+- Step ladder (`bft.ladder`, `ladder_line`, `unit_range`, `date_range`): any height to every unit and back.
+- `bft stamp` CLI and `stamp()/face()` with items, templates and JSON; `bft tip` reads the beacon then mempool then dashes.
+- `vectors/vectors.json` v2 (ladder, ranges, stamps added), run by Python, TypeScript and the inscription file.
+- `web/teach.html` teaching page, `docs/bft-ladder.excalidraw`, `spec/` with the specification and the BIP, NIP and ordinals drafts.
+
 ## Unreleased — the one-moon correction (task-359, Lane A)
 
 *Corrected `0018.07.02 a₿`, block 967,918 — the Admiral's ruling: "we only have one moon.
