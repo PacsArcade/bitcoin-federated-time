@@ -18,13 +18,14 @@ The flagship study: **two clocks, side by side, reading the same Bitcoin Federat
   Each lap's prize waits at 12 o'clock: the classic **fruit ladder** (🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ —
   the Key ninth, because it unlocks the tenth lap), and the tenth lap's prize is the gold ₿
   itself (the only gold — gold is money, and the reward *is* money), eaten at every block-break.
-- **The flip side** — tap a clock to flip it: the Day-0 countdown, split-flap style, counting
-  down to the appointed block. At zero: a surprise the arcade has been saving. Be there.
+- **The flip side** — tap a clock to flip it: a split-flap countdown to a target block. At zero:
+  a surprise the arcade has been saving. Be there. *(The target it still carries, 983,664, is the
+  retired Day-0 proposal; the Admiral picks the new target, block 971,364.)*
 
 It reads the live tip from mempool.space when the network allows, and falls back to an honest,
 `~`-marked anchor estimate offline. **Every number on the face is translated, with formulas, in
-[`docs/pupil-clock-grid.md`](../docs/pupil-clock-grid.md).** The Day-0 target and the Degen Hours
-window are specified (pending sign-off) in [`docs/degen-hours.md`](../docs/degen-hours.md).
+[`docs/pupil-clock-grid.md`](../docs/pupil-clock-grid.md).** The old Day-0 target and the Degen Hours
+window are history in [`docs/degen-hours.md`](../docs/degen-hours.md) (superseded by the one-moon ruling, 0018.07.02).
 
 ## [`bitcoin-birthday.html`](bitcoin-birthday.html) — THE BITCOIN BIRTHDAY
 

@@ -5,7 +5,7 @@ description: >
   `bitcoin-federated-time` Python package. Use this skill whenever the work involves reading a
   Bitcoin block height as time: the 13-month × 28-day block calendar, the ordinal degree clock
   (A°B′C″D‴ = hour/minute/second/third), halving/cycle math, block-height countdowns, the
-  Gregorian↔block bridge, Before-Bitcoin (negative) time, the block-timed moon and the 13 animal
+  Gregorian↔block bridge, Before-Bitcoin (negative) time, the sky's moon and the 13 animal
   years, or the package's lore/breadcrumbs. Also use it to TEACH the clock at any level — from a
   sharp five-year-old to an ordinals engineer — or to build clocks, countdowns, calendars, or
   inscriptions on top of it. Reach for it any time someone says "block time", "BFT", "stardate",
@@ -61,8 +61,11 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
 
 - **Genesis** = height 0, 2009-01-03 (unix 1231006505, 18:15:05 UTC). Heights ≥ 0 are **After
   Bitcoin (AB)**; negatives are **Before Bitcoin (BB)**, the inverse.
-- **13 months × 28 days = 364.** It drifts ~1.24 days/year from the sun **on purpose** — it tracks
-  the chain, not the orbit. No leap hacks, no intercalary day.
+- **13 months × 28 days = 364, and the drift has two parts** (corrected 0018.07.02, REVIEW-L01 §1, §3):
+  the DESIGNED part, 364 days against the sun's 365.24, about 1.24 days a year on purpose (corrected: that is only one part); and the
+  MEASURED part, blocks have averaged faster than 600 s, so the chain runs ahead of a ten-minute
+  ideal by an amount that is history, not a constant (about 14 days a year so far). It tracks the
+  chain, not the orbit. No leap hacks, no intercalary day.
 - Subsidy: 50 BTC, halving every 210,000 blocks, **floors to 0 at halving epoch 33** (block
   6,930,000, ~year 2140) — that's what fixes issuance and the ~21M cap.
 - **Month names are NOT baked in.** The package renders `M01..M13`; a caller supplies 13 names when
@@ -83,14 +86,17 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
    the ring once per "minute", so `seconds = wall-seconds-since-last-block mod 60` = Pac's
    angle ÷ 6°; always an estimate, always `~`; the minute TENS digit is
    which block of the hour. None for pre-genesis heights. This face leads every surface; teach it
-   first, as a ladder: tenths fill a block, 6 blocks an hour, 144 a day, 28 days a moon,
-   13 moons a year — each digit a container made of the containers below it, readable top→down
+   first, as a ladder: tenths fill a block, 6 blocks an hour, 144 a day, 28 days a month,
+   13 months a year — each digit a container made of the containers below it, readable top→down
    and bottom→up.
 1. **Calendar** — `from_height(h)` → `{epoch, year, month 1–13, day 1–28, day_of_year, week_of_month,
    beat, diff_epoch, ...}`. `format_date(h, style=…)`: the DEFAULT `"date"` style is the house
    standard — ₿-marked, **marker AFTER**, ONE order for both epochs — `yyyy.mm.dd` (full form
    `yyyy.mm.dd hh:mm:ss a₿`): `0016.05.23 a₿` / `0003.06.09 b₿` — never day-first; `"short"` → `AB 16 · M05 · D23` (teaching scaffolding); `"long"` adds the
-   block + diff-epoch. The display year IS bitcoin's age — genesis opens `0000`.
+   block + diff-epoch. The display year counts bitcoin's BLOCK-YEARS (52,416 blocks each), NOT
+   its age in sun years (that old line was false, Finding 1, REVIEW-L01 §1, 0018.07.02): genesis
+   opens `0000`; at block 967,911 the chain read 18.47 block-years against 17.71 solar years,
+   because blocks have averaged faster than 600 s. Year 0019 opens at block 995,904.
    `year_progress(h)` gives blocks-to-next-month/year.
 2. **The ordinal SIDEBAR** — `degree(h)` → `{notation "A°B′C″D‴", hour, minute, second, third,
    rarity_of_first_sat}`. This is **ordinal theory's own notation**, whose handbook labels the
@@ -106,15 +112,18 @@ All intervals are Bitcoin's own, and all math is integer — two nodes at the sa
    `to_conjunction`, `to_last_satoshi`. `halving(h)` and `cycle(h)` give epoch/subsidy/progress.
    There are **no negative heights on-chain**; "counting backward" means these remaining-block
    countdowns, plus the conceptual BB epoch for pre-genesis input.
-4. **The sky (`bft.sky`) — serves THE CALENDAR'S MOON, never the sky's.** `moon_phase(h)`
-   = the block-timed SYMBOLIC lunation (one per 28-day month; D01 new, ~D15 full, D28
-   home). NOT the astronomical phase: it drifts ~1.5 days/month from the real ~29.53-day
-   moon (~9.6 days of phase per BFT year); they agree at Day 0 (block 983,664 = the real
-   new moon of ~7 Jan 2027) and drift after. Surfaces showing the REAL moon (the pupil
-   study's analog face — computed locally, waxing lights the right limb, N hemisphere)
-   must be labeled THE SKY'S MOON; never present either moon as the other.
+4. **The sky (`bft.sky`) — ONE MOON, the sky's.** `moon_phase(h, at_ts=None)` returns the REAL
+   synodic phase (~29.53 days) from wall time, anchored to the known new moon of 2000-01-06
+   18:14 UTC; pass `time.time()` with a live tip, because the default genesis-average estimate
+   (height × 600 s) runs months ahead of the sky after years of fast blocks. The 28-day BFT
+   month is a block count: it never wears the moon's name, D01 is not a new moon, there is no
+   "calendar's moon", and no Day 0 is appointed to a new moon (the block 983,664 proposal
+   is retired, see `docs/degen-hours.md`). Ruling 0018.07.02, the Admiral: "we only have one
+   moon. and we can see it outside." The retired doctrine is kept as history in
+   `docs/the-two-moons.md`. Every moon drawn on a surface is labeled THE SKY'S MOON (the pupil
+   study's analog face computes it locally; waxing lights the right limb, N hemisphere).
    `year_animal(h)` (13 signs: the twelve + the **Astronomical Cat** as the thirteenth;
-   AB 0 = Ox). Signs and moons are **wonder, not finance**.
+   AB 0 = Ox). Signs and the moon are **wonder, not finance**.
 5. **The Gregorian bridge** — `height_at(y,m,d,H,M,S)` estimates the block height for a UTC datetime
    (negative = BB); `from_gregorian(...)` returns the full clock plus `estimate=True`,
    `before_bitcoin`. `before_bitcoin(y,m,d,sec)` renders the pre-genesis `b₿` label.
@@ -141,11 +150,11 @@ note above).
   loosely tracks reality. Date the *height* (which every node agrees on); label Gregorian
   conversions as estimates.
 - **Wonder, not finance.** No clock tells you a price. Signs/moons/animals are flavor. No price talk.
-- **Two moons, both labeled.** The calendar's moon (`bft.sky`) is symbolic and
-  block-timed; the sky's moon is the real phase. "The calendar begins on a real new
-  moon" is true AT DAY 0 and drifts after; "every month / every new year begins on a
-  new moon" is true only of the CALENDAR's moon. Never let one moon wear the other's
-  name — Pac photographed the sky and caught a display near-opposite once. Never again.
+- **One moon, labeled.** The only moon is the sky's, computed from wall time. Never a
+  block-timed "calendar's moon", never "the month or the new year begins on a new moon",
+  never a Day 0 appointed to a new moon (ruling 0018.07.02; the retired doctrine lives in
+  `docs/the-two-moons.md` as history). Pac photographed the sky and caught a display
+  near-opposite once. Never again.
 - **Your sky's hue (the opt-in pattern).** The pupil's moon can warm toward ember when
   the real moon rides low — computed from the moon's ALTITUDE, which needs location:
   always OPT-IN, one tap, in-memory only, never stored/sent, dies with the tab, and the
