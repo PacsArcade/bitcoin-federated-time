@@ -232,7 +232,7 @@ const moonOf = d => MOONS[Math.round(((d.day - 1) / 28) * 8) % 8];   // the CALE
    model lags the real chain by months. "Now" and future landings anchor to a real recent
    block (same pattern as the pupil clock). Birth estimates keep the genesis model — for
    pre-2009 there are no real blocks, and the page says ~estimate either way. */
-const ANCHOR_H = 957877, ANCHOR_T = 1783959226000;   // real block · 2026-07-13
+const ANCHOR_H = 962904, ANCHOR_T = 1786979361000;   // real block · 2026-08-17
 const SYNODIC = 29.530588853, NM_EPOCH = Date.UTC(2000, 0, 6, 18, 14);
 function skyMoonAt(ts) {
   const age = (((ts - NM_EPOCH) / 86400000) % SYNODIC + SYNODIC) % SYNODIC;
