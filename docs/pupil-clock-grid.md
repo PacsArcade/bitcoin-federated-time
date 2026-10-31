@@ -77,11 +77,13 @@ All integer math. Two nodes at the same height always agree on every row.
 | The seconds (read them off Pac) | **Pac IS the seconds hand** — one lap per "minute", so his position is the seconds | **the pac-ring formula:** `seconds = age mod 60` = Pac's angle ÷ 6° | — | **~ estimate** |
 | The prize at 12 o'clock | **The fruit ladder** — one prize per lap: 🍒 🍓 🍊 🥨 🍎 🍈 👾 🔔 🗝️ (classic arcade points in the tooltips; the Key ninth — it unlocks the tenth lap). **The tenth lap's prize is the ₿**, eaten at the block-break BANG. A long block parks Pac at 12, waiting beside it | prize = `FRUITS[lap]` for laps 0–8; the ₿ coin for lap 9 | — | chain-timed art |
 
-### The flip-card back — the Day-0 countdown
+### The flip-card back — the Day-0 countdown *(target RETIRED, block 971,364)*
+
+> **The Day-0 target is retired.** Block 983,664 was the superseded new-moon proposal (`docs/degen-hours.md`), retired by the one-moon ruling (0018.07.02, block 967,918), and the launch calendar of block 969,525 names other heights (the 788 to 888 test, the DW clock at 980,604, the new year 0019.01.01 at 995,904). The study still counts to 983,664 until the Admiral picks the new target; the rows below describe the study as built.
 
 | What you see | What it is | Exact formula | Truth |
 |---|---|---|---|
-| `block 983,664` — the target | The appointed Day-0 height (see `docs/degen-hours.md` — under review) | constant `GO_TARGET_HEIGHT` | appointed |
+| `block 983,664` — the target | The old appointed Day-0 height (see `docs/degen-hours.md` — superseded, retarget pending) | constant `GO_TARGET_HEIGHT` | appointed |
 | `N blocks to go` | Blocks between the tip and Day 0 | `983,664 − height` (floored at 0) | chain-exact given the height |
 | `DDD:HH:MM:SS` | The same distance as wall time | `blocks_to_go × 600 s`, ticking down against a fixed anchor, re-anchored when the chain moves | **~ estimate** |
 | The Day-0 surprise | Fires once, when blocks-to-go hits 0 — no spoilers here; be there (or dig in the source, if you must) | `height ≥ 983,664` | chain-exact |

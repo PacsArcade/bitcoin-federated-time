@@ -130,7 +130,7 @@ def test_holidays():
     assert holidays.holidays_at(-5) == []                            # no feast days before the light
     cal = holidays.year_calendar(18)
     hallows = next(r for r in cal if r["name"] == "The Hallows")
-    assert hallows["height"] == 983_664                              # Day 0 IS the Hallows' first block
+    assert hallows["height"] == 983_664                              # the Hallows, M10 D28 of year 18 (the old Day-0 pin; retired)
     assert hallows["date"] == "0018.10.28 a₿"
     assert any(r["name"] == "Year's End" for r in cal)
     upcoming = holidays.next_holidays(958_335, count=3)

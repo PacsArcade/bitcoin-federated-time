@@ -67,7 +67,12 @@ bft/holidays.py:153
 # names the retired "calendar's moon" formula explicitly to say it's retired and to point
 # at studies/bitcoin-birthday.html (out of this lane's scope, in-flight edits) as the one
 # place it still renders. (REVIEW-K90 §4 hardening hit — the "calendar's moon" trigger.)
-docs/pupil-clock-grid.md:99
+docs/pupil-clock-grid.md:101
+
+# --- sky-true / retired-target banner (block 971,364): the flip-card section's banner names the
+# retired Day-0 new-moon proposal to say it is retired and that the study's target waits on the
+# Admiral's pick. A negation, not an assertion.
+docs/pupil-clock-grid.md:82
 
 # --- sky-true: docs/bitcoin-holidays.md's New Year row states the negation with M01·D01
 # in the same table row; it also carries its own Finding-1-style correction tag.
