@@ -36,7 +36,7 @@ like; that's a lens, not a claim about the ticker.
 
 ## Install
 
-Zero dependencies, Python 3.9+.
+Zero dependencies, Python 3.10+.
 
 ```bash
 pip install bitcoin-federated-time      # once published
