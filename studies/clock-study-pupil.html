@@ -753,7 +753,7 @@ function skyTint() {
    the honest fallback. Set ARCADE_NODE to the arcade's public time endpoint when it stands
    up (it mirrors the explorer's routes below); null → the fallback carries alone. Every
    request walks the bases in order and takes the first honest answer. */
-const ARCADE_NODE = null;   // e.g. 'https://node.frens.earth' — the machine we hold (pending its public endpoint)
+const ARCADE_NODE = 'https://mempool.pacsarcade.org';   // Pac's Arcade's own mempool (our node); mempool.space stays the fallback
 const EXPLORER = 'https://mempool.space';
 const API_BASES = [ARCADE_NODE, EXPLORER].filter(Boolean);
 const TIP_PATH = '/api/blocks/tip/height';
